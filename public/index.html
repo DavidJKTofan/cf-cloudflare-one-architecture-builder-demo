@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudflare Connectivity Diagram</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Cloudflare Zero Trust Connectivity Diagram</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div class="diagram-container">
+            <div class="mermaid">
+            graph LR
+                %% Define Node Styles with Different Colors
+                classDef cloudflare fill:#F38020,stroke:#E56C0A,stroke-width:3px,color:#ffffff,font-weight:bold;
+                classDef onrampUser fill:#ADD8E6,stroke:#4A90E2,stroke-width:1px,color:#333;      %% Lighter Blue for Users
+                classDef onrampOffice fill:#90EE90,stroke:#4CAF50,stroke-width:1px,color:#333;    %% Lighter Green for Offices
+                classDef internet fill:#E1F5FE,stroke:#03A9F4,stroke-width:1px,color:#333;        %% Lighter Blue for Internet
+                classDef saas fill:#FFFACD,stroke:#FFD700,stroke-width:1px,color:#333;            %% Light Yellow for SaaS
+                classDef offrampTunnel fill:#D8BFD8,stroke:#BA55D3,stroke-width:1px,color:#333;   %% Lighter Purple for Tunnel Resources
+                classDef offrampWarp fill:#FFC0CB,stroke:#FF4500,stroke-width:1px,color:#333;     %% Light Pink for WARP Connector Resources
+                classDef offrampIPSec fill:#DEB887,stroke:#8B4513,stroke-width:1px,color:#333;    %% Lighter Brown for IPSec Resources
+                classDef offrampCNI fill:#B0C4DE,stroke:#4682B4,stroke-width:1px,color:#333;      %% Lighter Blue Grey for CNI Resources
+
+                %% Subgraph for On-Ramps (Left Side)
+                subgraph OnRamps["On-Ramps [Users & Locations]"]
+                    direction TB  %% Stack nodes vertically
+                    U1["👤 Users w/ WARP Client"]:::onrampUser
+                    U2["👤 Users w/o Client"]:::onrampUser
+                    O1["🏢 Office 1<br/>Networking Hardware"]:::onrampOffice
+                    O2["🏢 Office 2<br/>Magic WAN Connector"]:::onrampOffice
+                end
+
+                %% Central Cloudflare Node
+                CF["☁️ Cloudflare Network"]:::cloudflare
+
+                %% Public Internet & SaaS Nodes
+                PI["🌐 Public Internet"]:::internet
+                SaaS["💼 SaaS Apps<br/>e.g., Salesforce, Microsoft 365"]:::saas
+
+                %% Subgraph for Off-Ramps (Right Side)
+                subgraph OffRamps["Off-Ramps [Company Resources]"]
+                    direction TB  %% Stack nodes vertically
+                    D1["🖥️ On-Prem/Cloud<br/>via Tunnel"]:::offrampTunnel
+                    D2["🖥️ On-Prem/Cloud<br/>via WARP Connector"]:::offrampWarp
+                    D3["🖥️ On-Prem/Cloud<br/>via IPSec/GRE"]:::offrampIPSec
+                    D4["🖥️ On-Prem/Cloud<br/>via CNI"]:::offrampCNI
+                end
+
+                %% Connections: On-Ramps to Cloudflare
+                U1 -- "WireGuard / MASQUE" --> CF
+                U2 -- "HTTPS / PAC / mTLS / <br>Clientless RBI / DNS (DoH / DoT)" --> CF
+                O1 -- "IPSec / GRE / DNS (DoH / DoT)" --> CF
+                O2 -- "IPSec / GRE Tunnels" --> CF
+
+                %% Connections: Cloudflare to Internet/SaaS
+                CF -- "Connects" --> PI
+                CF -- "SAML / OIDC / API" --> SaaS
+
+                %% Connections: Cloudflare to/from Off-Ramps (Resources)
+                CF <-- "Cloudflare Tunnel" --- D1
+                CF -- "WARP Connector" <--> D2
+                CF -- "IPSec / GRE Tunnels" <--> D3
+                CF -- "CNI Peering" <--> D4
+
+                %% Make CNI connection thicker
+                linkStyle 9 stroke:#4682B4,stroke-width:6px;
+            </div>
+        </div>
+        <h2>Color Legend</h2>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #F38020"></div>
+                <span>Cloudflare Network</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #ADD8E6"></div>
+                <span>Users</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #90EE90"></div>
+                <span>Offices</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #E1F5FE"></div>
+                <span>Internet</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FFFACD"></div>
+                <span>SaaS Apps</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #D8BFD8"></div>
+                <span>Tunnel Resources</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #FFC0CB"></div>
+                <span>WARP Connector Resources</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #DEB887"></div>
+                <span>IPSec Resources</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #B0C4DE"></div>
+                <span>CNI Resources</span>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Powered by Cloudflare Workers and Mermaid.js</p>
+    </footer>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</body>
+</html>
