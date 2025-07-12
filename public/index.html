@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="header-content">
-            <h1>Cloudflare Zero Trust Connectivity Diagram</h1>
+            <h1>Cloudflare One (Zero Trust) Connectivity Diagram</h1>
         </div>
     </header>
     <div class="container">
@@ -19,18 +19,18 @@
             graph LR
                 %% Define Node Styles with Different Colors
                 classDef cloudflare fill:#F38020,stroke:#E56C0A,stroke-width:3px,color:#ffffff,font-weight:bold;
-                classDef onrampUser fill:#ADD8E6,stroke:#4A90E2,stroke-width:1px,color:#333;      %% Lighter Blue for Users
-                classDef onrampOffice fill:#90EE90,stroke:#4CAF50,stroke-width:1px,color:#333;    %% Lighter Green for Offices
-                classDef internet fill:#E1F5FE,stroke:#03A9F4,stroke-width:1px,color:#333;        %% Lighter Blue for Internet
-                classDef saas fill:#FFFACD,stroke:#FFD700,stroke-width:1px,color:#333;            %% Light Yellow for SaaS
-                classDef offrampTunnel fill:#D8BFD8,stroke:#BA55D3,stroke-width:1px,color:#333;   %% Lighter Purple for Tunnel Resources
-                classDef offrampWarp fill:#FFC0CB,stroke:#FF4500,stroke-width:1px,color:#333;     %% Light Pink for WARP Connector Resources
-                classDef offrampIPSec fill:#DEB887,stroke:#8B4513,stroke-width:1px,color:#333;    %% Lighter Brown for IPSec Resources
-                classDef offrampCNI fill:#B0C4DE,stroke:#4682B4,stroke-width:1px,color:#333;      %% Lighter Blue Grey for CNI Resources
+                classDef onrampUser fill:#ADD8E6,stroke:#4A90E2,stroke-width:2px,color:#333;
+                classDef onrampOffice fill:#90EE90,stroke:#4CAF50,stroke-width:2px,color:#333;
+                classDef internet fill:#E1F5FE,stroke:#03A9F4,stroke-width:2px,color:#333;
+                classDef saas fill:#FFFACD,stroke:#FFD700,stroke-width:2px,color:#333;
+                classDef offrampTunnel fill:#D8BFD8,stroke:#BA55D3,stroke-width:2px,color:#333;
+                classDef offrampWarp fill:#FFC0CB,stroke:#FF4500,stroke-width:2px,color:#333;
+                classDef offrampIPSec fill:#DEB887,stroke:#8B4513,stroke-width:2px,color:#333;
+                classDef offrampCNI fill:#B0C4DE,stroke:#4682B4,stroke-width:2px,color:#333;
 
                 %% Subgraph for On-Ramps (Left Side)
                 subgraph OnRamps["On-Ramps [Users & Locations]"]
-                    direction TB  %% Stack nodes vertically
+                    direction TB
                     U1["👤 Users w/ WARP Client"]:::onrampUser
                     U2["👤 Users w/o Client"]:::onrampUser
                     O1["🏢 Office 1<br/>Networking Hardware"]:::onrampOffice
@@ -46,78 +46,225 @@
 
                 %% Subgraph for Off-Ramps (Right Side)
                 subgraph OffRamps["Off-Ramps [Company Resources]"]
-                    direction TB  %% Stack nodes vertically
+                    direction TB
                     D1["🖥️ On-Prem/Cloud<br/>via Tunnel"]:::offrampTunnel
                     D2["🖥️ On-Prem/Cloud<br/>via WARP Connector"]:::offrampWarp
                     D3["🖥️ On-Prem/Cloud<br/>via IPSec/GRE"]:::offrampIPSec
                     D4["🖥️ On-Prem/Cloud<br/>via CNI"]:::offrampCNI
                 end
 
-                %% Connections: On-Ramps to Cloudflare
-                U1 -- "WireGuard / MASQUE" --> CF
-                U2 -- "HTTPS / PAC / mTLS / <br>Clientless RBI / DNS (DoH / DoT)" --> CF
-                O1 -- "IPSec / GRE / DNS (DoH / DoT)" --> CF
-                O2 -- "IPSec / GRE Tunnels" --> CF
+                %% Connections with labels
+                U1 --->|"WireGuard / MASQUE"| CF
+                U2 --->|"HTTPS / PAC / mTLS /<br/>Clientless RBI / DNS (DoH / DoT)"| CF
+                O1 --->|"IPSec / GRE / Clientless RBI  / DNS (DoH / DoT)"| CF
+                O2 --->|"IPSec / GRE Tunnels"| CF
+                CF -->|"Connects (HTTPS)"| PI
+                CF -->|"SAML / OIDC / API"| SaaS
+                CF <-->|"Cloudflare Tunnel"| D1
+                CF <===>|"WARP Connector"| D2
+                CF <===>|"IPSec / GRE Tunnels"| D3
+                CF <===>|"CNI Peering"| D4
 
-                %% Connections: Cloudflare to Internet/SaaS
-                CF -- "Connects" --> PI
-                CF -- "SAML / OIDC / API" --> SaaS
-
-                %% Connections: Cloudflare to/from Off-Ramps (Resources)
-                CF <-- "Cloudflare Tunnel" --- D1
-                CF -- "WARP Connector" <--> D2
-                CF -- "IPSec / GRE Tunnels" <--> D3
-                CF -- "CNI Peering" <--> D4
-
-                %% Make CNI connection thicker
-                linkStyle 9 stroke:#4682B4,stroke-width:6px;
+                %% Add styles to connections
+                linkStyle 0 stroke:#333,stroke-width:2px;
+                linkStyle 1 stroke:#333,stroke-width:2px;
+                linkStyle 2 stroke:#333,stroke-width:2px;
+                linkStyle 3 stroke:#333,stroke-width:2px;
+                linkStyle 4 stroke:#333,stroke-width:2px;
+                linkStyle 5 stroke:#333,stroke-width:2px;
+                linkStyle 6 stroke:#333,stroke-width:2px;
+                linkStyle 7 stroke:#4682B4,stroke-width:3px;
+                linkStyle 8 stroke:#4682B4,stroke-width:3px;
+                linkStyle 9 stroke:#4682B4,stroke-width:3px;
             </div>
         </div>
-        <h2>Color Legend</h2>
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #F38020"></div>
-                <span>Cloudflare Network</span>
+
+        <details class="color-legend-details">
+            <summary>Show Color Legend</summary>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #F38020"></div>
+                    <span>Cloudflare Network</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ADD8E6"></div>
+                    <span>Users</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #90EE90"></div>
+                    <span>Offices</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #E1F5FE"></div>
+                    <span>Internet</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #FFFACD"></div>
+                    <span>SaaS Apps</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #D8BFD8"></div>
+                    <span>Tunnel Resources</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #FFC0CB"></div>
+                    <span>WARP Connector Resources</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #DEB887"></div>
+                    <span>IPSec Resources</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #B0C4DE"></div>
+                    <span>CNI Resources</span>
+                </div>
             </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #ADD8E6"></div>
-                <span>Users</span>
+        </details>
+
+        <h2>Connection Types Documentation</h2>
+        <div class="docs-links">
+            <h3>Understanding Connectivity</h3>
+            <p class="intro-text">It's critical to distinguish between connecting <strong>locations (networks)</strong>, <strong>users (knowledge workers)</strong>, and <strong>applications (resources)</strong>.</p>
+            
+            <p>The following table outlines Cloudflare's composable and flexible connectivity options (on-ramps and off-ramps):</p>
+
+            <div class="legend-indicators">
+                <p><span class="indicator">🟡</span> <a href="https://developers.cloudflare.com/cloudflare-one/policies/gateway/identity-selectors/" target="_blank">Identity-based policies</a> not support or restrictions apply (only applies to the <i>Users</i> column)</p>
             </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #90EE90"></div>
-                <span>Offices</span>
+
+            <div class="table-container">
+                <table class="connectivity-table">
+                    <thead>
+                        <tr>
+                            <th>Connectivity Option</th>
+                            <th>Locations<br>(Networks)</th>
+                            <th>Users</th>
+                            <th>Applications<br>(Resources)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/" target="_blank">WARP Client</a> (Gateway with WARP default mode)</td>
+                            <td>-</td>
+                            <td>✅</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh" target="_blank">(Gateway with DoH)</a></td>
+                            <td>-</td>
+                            <td>🟡<br><span class="note">Supports DNS filtering <strong>only</strong></span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering" target="_blank">(Gateway without DNS)</a></td>
+                            <td>-</td>
+                            <td>✅<br><span class="note">Does <strong>not</strong> support DNS filtering</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode" target="_blank">(Proxy mode)</a></td>
+                            <td>-</td>
+                            <td>✅<br><span class="note">Does <strong>not</strong> support DNS filtering</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only" target="_blank">(Device Info Only)</a></td>
+                            <td>-</td>
+                            <td>🟡<br><span class="note">Supports device posture rules <strong>only</strong></span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/" target="_blank">DNS Resolver IPs</a></td>
+                            <td>✅</td>
+                            <td>🟡</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/" target="_blank">DNS over HTTPS (DoH)</a></td>
+                            <td>✅<br><span class="note">Location-specific endpoint</span></td>
+                            <td>✅<br><span class="note">Requires user-specific DoH token</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/" target="_blank">DNS over TLS (DoT)</a></td>
+                            <td>✅<br><span class="note">Location-specific endpoint</span></td>
+                            <td>🟡</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/pac-files/" target="_blank">Proxy Endpoint (PAC file)</a></td>
+                            <td>-</td>
+                            <td>🟡</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/" target="_blank">Cloudflare Tunnel</a></td>
+                            <td>✅</td>
+                            <td>-</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/warp-connector/" target="_blank">WARP Connector</a></td>
+                            <td>✅</td>
+                            <td>-</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/" target="_blank">Clientless RBI</a></td>
+                            <td>✅</td>
+                            <td>🟡</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a></td>
+                            <td>✅</td>
+                            <td>-</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Cloudflare Network Interconnect (CNI)</a></td>
+                            <td>✅</td>
+                            <td>-</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/learning-paths/mtls/concepts/mtls-cloudflare/" target="_blank">Mutual TLS (mTLS)</a> / <a href="https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/" target="_blank">Service Tokens</a></td>
+                            <td>✅</td>
+                            <td>🟡</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/" target="_blank">Identity Provider IdP (SAML / OIDC)</a></td>
+                            <td>-</td>
+                            <td>✅</td>
+                            <td>✅</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/applications/casb/" target="_blank">CASB (API Integration)</a></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>✅</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #E1F5FE"></div>
-                <span>Internet</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #FFFACD"></div>
-                <span>SaaS Apps</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #D8BFD8"></div>
-                <span>Tunnel Resources</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #FFC0CB"></div>
-                <span>WARP Connector Resources</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #DEB887"></div>
-                <span>IPSec Resources</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #B0C4DE"></div>
-                <span>CNI Resources</span>
+
+            <div class="notes">
+                <p><em>Last updated: July 2025. <br><br>The public Internet (HTTPS) also remains a viable connection option to the nearest Cloudflare data center.</em></p>
+                <p class="important-note"><strong>Additional Notes:</strong></p>
+                <ul>
+                    <li><a href="https://developers.cloudflare.com/ssl/post-quantum-cryptography/" target="_blank">Post-Quantum Cryptography (PQC)</a> is supported.</li>
+                    <li><a href="https://developers.cloudflare.com/cloudflare-one/policies/gateway/identity-selectors/" target="_blank">Identity-based policies</a> provide user-level control over access and security rules.</li>
+                    <li>Mutual TLS (mTLS) and Service Tokens are typically used for service-to-service authentication and securing API endpoints.</li>
+                    <li><a href="https://developers.cloudflare.com/magic-wan/reference/tunnels/" target="_blank">IPSec/GRE Tunnels</a> and CNI require <a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a> or <a href="https://developers.cloudflare.com/magic-transit/" target="_blank">Magic Transit</a>.</li>
+                    <li><a href="https://developers.cloudflare.com/network-interconnect/pni-and-peering/" target="_blank">Public Peering or Private Network Interconnect (PNI)</a> follows Cloudflare's open peering policy.</li>
+                </ul>
             </div>
         </div>
     </div>
     <footer>
         <p>Powered by Cloudflare Workers and Mermaid.js</p>
     </footer>
-    <script>
-        mermaid.initialize({ startOnLoad: true });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
