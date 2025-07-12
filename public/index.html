@@ -144,106 +144,112 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/" target="_blank">WARP Client</a> (Gateway with WARP default mode)</td>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/" target="_blank">WARP Client</a> (Default mode)</td>
                             <td>-</td>
-                            <td>✅</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh" target="_blank">(Gateway with DoH)</a></td>
-                            <td>-</td>
-                            <td>🟡<br><span class="note">Supports DNS filtering <strong>only</strong></span></td>
+                            <td>✅<br><span class="note">Full identity-based policies</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering" target="_blank">(Gateway without DNS)</a></td>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh" target="_blank">WARP Client</a> (Gateway with DoH)</td>
                             <td>-</td>
-                            <td>✅<br><span class="note">Does <strong>not</strong> support DNS filtering</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode" target="_blank">(Proxy mode)</a></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">Does <strong>not</strong> support DNS filtering</span></td>
+                            <td>🟡<br><span class="note">DNS filtering only</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <td>WARP Client <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only" target="_blank">(Device Info Only)</a></td>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering" target="_blank">WARP Client</a> (Gateway without DNS)</td>
                             <td>-</td>
-                            <td>🟡<br><span class="note">Supports device posture rules <strong>only</strong></span></td>
+                            <td>✅<br><span class="note">No DNS filtering</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode" target="_blank">WARP Client</a> (Proxy Mode)</td>
+                            <td>-</td>
+                            <td>✅<br><span class="note">Proxy-based filtering</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only" target="_blank">WARP Client</a> (Device Info Only)</td>
+                            <td>-</td>
+                            <td>🟡<br><span class="note">Device posture only</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/" target="_blank">DNS Resolver IPs</a></td>
-                            <td>✅</td>
-                            <td>🟡</td>
+                            <td>✅<br><span class="note">Location-based DNS</span></td>
+                            <td>🟡<br><span class="note">Limited identity context</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/" target="_blank">DNS over HTTPS (DoH)</a></td>
-                            <td>✅<br><span class="note">Location-specific endpoint</span></td>
-                            <td>✅<br><span class="note">Requires user-specific DoH token</span></td>
+                            <td>✅<br><span class="note">Location-specific endpoints</span></td>
+                            <td>✅<br><span class="note">User-specific tokens</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/" target="_blank">DNS over TLS (DoT)</a></td>
-                            <td>✅<br><span class="note">Location-specific endpoint</span></td>
-                            <td>🟡</td>
+                            <td>✅<br><span class="note">Location-specific endpoints</span></td>
+                            <td>🟡<br><span class="note">Limited identity</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/pac-files/" target="_blank">Proxy Endpoint (PAC file)</a></td>
                             <td>-</td>
-                            <td>🟡</td>
+                            <td>🟡<br><span class="note">Limited identity</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/" target="_blank">Cloudflare Tunnel</a></td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">Private Networks</span></td>
                             <td>-</td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">Private Networks & Public Hostnames</span></td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/warp-connector/" target="_blank">WARP Connector</a></td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">Layer 3 routing</span></td>
                             <td>-</td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">Layer 3 routing</span></td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/" target="_blank">Clientless RBI</a></td>
-                            <td>✅</td>
-                            <td>🟡</td>
+                            <td>✅<br><span class="note">On-ramp via GRE or IPSec Tunnel</span></td>
+                            <td>🟡<br><span class="note">Non-identity via PAC, GRE or IPSec</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a></td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">GRE/IPSec Tunnel</span></td>
                             <td>-</td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">Layer 3 routing</span></td>
                         </tr>
                         <tr>
-                            <td><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Cloudflare Network Interconnect (CNI)</a></td>
-                            <td>✅</td>
+                            <td><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Network Interconnect (CNI)</a></td>
+                            <td>✅<br><span class="note">Direct peering</span></td>
                             <td>-</td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">IP Routing</span></td>
                         </tr>
                         <tr>
-                            <td><a href="https://developers.cloudflare.com/learning-paths/mtls/concepts/mtls-cloudflare/" target="_blank">Mutual TLS (mTLS)</a> / <a href="https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/" target="_blank">Service Tokens</a></td>
-                            <td>✅</td>
-                            <td>🟡</td>
-                            <td>✅</td>
+                            <td><a href="https://developers.cloudflare.com/learning-paths/mtls/concepts/mtls-cloudflare/" target="_blank">Mutual TLS (mTLS)</a></td>
+                            <td>✅<br><span class="note">Network authentication</span></td>
+                            <td>🟡<br><span class="note">Service accounts</span></td>
+                            <td>✅<br><span class="note">API endpoints</span></td>
                         </tr>
                         <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/" target="_blank">Identity Provider IdP (SAML / OIDC)</a></td>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/" target="_blank">Service Tokens</a></td>
                             <td>-</td>
-                            <td>✅</td>
-                            <td>✅</td>
+                            <td>🟡<br><span class="note">Service accounts</span></td>
+                            <td>✅<br><span class="note">API endpoints</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/" target="_blank">Identity Provider (SAML/OIDC)</a></td>
+                            <td>-</td>
+                            <td>✅<br><span class="note">SSO integration</span></td>
+                            <td>✅<br><span class="note">SaaS Applications</span></td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/applications/casb/" target="_blank">CASB (API Integration)</a></td>
                             <td>-</td>
                             <td>-</td>
-                            <td>✅</td>
+                            <td>✅<br><span class="note">SaaS applications</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -259,6 +265,13 @@
                     <li><a href="https://developers.cloudflare.com/magic-wan/reference/tunnels/" target="_blank">IPSec/GRE Tunnels</a> and CNI require <a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a> or <a href="https://developers.cloudflare.com/magic-transit/" target="_blank">Magic Transit</a>.</li>
                     <li><a href="https://developers.cloudflare.com/network-interconnect/pni-and-peering/" target="_blank">Public Peering or Private Network Interconnect (PNI)</a> follows Cloudflare's open peering policy.</li>
                 </ul>
+            </div>
+            
+            <div class="detailed-view-button">
+                <a href="table.html" class="button table-link">
+                    <span>View Enhanced Table</span>
+                    <small>Includes categories, features, protocols, and more details</small>
+                </a>
             </div>
         </div>
     </div>

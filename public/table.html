@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Cloudflare One (Zero Trust) Connectivity Matrix</title>
+		<link rel="stylesheet" href="css/table-style.css" />
+	</head>
+    <body>
+    <div class="container">
+        <div class="header">
+            <h1>Cloudflare One (Zero Trust) Connectivity Matrix</h1>
+            <p>Comprehensive guide to connecting locations, users, and applications through Cloudflare's Zero Trust platform</p>
+        </div>
+
+        <div class="matrix-container">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalOptions">17</div>
+                    <div class="stat-label">Total Options</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="filteredOptions">17</div>
+                    <div class="stat-label">Showing</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Connection Types</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Use Cases</div>
+                </div>
+            </div>
+
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="categoryFilter">Filter by Category:</label>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="client">Client-based Solutions</option>
+                        <option value="agentless">Agentless Solutions</option>
+                        <option value="network">Network Infrastructure</option>
+                        <option value="identity">Identity & Authentication</option>
+                        <option value="saas">SaaS Integration</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="useCaseFilter">Primary Use Case:</label>
+                    <select id="useCaseFilter">
+                        <option value="all">All Use Cases</option>
+                        <option value="remote-work">Remote Work</option>
+                        <option value="office">Office Networks</option>
+                        <option value="datacenter">Data Centers</option>
+                        <option value="cloud">Cloud Resources</option>
+                        <option value="saas">SaaS Applications</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="searchFilter">Search Options:</label>
+                    <input type="text" id="searchFilter" placeholder="Search connectivity options, protocols, or features..." />
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="connectivity-table" id="connectivityTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Connectivity Option</th>
+                            <th style="width: 15%;">Locations<br/>(Networks)</th>
+                            <th style="width: 15%;">Users<br/>(End Users)</th>
+                            <th style="width: 15%;">Applications<br/>(Resources)</th>
+                            <th style="width: 15%;">Use Cases</th>
+                            <th style="width: 25%;">Key Features & Protocols</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-category="client" data-complexity="low" data-use-case="remote-work">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/" target="_blank">WARP Client</a>
+                                <div class="requirements">Requires client installation (Default mode)</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">Full identity-based policies</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">WireGuard</span>
+                                    <span class="protocol-badge">MASQUE</span>
+                                    <span class="protocol-badge">DNS Filtering</span>
+                                    <span class="protocol-badge">Network Filtering</span>
+                                    <span class="protocol-badge">HTTP Inspection</span>
+                                    <span class="protocol-badge">Data Loss Prevention (DLP)</span>
+                                    <span class="protocol-badge">Device Posture Checks</span>
+                                    <span class="protocol-badge">AV Scanning</span>
+                                    <span class="protocol-badge">Remote Browser Isolation (RBI)</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="client" data-complexity="low" data-use-case="remote-work">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh" target="_blank">WARP Client (Gateway with DoH)</a>
+                                <div class="requirements">DNS-only filtering mode</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-limited">🟡<span class="note">DNS filtering only</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">DNS over HTTPS (DoH)</span>
+                                    <span class="protocol-badge">DNS Filtering</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="client" data-complexity="low" data-use-case="remote-work">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering" target="_blank">WARP Client (Gateway without DNS)</a>
+                                <div class="requirements">HTTP inspection without DNS</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">No DNS filtering</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">WireGuard</span>
+                                    <span class="protocol-badge">MASQUE</span>
+                                    <span class="protocol-badge">Network Filtering</span>
+                                    <span class="protocol-badge">HTTP Inspection</span>
+                                    <span class="protocol-badge">Data Loss Prevention (DLP)</span>
+                                    <span class="protocol-badge">Device Posture Checks</span>
+                                    <span class="protocol-badge">AV Scanning</span>
+                                    <span class="protocol-badge">Remote Browser Isolation (RBI)</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="client" data-complexity="low" data-use-case="remote-work">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode" target="_blank">WARP Client (Proxy Mode)</a>
+                                <div class="requirements">HTTP proxy configuration</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">Proxy-based filtering</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">Localhost Proxy</span>
+                                    <span class="protocol-badge">WireGuard</span>
+                                    <span class="protocol-badge">MASQUE</span>
+                                    <span class="protocol-badge">HTTP Inspection</span>
+                                    <span class="protocol-badge">Data Loss Prevention (DLP)</span>
+                                    <span class="protocol-badge">AV Scanning</span>
+                                    <span class="protocol-badge">Remote Browser Isolation (RBI)</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="agentless" data-complexity="low" data-use-case="office">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/" target="_blank">DNS Resolver IPs</a>
+                                <div class="requirements">Office Router DNS configuration</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Location-based DNS</span></td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Limited identity context</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">DNS Filtering</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="agentless" data-complexity="medium" data-use-case="office,remote-work">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/" target="_blank">DNS over HTTPS (DoH)</a>
+                                <div class="requirements">DoH token configuration</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Location-specific endpoints</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">User-specific tokens</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag office">Office Networks</span>
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">DNS over HTTPS (DoH)</span>
+                                    <span class="protocol-badge">DNS Filtering</span>
+                                    <span class="protocol-badge">DoH Identity Tokens</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="agentless" data-complexity="medium" data-use-case="office">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/" target="_blank">DNS over TLS (DoT)</a>
+                                <div class="requirements">TLS DNS configuration</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Location-specific endpoints</span></td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Limited identity</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">DNS over TLS (DoT)</span>
+                                    <span class="protocol-badge">DNS Filtering</span>
+                                    <span class="protocol-badge">Port 853</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="agentless" data-complexity="medium" data-use-case="office">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/pac-files/" target="_blank">Proxy Endpoint (PAC)</a>
+                                <div class="requirements">PAC file deployment</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Limited identity</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">DNS Filtering</span>
+                                    <span class="protocol-badge">HTTP Inspection</span>
+                                    <span class="protocol-badge">Proxy Auto-Configuration (PAC) file</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="agentless" data-complexity="medium" data-use-case="office">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/" target="_blank">Clientless RBI</a>
+                                <div class="requirements">Browser isolation deployment</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">On-ramp via GRE or IPSec Tunnel</span></td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Non-identity via PAC, GRE or IPSec Tunnel</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag office">Office Networks</span>
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">Remote Browser Isolation (RBI)</span>
+                                    <span class="protocol-badge">Web Isolation</span>
+                                    <span class="protocol-badge">(Isolated) HTTP Inspection</span>
+                                    <span class="protocol-badge">(Isolated) Network Filtering</span>
+                                    <span class="protocol-badge">(Isolated) DNS Filtering</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="network" data-complexity="medium" data-use-case="datacenter,cloud">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/" target="_blank">Cloudflare Tunnel</a>
+                                <div class="requirements">Outbound-only connections</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note"><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/" target="_blank">Private Networks</a></span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">Private Networks and <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/" target="_blank">Public Hostnames</a></span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag cloud">Cloud Resources</span>
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">HTTP/HTTPS</span>
+                                    <span class="protocol-badge">SSH</span>
+                                    <span class="protocol-badge">RDP</span>
+                                    <span class="protocol-badge">SMB</span>
+                                    <span class="protocol-badge">gRPC</span>
+                                    <span class="protocol-badge">TCP</span>
+                                    <span class="protocol-badge">Kubernetes</span>
+                                    <span class="protocol-badge">Layer 4</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="network" data-complexity="medium" data-use-case="datacenter,cloud">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/warp-connector/" target="_blank">WARP Connector</a>
+                                <div class="requirements">Site-to-site, bidirectional, and mesh networking connectivity</div>
+                            </td>
+                            <td class="support-indicator support-full">✅</td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag cloud">Cloud Resources</span>
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">WireGuard</span>
+                                    <span class="protocol-badge">IP Routing</span>
+                                    <span class="protocol-badge">Private Networks</span>
+                                    <span class="protocol-badge">Layer 3</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="network" data-complexity="high" data-use-case="datacenter,office">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a>
+                                <div class="requirements">Enterprise network infrastructure</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Connection via GRE or IPSec Tunnel</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">IPSec</span>
+                                    <span class="protocol-badge">GRE</span>
+                                    <span class="protocol-badge">SD-WAN</span>
+                                    <span class="protocol-badge">(NGFW) Network Filtering</span>
+                                    <span class="protocol-badge">Traffic Steering</span>
+                                    <span class="protocol-badge">IP Routing</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="network" data-complexity="high" data-use-case="datacenter">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Network Interconnect (CNI)</a>
+                                <div class="requirements">Physical network connections</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Direct peering</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">IP Routing</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">Direct Connect / Peering</span>
+                                    <span class="protocol-badge">BGP</span>
+                                    <span class="protocol-badge">High Bandwidth</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="identity" data-complexity="medium" data-use-case="remote-work,office,saas">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/" target="_blank">Identity Provider (SAML/OIDC)</a>
+                                <div class="requirements">IdP integration required</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">SSO integration</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">SaaS Applications</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                    <span class="use-case-tag office">Office Networks</span>
+                                    <span class="use-case-tag saas">SaaS Applications</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">SAML</span>
+                                    <span class="protocol-badge">OIDC</span>
+                                    <span class="protocol-badge">OAuth</span>
+                                    <span class="protocol-badge">SSO</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="identity" data-complexity="medium" data-use-case="datacenter,cloud">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/learning-paths/mtls/concepts/mtls-cloudflare/" target="_blank">Mutual TLS (mTLS)</a>
+                                <div class="requirements">Certificate management</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Network authentication</span></td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Service accounts</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">API endpoints</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag cloud">Cloud Resources</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">mTLS</span>
+                                    <span class="protocol-badge">Client Certificates</span>
+                                    <span class="protocol-badge">API Authentication</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="identity" data-complexity="low" data-use-case="datacenter,cloud">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/" target="_blank">Service Tokens</a>
+                                <div class="requirements">Token-based authentication</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Service accounts</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">API endpoints</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag cloud">Cloud Resources</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">Bearer Tokens</span>
+                                    <span class="protocol-badge">API Authentication</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="saas" data-complexity="medium" data-use-case="remote-work,office,saas">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/applications/casb/" target="_blank">CASB (API Integration)</a>
+                                <div class="requirements">SaaS API integration</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">SaaS applications</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                    <span class="use-case-tag office">Office Networks</span>
+                                    <span class="use-case-tag saas">SaaS Applications</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">API Integration</span>
+                                    <span class="protocol-badge">SaaS Security</span>
+                                    <span class="protocol-badge">Data Protection</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="client" data-complexity="low" data-use-case="remote-work">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only" target="_blank">WARP Client (Device Info Only)</a>
+                                <div class="requirements">Device posture only</div>
+                            </td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Device posture only</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag remote-work">Remote Work</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">Device Posture Checks</span>
+                                    <span class="protocol-badge">No Traffic Routing</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0);"></div>
+                    <span>✅ Full Support</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #fef3c7, #fde68a);"></div>
+                    <span>🟡 Caveats Apply</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f8fafc;"></div>
+                    <span>— Not Applicable</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="additional-info">
+            <h2>Implementation Notes</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🔐 Identity-Based Policies</h3>
+                    <p>Options marked with 🟡 have limited or no support for <a href="https://developers.cloudflare.com/cloudflare-one/policies/gateway/identity-selectors/" target="_blank">identity-based policies</a>. Full identity support requires user authentication through IdP or WARP client.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>🌐 Protocol Support</h3>
+                    <p>Modern protocols like <a href="https://developers.cloudflare.com/ssl/post-quantum-cryptography/" target="_blank">Post-Quantum Cryptography</a>, WireGuard, and MASQUE are supported across applicable connection types.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🔗 Additional Resources</h3>
+                    <p>For detailed implementation guides, visit the <a href="https://developers.cloudflare.com/cloudflare-one/implementation-guides/" target="_blank">Cloudflare One Documentation</a> and explore specific configuration examples.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/table-main.js"></script>
+    </body>
+</html>
