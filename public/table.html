@@ -3,14 +3,20 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Cloudflare One (Zero Trust) Connectivity Matrix</title>
+		<title>Cloudflare One Connectivity Matrix | Enhanced View</title>
+		<meta name="description" content="Comprehensive connectivity matrix for Cloudflare One - SASE and Zero Trust deployment options.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="css/table-style.css" />
 	</head>
     <body>
     <div class="container">
         <div class="header">
-            <h1>Cloudflare One (Zero Trust) Connectivity Matrix</h1>
-            <p>Comprehensive guide to connecting locations, users, and applications through Cloudflare's Zero Trust platform</p>
+            <span class="header-badge">Enhanced View</span>
+            <h1><span>Cloudflare One</span> Connectivity Matrix</h1>
+            <p>Comprehensive guide to connecting locations, users, and applications</p>
+            <a href="index.html" class="back-link">← Back to Diagram</a>
         </div>
 
         <div class="matrix-container">
@@ -238,22 +244,24 @@
                         </tr>
                         <tr data-category="agentless" data-complexity="medium" data-use-case="office">
                             <td class="connectivity-option">
-                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/pac-files/" target="_blank">Proxy Endpoint (PAC)</a>
-                                <div class="requirements">PAC file deployment</div>
+                                <a href="https://developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/" target="_blank">Proxy Endpoint (PAC)</a>
+                                <div class="requirements">PAC file with authorization endpoint</div>
                             </td>
                             <td class="support-indicator support-none">—</td>
-                            <td class="support-indicator support-limited">🟡<span class="note">Limited identity</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">Authorization endpoint</span></td>
                             <td class="support-indicator support-none">—</td>
                             <td>
                                 <div class="use-case-tags">
                                     <span class="use-case-tag office">Office Networks</span>
+                                    <span class="use-case-tag remote-work">Remote Work</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="protocol-badges">
-                                    <span class="protocol-badge">DNS Filtering</span>
+                                    <span class="protocol-badge">Authorization Endpoint</span>
                                     <span class="protocol-badge">HTTP Inspection</span>
-                                    <span class="protocol-badge">Proxy Auto-Configuration (PAC) file</span>
+                                    <span class="protocol-badge">Identity-Based Policies</span>
+                                    <span class="protocol-badge">PAC file</span>
                                 </div>
                             </td>
                         </tr>
@@ -527,6 +535,10 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <p>Powered by <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a></p>
+            <p class="disclaimer">For educational purposes only. Not official Cloudflare documentation.</p>
+        </footer>
     </div>
     <script src="js/table-main.js"></script>
     </body>

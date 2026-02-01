@@ -68,18 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Initialize stats
 	updateStats();
 
-	// Enhanced row hover effects
-	rows.forEach((row) => {
-		row.addEventListener('mouseenter', function () {
-			this.style.transform = 'translateX(5px)';
-			this.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-		});
-
-		row.addEventListener('mouseleave', function () {
-			this.style.transform = 'translateX(0)';
-			this.style.boxShadow = 'none';
-		});
-	});
+	// Row hover effects handled via CSS for better performance
 
 	// Keyboard navigation
 	document.addEventListener('keydown', function (e) {
