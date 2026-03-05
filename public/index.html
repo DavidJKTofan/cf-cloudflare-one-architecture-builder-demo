@@ -36,44 +36,45 @@
                     classDef offrampTunnel fill:#EDE9FE,stroke:#8B5CF6,stroke-width:2px,color:#5b21b6;
                     classDef offrampWarp fill:#FCE7F3,stroke:#EC4899,stroke-width:2px,color:#9d174d;
                     classDef offrampIPSec fill:#FED7AA,stroke:#F97316,stroke-width:2px,color:#9a3412;
-                    classDef offrampCNI fill:#E0E7FF,stroke:#6366F1,stroke-width:2px,color:#3730a3;
+                    classDef cloud fill:#DCFCE7,stroke:#22C55E,stroke-width:2px,color:#166534;
+                    classDef cni fill:#E0E7FF,stroke:#6366F1,stroke-width:2px,color:#3730a3;
 
                     %% Subgraph for On-Ramps (Left Side)
                     subgraph OnRamps["On-Ramps"]
                         direction TB
-                        U1["👤 Users with WARP Client"]:::onrampUser
-                        U2["👤 Users without Client"]:::onrampUser
-                        O1["🏢 Branch Office<br/>Network Hardware"]:::onrampOffice
-                        O2["🏢 Remote Site<br/>Magic WAN Connector"]:::onrampOffice
+                        U1["Users with WARP Client"]:::onrampUser
+                        U2["Users without Client"]:::onrampUser
+                        O1["Branch Office<br/>Network Hardware"]:::onrampOffice
+                        O2["Remote Site<br/>Cloudflare One Appliance<br/>(formerly Magic WAN Connector)"]:::onrampOffice
                     end
 
                     %% Central Cloudflare Node
-                    CF["☁️ Cloudflare<br/>Global Network"]:::cloudflare
+                    CF["Cloudflare<br/>Global Network"]:::cloudflare
 
                     %% Public Internet & SaaS Nodes
-                    PI["🌐 Public Internet"]:::internet
-                    SaaS["💼 SaaS Applications<br/>Microsoft 365, Salesforce, etc."]:::saas
+                    PI["Public Internet"]:::internet
+                    SaaS["SaaS Applications<br/>Microsoft 365, Salesforce, etc."]:::saas
 
                     %% Subgraph for Off-Ramps (Right Side)
                     subgraph OffRamps["Off-Ramps"]
                         direction TB
-                        D1["🖥️ Private Resources<br/>via Cloudflare Tunnel"]:::offrampTunnel
-                        D2["🖥️ Private Resources<br/>via WARP Connector"]:::offrampWarp
-                        D3["🖥️ Data Centers<br/>via Magic WAN"]:::offrampIPSec
-                        D4["🖥️ Cloud/Data Centers<br/>via Direct Connect"]:::offrampCNI
+                        D1["Private Resources<br/>(via Cloudflare Tunnel)"]:::offrampTunnel
+                        D2["Private Resources<br/>(via WARP Connector)"]:::offrampWarp
+                        D3["Data Centers<br/>(via Cloudflare WAN)"]:::offrampIPSec
+                        D4["Cloud Providers<br/>(via Multi-Cloud Networking)"]:::cloud
                     end
 
                     %% Connections with labels
-                    U1 --->|"WireGuard / MASQUE"| CF
+                    U1 --->|"MASQUE / WireGuard"| CF
                     U2 --->|"HTTPS / PAC / DoH / DoT /<br/>mTLS / Clientless RBI"| CF
-                    O1 --->|"IPSec / GRE /<br/>DoH / DoT / Clientless RBI"| CF
-                    O2 --->|"Anycast IPSec/GRE Tunnels"| CF
+                    O1 --->|"Anycast IPsec / GRE /<br/>DoH / DoT / Clientless RBI"| CF
+                    O2 --->|"Anycast IPsec"| CF
                     CF -->|"HTTPS"| PI
                     CF -->|"SAML / OIDC / SCIM / API"| SaaS
-                    CF <-->|"cloudflared (QUIC)"| D1
-                    CF <===>|"WireGuard / MASQUE"| D2
-                    CF <===>|"Anycast IPSec/GRE Tunnels"| D3
-                    CF <===>|"CNI Peering"| D4
+                    CF <-->|"cloudflared (QUIC / HTTP/2)"| D1
+                    CF <===>|"MASQUE / WireGuard"| D2
+                    CF <===>|"Anycast IPsec / GRE /<br/>CNI (Direct / Partner)"| D3
+                    CF <===>|"Anycast IPsec / GRE /<br/>CNI (Partner / Cloud)"| D4
 
                     %% Add styles to connections
                     linkStyle 0 stroke:#3B82F6,stroke-width:2px;
@@ -85,7 +86,7 @@
                     linkStyle 6 stroke:#8B5CF6,stroke-width:2px;
                     linkStyle 7 stroke:#EC4899,stroke-width:3px;
                     linkStyle 8 stroke:#F97316,stroke-width:3px;
-                    linkStyle 9 stroke:#6366F1,stroke-width:3px;
+                    linkStyle 9 stroke:#22C55E,stroke-width:3px;
                 </div>
             </div>
             <details class="color-legend-details">
@@ -113,7 +114,7 @@
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #EDE9FE"></div>
-                        <span>Tunnel Off-Ramps</span>
+                        <span>Cloudflare Tunnel</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #FCE7F3"></div>
@@ -121,11 +122,11 @@
                     </div>
                     <div class="legend-item">
                         <div class="legend-color" style="background-color: #FED7AA"></div>
-                        <span>Magic WAN (IPSec/GRE)</span>
+                        <span>Data Centers</span>
                     </div>
                     <div class="legend-item">
-                        <div class="legend-color" style="background-color: #E0E7FF"></div>
-                        <span>CNI Peering</span>
+                        <div class="legend-color" style="background-color: #DCFCE7"></div>
+                        <span>Cloud Providers</span>
                     </div>
                 </div>
             </details>
@@ -222,21 +223,39 @@
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/" target="_blank">Clientless RBI</a></td>
-                            <td>✅<br><span class="note">On-ramp via GRE or IPSec Tunnel</span></td>
-                            <td>🟡<br><span class="note">Non-identity via PAC, GRE or IPSec</span></td>
+                            <td>✅<br><span class="note">On-ramp via GRE or IPsec Tunnel</span></td>
+                            <td>🟡<br><span class="note">Non-identity via PAC, GRE or IPsec</span></td>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <td><a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a></td>
-                            <td>✅<br><span class="note">GRE/IPSec Tunnel</span></td>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a> (formerly Magic WAN)</td>
+                            <td>✅<br><span class="note">Anycast IPsec/GRE Tunnels</span></td>
                             <td>-</td>
                             <td>✅<br><span class="note">Layer 3 routing</span></td>
                         </tr>
                         <tr>
-                            <td><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Network Interconnect (CNI)</a></td>
-                            <td>✅<br><span class="note">Direct peering</span></td>
+                            <td><a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a> (formerly Magic Cloud Networking)</td>
+                            <td>✅<br><span class="note">AWS / Azure / GCP VPCs</span></td>
                             <td>-</td>
-                            <td>✅<br><span class="note">IP Routing</span></td>
+                            <td>✅<br><span class="note">IPsec via Cloud VPN</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a> (formerly Magic WAN)</td>
+                            <td>✅<br><span class="note">Anycast IPSec/GRE Tunnels</span></td>
+                            <td>-</td>
+                            <td>✅<br><span class="note">Layer 3 routing</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a> (formerly Magic Cloud Networking)</td>
+                            <td>✅<br><span class="note">AWS / Azure / GCP VPCs</span></td>
+                            <td>-</td>
+                            <td>✅<br><span class="note">IPSec via Cloud VPN</span></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Cloudflare Network Interconnect (CNI)</a></td>
+                            <td>✅<br><span class="note">Direct / Partner / Cloud</span></td>
+                            <td>-</td>
+                            <td>✅<br><span class="note">BGP / Private Peering</span></td>
                         </tr>
                         <tr>
                             <td><a href="https://developers.cloudflare.com/learning-paths/mtls/concepts/mtls-cloudflare/" target="_blank">Mutual TLS (mTLS)</a></td>
@@ -267,14 +286,16 @@
             </div>
 
             <div class="notes">
-                <p><em>Last updated: February 2026</em></p>
+                <p><em>Last updated: March 2026</em></p>
                 <p class="important-note"><strong>Key Notes:</strong></p>
                 <ul>
+                    <li><strong>Product name updates (Feb 2026):</strong> Magic WAN &rarr; <a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a>, Magic WAN Connector &rarr; <a href="https://developers.cloudflare.com/cloudflare-wan/configuration/appliance/" target="_blank">Cloudflare One Appliance</a>, Magic Cloud Networking &rarr; <a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a>, Magic Firewall &rarr; Cloudflare Network Firewall, Magic Network Monitoring &rarr; Network Flow.</li>
                     <li><a href="https://developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/" target="_blank">Proxy Endpoints (PAC files)</a> now support <strong>Authorization endpoints</strong> for identity-based policies.</li>
                     <li><a href="https://developers.cloudflare.com/ssl/post-quantum-cryptography/" target="_blank">Post-Quantum Cryptography (PQC)</a> is supported across the platform.</li>
                     <li><a href="https://developers.cloudflare.com/cloudflare-one/policies/gateway/identity-selectors/" target="_blank">Identity-based policies</a> provide user-level control over access and security rules.</li>
                     <li>mTLS and Service Tokens are used for service-to-service authentication and API security.</li>
-                    <li><a href="https://developers.cloudflare.com/magic-wan/reference/tunnels/" target="_blank">IPSec/GRE Tunnels</a> and CNI require <a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a> or <a href="https://developers.cloudflare.com/magic-transit/" target="_blank">Magic Transit</a>.</li>
+                    <li><a href="https://developers.cloudflare.com/cloudflare-wan/reference/gre-ipsec-tunnels/" target="_blank">Anycast IPsec/GRE Tunnels</a> connect data centers and branch offices; <a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a> automates IPsec tunnels to AWS, Azure, and GCP VPCs.</li>
+                    <li><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">CNI</a> supports Direct Interconnect (physical cross-connect), Partner Interconnect (Megaport, Equinix), and Cloud Interconnect (AWS Direct Connect, Azure ExpressRoute, GCP Cloud Interconnect).</li>
                     <li><a href="https://developers.cloudflare.com/network-interconnect/pni-and-peering/" target="_blank">Public Peering or PNI</a> follows Cloudflare's open peering policy.</li>
                 </ul>
             </div>

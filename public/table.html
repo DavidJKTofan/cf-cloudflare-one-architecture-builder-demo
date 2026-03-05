@@ -22,11 +22,11 @@
         <div class="matrix-container">
             <div class="stats-bar">
                 <div class="stat-item">
-                    <div class="stat-number" id="totalOptions">17</div>
+                    <div class="stat-number" id="totalOptions">20</div>
                     <div class="stat-label">Total Options</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="filteredOptions">17</div>
+                    <div class="stat-number" id="filteredOptions">20</div>
                     <div class="stat-label">Showing</div>
                 </div>
                 <div class="stat-item">
@@ -34,7 +34,7 @@
                     <div class="stat-label">Connection Types</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number">4</div>
+                    <div class="stat-number">5</div>
                     <div class="stat-label">Use Cases</div>
                 </div>
             </div>
@@ -270,8 +270,8 @@
                                 <a href="https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/" target="_blank">Clientless RBI</a>
                                 <div class="requirements">Browser isolation deployment</div>
                             </td>
-                            <td class="support-indicator support-full">✅<span class="note">On-ramp via GRE or IPSec Tunnel</span></td>
-                            <td class="support-indicator support-limited">🟡<span class="note">Non-identity via PAC, GRE or IPSec Tunnel</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">On-ramp via GRE or IPsec Tunnel</span></td>
+                            <td class="support-indicator support-limited">🟡<span class="note">Non-identity via PAC, GRE or IPsec Tunnel</span></td>
                             <td class="support-indicator support-none">—</td>
                             <td>
                                 <div class="use-case-tags">
@@ -320,11 +320,11 @@
                         <tr data-category="network" data-complexity="medium" data-use-case="datacenter,cloud">
                             <td class="connectivity-option">
                                 <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/warp-connector/" target="_blank">WARP Connector</a>
-                                <div class="requirements">Site-to-site, bidirectional, and mesh networking connectivity</div>
+                                <div class="requirements">Site-to-site, bidirectional, and mesh networking connectivity (beta)</div>
                             </td>
-                            <td class="support-indicator support-full">✅</td>
+                            <td class="support-indicator support-full">✅<span class="note">Layer 3 routing</span></td>
                             <td class="support-indicator support-none">—</td>
-                            <td class="support-indicator support-full">✅</td>
+                            <td class="support-indicator support-full">✅<span class="note">Bidirectional</span></td>
                             <td>
                                 <div class="use-case-tags">
                                     <span class="use-case-tag datacenter">Data Centers</span>
@@ -334,19 +334,43 @@
                             </td>
                             <td>
                                 <div class="protocol-badges">
+                                    <span class="protocol-badge">MASQUE</span>
                                     <span class="protocol-badge">WireGuard</span>
                                     <span class="protocol-badge">IP Routing</span>
-                                    <span class="protocol-badge">Private Networks</span>
+                                    <span class="protocol-badge">Source IP Preservation</span>
                                     <span class="protocol-badge">Layer 3</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="network" data-complexity="medium" data-use-case="office">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/cloudflare-wan/configuration/appliance/" target="_blank">Cloudflare One Appliance</a>
+                                <div class="requirements">Formerly Magic WAN Connector - Zero-touch SD-WAN appliance</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">IPsec Tunnels</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">Bidirectional</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">Automated IPsec</span>
+                                    <span class="protocol-badge">Zero-Touch Provisioning</span>
+                                    <span class="protocol-badge">Traffic Steering</span>
+                                    <span class="protocol-badge">High Availability</span>
+                                    <span class="protocol-badge">Hardware / Virtual</span>
                                 </div>
                             </td>
                         </tr>
                         <tr data-category="network" data-complexity="high" data-use-case="datacenter,office">
                             <td class="connectivity-option">
-                                <a href="https://developers.cloudflare.com/magic-wan/" target="_blank">Magic WAN</a>
-                                <div class="requirements">Enterprise network infrastructure</div>
+                                <a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a>
+                                <div class="requirements">Formerly Magic WAN - Enterprise network infrastructure</div>
                             </td>
-                            <td class="support-indicator support-full">✅<span class="note">Connection via GRE or IPSec Tunnel</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">Anycast IPsec/GRE Tunnels</span></td>
                             <td class="support-indicator support-none">—</td>
                             <td class="support-indicator support-full">✅</td>
                             <td>
@@ -357,31 +381,57 @@
                             </td>
                             <td>
                                 <div class="protocol-badges">
-                                    <span class="protocol-badge">IPSec</span>
-                                    <span class="protocol-badge">GRE</span>
+                                    <span class="protocol-badge">Anycast IPsec</span>
+                                    <span class="protocol-badge">Anycast GRE</span>
                                     <span class="protocol-badge">SD-WAN</span>
-                                    <span class="protocol-badge">(NGFW) Network Filtering</span>
+                                    <span class="protocol-badge">Cloudflare Network Firewall</span>
                                     <span class="protocol-badge">Traffic Steering</span>
                                     <span class="protocol-badge">IP Routing</span>
                                 </div>
                             </td>
                         </tr>
-                        <tr data-category="network" data-complexity="high" data-use-case="datacenter">
+                        <tr data-category="network" data-complexity="medium" data-use-case="cloud">
                             <td class="connectivity-option">
-                                <a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Network Interconnect (CNI)</a>
-                                <div class="requirements">Physical network connections</div>
+                                <a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a>
+                                <div class="requirements">Formerly Magic Cloud Networking - Orchestrates cloud-native VPN to Cloudflare WAN</div>
                             </td>
-                            <td class="support-indicator support-full">✅<span class="note">Direct peering</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">AWS / Azure / GCP VPCs</span></td>
                             <td class="support-indicator support-none">—</td>
-                            <td class="support-indicator support-full">✅<span class="note">IP Routing</span></td>
+                            <td class="support-indicator support-full">✅<span class="note">IPsec via Cloud VPN</span></td>
                             <td>
                                 <div class="use-case-tags">
-                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag cloud">Cloud Resources</span>
                                 </div>
                             </td>
                             <td>
                                 <div class="protocol-badges">
-                                    <span class="protocol-badge">Direct Connect / Peering</span>
+                                    <span class="protocol-badge">IPsec (IKEv2)</span>
+                                    <span class="protocol-badge">AWS VPN Gateway</span>
+                                    <span class="protocol-badge">Azure VPN Gateway</span>
+                                    <span class="protocol-badge">GCP Cloud VPN</span>
+                                    <span class="protocol-badge">AWS Transit Gateway</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-category="network" data-complexity="high" data-use-case="datacenter,cloud">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Cloudflare Network Interconnect (CNI)</a>
+                                <div class="requirements">Private dedicated connections</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Direct / Partner / Cloud</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">BGP / Private Peering</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag cloud">Cloud Resources</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">Direct Interconnect</span>
+                                    <span class="protocol-badge">Partner Interconnect</span>
+                                    <span class="protocol-badge">Cloud Interconnect</span>
                                     <span class="protocol-badge">BGP</span>
                                     <span class="protocol-badge">High Bandwidth</span>
                                 </div>
