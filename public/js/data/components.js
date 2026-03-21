@@ -75,7 +75,7 @@ window.App.COMPONENTS = {
         label: "Remote Worker",
         category: "users",
         desc: "Employee working from home or while traveling. Deploy the Cloudflare One Client for full device security, or use agentless options (RBI, PAC, DNS) for lighter deployments.",
-        compatibleConnectors: ["warp-client", "clientless-rbi", "proxy-endpoint", "dns-location"],
+        compatibleConnectors: ["warp-client", "clientless-rbi", "proxy-endpoint", "dns-location", "mtls"],
         color: "#3B82F6",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M2 12h3m14 0h3" stroke-dasharray="2 2"/></svg>',
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/"
@@ -84,7 +84,7 @@ window.App.COMPONENTS = {
         label: "Office Worker",
         category: "users",
         desc: "On-site corporate employee with a managed device. Use the Cloudflare One Client for full protection, or agentless options (RBI, PAC, DNS) for the office network.",
-        compatibleConnectors: ["warp-client", "clientless-rbi", "proxy-endpoint", "dns-location"],
+        compatibleConnectors: ["warp-client", "clientless-rbi", "proxy-endpoint", "dns-location", "mtls"],
         color: "#8B5CF6",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><rect x="8" y="18" width="8" height="3" rx="1" opacity="0.3"/></svg>',
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/"
@@ -93,7 +93,7 @@ window.App.COMPONENTS = {
         label: "Contractor / BYOD",
         category: "users",
         desc: "Third-party contractor or employee with an unmanaged personal device. Clientless Web Isolation provides secure access without installing any software.",
-        compatibleConnectors: ["clientless-rbi", "proxy-endpoint", "dns-location", "warp-client"],
+        compatibleConnectors: ["clientless-rbi", "proxy-endpoint", "dns-location", "warp-client", "mtls"],
         color: "#EC4899",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M15 3l2 2-2 2" opacity="0.6"/></svg>',
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/"
@@ -102,7 +102,7 @@ window.App.COMPONENTS = {
         label: "IoT / Devices",
         category: "users",
         desc: "IP phones, cameras, sensors, and devices that cannot run agents. Use WARP Connector or Cloudflare Tunnel on a gateway host; DNS/PAC for basic filtering.",
-        compatibleConnectors: ["warp-connector", "cloudflare-tunnel", "dns-location", "proxy-endpoint"],
+        compatibleConnectors: ["warp-connector", "cloudflare-tunnel", "dns-location", "proxy-endpoint", "mtls"],
         color: "#EAB308",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/><circle cx="12" cy="10" r="2" stroke-dasharray="2 1"/></svg>',
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/"

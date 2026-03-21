@@ -15,7 +15,7 @@ window.App = window.App || {};
 window.App.CONNECTORS = {
     "cloudflare-tunnel": {
         name: "Cloudflare Tunnel",
-        protocol: "HTTP/2, QUIC",
+        protocol: "QUIC, HTTP/2",
         direction: "Off-ramp only",
         color: "#7C3AED",
         desc: "Outbound-only connections via cloudflared. Exposes web apps, SSH, and RDP without public IPs or firewall changes. Client IP available via CF-Connecting-IP header.",
@@ -116,5 +116,13 @@ window.App.CONNECTORS = {
         color: "#C084FC",
         desc: "API-driven scan of SaaS app configurations. Detects misconfigurations, overshared files, shadow IT, and third-party app OAuth grants at rest. No inline traffic required.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/applications/scan-apps/"
+    },
+    "mtls": {
+        name: "Mutual TLS (mTLS)",
+        protocol: "TLS client certificates",
+        direction: "Application-level",
+        color: "#64748B",
+        desc: "Certificate-based authentication for devices and services that cannot use an IdP. Also a second factor for users alongside SSO. Requires uploading a root CA to Access.",
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/"
     }
 };
