@@ -8,8 +8,8 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 
 - **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices)
 - **13 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-wan/zero-trust/connectivity-options/): Cloudflare Tunnel, WARP Client, WARP Connector, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Appliance, Access SSO, CASB API
-- **Quick Start Templates** for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Clientless Contractor Access
-- **Full SASE button** that populates all 9 element types with relevant connections
+- **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Clientless Contractor Access
+- **Full SASE button** that populates all 9 element types with relevant connections to reach 100%
 - **Per-element remove** via X button on hover
 - **Detail panel** showing compatible connectors, active connections, and documentation links to Cloudflare Developer Docs
 - **Gamification** with progress tracking and 9 achievements
@@ -20,37 +20,58 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 ```
 .
 ├── src/
-│   └── index.ts              # Cloudflare Worker entry point (serves static assets with security headers)
+│   └── index.ts                    # Cloudflare Worker (serves assets + security headers)
 ├── public/
-│   ├── index.html            # Single-page application shell
+│   ├── index.html                  # Single-page application shell
 │   ├── css/
-│   │   └── app.css           # All styles (dark theme, blueprint grid, animations)
+│   │   └── app.css                 # Styles (dark theme, blueprint grid, animations)
 │   └── js/
-│       └── app.js            # Application logic (state, rendering, drag-drop, templates)
-├── wrangler.jsonc            # Wrangler configuration (assets binding, observability)
-├── tsconfig.json             # TypeScript configuration
-├── worker-configuration.d.ts # Auto-generated types from `wrangler types`
+│       ├── app.js                  # Entry point — thin orchestrator, renderAll, init
+│       ├── data/
+│       │   ├── components.js       # Component definitions (infra + user elements)
+│       │   ├── connectors.js       # Connector definitions (13 connectivity options)
+│       │   ├── templates.js        # Use case templates (VPN replacement, etc.)
+│       │   └── achievements.js     # Achievement definitions (9 milestones)
+│       ├── engine/
+│       │   ├── state.js            # State object + mutations (add/remove/reset)
+│       │   ├── connections.js      # SVG connection line rendering (Bezier curves)
+│       │   └── progress.js         # Progress bar + achievement checking
+│       ├── ui/
+│       │   ├── toast.js            # Toast notification system
+│       │   ├── drag-drop.js        # Drag-and-drop from sidebar to canvas
+│       │   ├── sidebar.js          # Sidebar clicks, connector buttons, templates
+│       │   ├── detail-panel.js     # Right panel (info, docs, connections)
+│       │   ├── canvas.js           # Placed elements rendering + in-canvas drag
+│       │   └── onboarding.js       # Onboarding overlay
+│       └── presets/
+│           └── full-sase.js        # Full SASE architecture preset
+├── wrangler.jsonc                  # Wrangler config (assets binding, observability)
+├── tsconfig.json                   # TypeScript configuration
+├── worker-configuration.d.ts       # Auto-generated types from `wrangler types`
 └── package.json
 ```
 
 ## Architecture
 
+### Modular Frontend
+
+The frontend is vanilla JavaScript with **no build step**. Modules communicate via a shared `window.App` namespace. Each file registers its exports on `window.App` and reads dependencies from it. Script load order in `index.html` ensures dependencies are available.
+
+| Layer | Files | Responsibility |
+|---|---|---|
+| **Data** | `data/*.js` | Pure data objects — components, connectors, templates, achievements. No DOM access. Edit these to add/remove/modify content. |
+| **Engine** | `engine/*.js` | State management, SVG rendering, progress tracking. Core logic with no setup/event binding. |
+| **UI** | `ui/*.js` | DOM event handlers, rendering functions. Each file owns one UI concern (drag-drop, sidebar, detail panel, canvas, toasts, onboarding). |
+| **Presets** | `presets/*.js` | Predefined architecture layouts (Full SASE). Add new preset files here. |
+| **App** | `app.js` | Thin orchestrator — defines `renderAll()`, wires up reset/deselect, calls all `setup*()` functions on `DOMContentLoaded`. |
+
 ### Worker (`src/index.ts`)
 
 Minimal TypeScript Worker that serves static assets via the `ASSETS` binding and adds security headers (`CSP`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`). Uses `satisfies ExportedHandler<Env>` with the generated `Env` type.
 
-### Frontend (`public/`)
-
-Vanilla JavaScript with no build step. All state lives in a single `state` object. The canvas uses absolute-positioned DOM elements for components and an SVG overlay for connection lines (quadratic Bezier curves with perpendicular spread for multi-connection elements).
-
-Key data structures:
-- **`COMPONENTS`** — metadata for each placeable element (label, category, compatible connectors, icon SVG, docs URL)
-- **`CONNECTORS`** — metadata for each connectivity option (name, protocol, direction, color, docs URL)
-- **`TEMPLATES`** — predefined architectures with element positions and connection mappings
-
 ### Connection Line Rendering
 
-Lines are drawn as SVG `<path>` elements using quadratic Bezier curves (`Q` command). Each line runs from the component position to the nearest point on the Cloudflare network circle edge (computed via unit vector * radius). When multiple connections originate from the same element, a perpendicular spread offset fans them apart.
+Lines are drawn as SVG `<path>` elements using quadratic Bezier curves (`Q` command). Each line runs from the component position to the nearest point on the Cloudflare network circle edge (computed via unit vector * radius). When multiple connections originate from the same element, a perpendicular spread offset fans them apart so all lines remain visible.
 
 ## Development
 
@@ -61,6 +82,30 @@ npm run check      # TypeScript type-check
 npm run types      # Regenerate Env types from wrangler.jsonc
 npm run deploy     # Deploy to Cloudflare Workers
 ```
+
+### Adding a New Component
+
+1. Add an entry to `public/js/data/components.js`
+2. Add a sidebar button in `public/index.html` (section 1 or 2)
+3. Optionally update templates in `public/js/data/templates.js`
+
+### Adding a New Connector
+
+1. Add an entry to `public/js/data/connectors.js`
+2. Add a sidebar button in `public/index.html` (section 3)
+3. Add a CSS variable in `public/css/app.css` (`:root` block)
+4. Add the connector key to relevant components' `compatibleConnectors` arrays
+
+### Adding a New Template
+
+1. Add an entry to `public/js/data/templates.js`
+2. Add a button in `public/index.html` (inside `#templatesGroup`)
+
+### Adding a New Preset
+
+1. Create a new file in `public/js/presets/`
+2. Add a `<script>` tag in `index.html` (before `app.js`)
+3. Wire up the button in `app.js` or in the preset file itself
 
 ## Connectivity Options Reference
 
@@ -81,6 +126,8 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 | Appliance | IPsec | Bidirectional | Zero-touch branch deployment |
 | Access SSO | SAML, OIDC | App-level | SaaS identity-aware authentication |
 | CASB API | REST API | App-level | SaaS misconfiguration scanning |
+
+* * * *
 
 ## Disclaimer
 

@@ -1,0 +1,78 @@
+/**
+ * Full SASE preset — populates the canvas with all element types
+ * and best-practice connections to showcase a complete architecture.
+ */
+
+"use strict";
+
+window.App = window.App || {};
+
+window.App.setupFullSase = function setupFullSase() {
+    document.getElementById("btnFullSase").addEventListener("click", () => {
+        window.App.applyFullSase();
+    });
+};
+
+window.App.applyFullSase = function applyFullSase() {
+    const { state, renderAll, checkAchievements, showToast } = window.App;
+
+    // Full reset
+    state.elements = [];
+    state.connections = [];
+    state.selectedElementId = null;
+    state.unlockedAchievements.clear();
+    state.idCounter = 0;
+    document.getElementById("placedElements").innerHTML = "";
+    document.getElementById("connectionsLayer").innerHTML = "";
+    document.getElementById("onboarding").classList.add("hidden");
+
+    const canvas = document.getElementById("canvasContainer");
+    const rect = canvas.getBoundingClientRect();
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+
+    // Layout: 4 user types on the left, 5 infra on the right
+    const leftTypes  = ["remote-user", "office-user", "contractor", "iot"];
+    const rightTypes = ["datacenter", "aws", "azure", "saas", "branch"];
+    const leftSpacing = (rect.height * 0.7) / (leftTypes.length - 1 || 1);
+    const rightSpacing = (rect.height * 0.7) / (rightTypes.length - 1 || 1);
+    const leftStartY = cy - (leftTypes.length - 1) * leftSpacing / 2;
+    const rightStartY = cy - (rightTypes.length - 1) * rightSpacing / 2;
+    const leftX = cx * 0.32;
+    const rightX = cx * 1.64;
+
+    leftTypes.forEach((type, i) => {
+        const id = "el-" + (++state.idCounter);
+        state.elements.push({ id, type, x: leftX, y: leftStartY + i * leftSpacing });
+    });
+    rightTypes.forEach((type, i) => {
+        const id = "el-" + (++state.idCounter);
+        state.elements.push({ id, type, x: rightX, y: rightStartY + i * rightSpacing });
+    });
+
+    // Best-practice connections
+    const connMap = [
+        [0, "warp-client"],       // Remote Worker -> WARP Client
+        [1, "warp-client"],       // Office Worker -> WARP Client
+        [2, "clientless-rbi"],    // Contractor -> Clientless RBI
+        [2, "proxy-endpoint"],    // Contractor -> Proxy Endpoint
+        [3, "warp-connector"],    // IoT -> WARP Connector
+        [3, "dns-location"],      // IoT -> DNS Location
+        [4, "cloudflare-tunnel"], // Data Center -> Tunnel
+        [4, "ipsec-tunnel"],      // Data Center -> IPsec
+        [5, "multi-cloud"],       // AWS -> Multi-Cloud Networking
+        [6, "multi-cloud"],       // Azure -> Multi-Cloud Networking
+        [7, "access-saas"],       // SaaS -> Access SSO
+        [7, "casb-api"],          // SaaS -> CASB API
+        [8, "appliance"],         // Branch -> Appliance
+    ];
+    connMap.forEach(([idx, connector]) => {
+        const elId = state.elements[idx]?.id;
+        if (!elId) return;
+        state.connections.push({ id: "conn-" + (++state.idCounter), elementId: elId, connector });
+    });
+
+    renderAll();
+    checkAchievements();
+    showToast("Full SASE Architecture loaded", "template");
+};

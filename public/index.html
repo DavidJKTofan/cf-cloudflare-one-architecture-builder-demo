@@ -182,7 +182,7 @@
                         <button class="connector-btn" data-connector="warp-connector" disabled>
                             <span class="connector-dot" style="--dot-color: #E844A0"></span>
                             <span>WARP Connector</span>
-                            <span class="connector-tag tag-beta">Bidirectional</span>
+                            <span class="connector-tag">Bidirectional</span>
                         </button>
                         <button class="connector-btn" data-connector="ipsec-tunnel" disabled>
                             <span class="connector-dot" style="--dot-color: #F97316"></span>
@@ -326,6 +326,29 @@
         <div class="toast-container" id="toastContainer"></div>
     </div>
 
+    <!-- Data modules (no dependencies) -->
+    <script src="js/data/components.js"></script>
+    <script src="js/data/connectors.js"></script>
+    <script src="js/data/templates.js"></script>
+    <script src="js/data/achievements.js"></script>
+
+    <!-- Engine modules (depend on data) -->
+    <script src="js/engine/state.js"></script>
+    <script src="js/engine/connections.js"></script>
+    <script src="js/engine/progress.js"></script>
+
+    <!-- UI modules (depend on data + engine) -->
+    <script src="js/ui/toast.js"></script>
+    <script src="js/ui/drag-drop.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/ui/detail-panel.js"></script>
+    <script src="js/ui/canvas.js"></script>
+    <script src="js/ui/onboarding.js"></script>
+
+    <!-- Presets (depend on engine + ui) -->
+    <script src="js/presets/full-sase.js"></script>
+
+    <!-- App entry point (orchestrator) -->
     <script src="js/app.js"></script>
 </body>
 </html>
