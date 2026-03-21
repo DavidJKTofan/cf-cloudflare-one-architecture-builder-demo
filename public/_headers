@@ -1,0 +1,37 @@
+# https://developers.cloudflare.com/workers/static-assets/headers/
+
+# All pages
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+# HTML — short cache, revalidate
+/*.html
+  Cache-Control: public, max-age=300, must-revalidate
+
+/
+  Cache-Control: public, max-age=300, must-revalidate
+
+# CSS and JS — versioned by content, cache longer
+/css/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+/js/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# Favicons and manifest — long cache
+/favicon.*
+  Cache-Control: public, max-age=604800, immutable
+
+/site.webmanifest
+  Cache-Control: public, max-age=604800, immutable
+
+# Thumbnail / OG image
+/thumbnail.png
+  Cache-Control: public, max-age=604800, immutable
+
+# robots.txt
+/robots.txt
+  Cache-Control: public, max-age=86400

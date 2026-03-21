@@ -3,12 +3,12 @@
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const securityHeaders: Record<string, string> = {
-			'Cache-Control': 'public, max-age=3600',
 			'Content-Security-Policy':
-				"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self';",
+				"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; manifest-src 'self';",
 			'X-Content-Type-Options': 'nosniff',
 			'X-Frame-Options': 'DENY',
 			'Referrer-Policy': 'strict-origin-when-cross-origin',
+			'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 		};
 
 		if (request.method !== 'GET') {

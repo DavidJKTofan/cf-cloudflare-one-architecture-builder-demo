@@ -3,14 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloudflare One Architecture Walkthrough</title>
-    <meta name="description" content="Interactive visual walkthrough of Cloudflare One SASE and Zero Trust architecture. Build your connectivity architecture step by step.">
+    <title>Cloudflare One Architecture Builder — Interactive SASE Walkthrough</title>
+    <meta name="description" content="Interactive visual walkthrough to build a Cloudflare One SASE and Zero Trust architecture. Drag-and-drop infrastructure and users, then connect them through Cloudflare's global network.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://connectivity.automatic-demo.com/">
+
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#0C0F14">
+    <meta name="color-scheme" content="dark">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Cloudflare One Architecture Builder">
+    <meta property="og:description" content="Interactive visual walkthrough to build a Cloudflare One SASE and Zero Trust architecture. Drag-and-drop infrastructure and users, then connect them through Cloudflare's global network.">
+    <meta property="og:url" content="https://connectivity.automatic-demo.com/">
+    <meta property="og:image" content="https://connectivity.automatic-demo.com/thumbnail.png">
+    <meta property="og:image:width" content="1280">
+    <meta property="og:image:height" content="720">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:site_name" content="Cloudflare One Architecture Builder">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cloudflare One Architecture Builder">
+    <meta name="twitter:description" content="Interactive visual walkthrough to build a Cloudflare One SASE and Zero Trust architecture.">
+    <meta name="twitter:image" content="https://connectivity.automatic-demo.com/thumbnail.png">
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Cloudflare">
+    <meta name="keywords" content="Cloudflare One, SASE, Zero Trust, architecture, walkthrough, WARP, Tunnel, IPsec, GRE, ZTNA, SWG, CASB, DLP, RBI">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+    <!-- Mobile viewport block — shown only on small screens -->
+    <div class="mobile-block" id="mobileBlock">
+        <div class="mobile-block-card">
+            <svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#F38020" stroke-width="2">
+                <rect x="6" y="4" width="36" height="40" rx="3"/>
+                <line x1="6" y1="36" x2="42" y2="36"/>
+                <circle cx="24" cy="40" r="1.5" fill="#F38020"/>
+                <path d="M18 18l6-6 6 6M18 26l6 6 6-6" opacity="0.4"/>
+            </svg>
+            <h2>Desktop Experience Required</h2>
+            <p>This interactive architecture builder is designed for desktop browsers and larger screens. Please open it on a laptop or desktop for the best experience.</p>
+            <a href="https://developers.cloudflare.com/cloudflare-one/" class="mobile-block-link">Visit Cloudflare One Docs Instead</a>
+        </div>
+    </div>
+
     <div id="app">
         <!-- Top bar -->
         <header class="topbar">
@@ -35,7 +90,11 @@
             <aside class="sidebar" id="sidebar">
                 <div class="sidebar-section">
                     <details class="templates-dropdown" id="templatesDropdown">
-                        <summary class="sidebar-heading templates-toggle">Quick Start Templates <span class="toggle-arrow">&#9662;</span></summary>
+                        <summary class="templates-toggle">
+                            <svg class="templates-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
+                            <span>Quick Start Templates</span>
+                            <span class="toggle-arrow">&#9662;</span>
+                        </summary>
                     <div class="templates-group" id="templatesGroup">
                         <button class="template-btn" data-template="vpn-replacement">
                             <span class="template-emoji">&#128274;</span>
@@ -238,7 +297,7 @@
                 </div>
 
                 <div class="sidebar-disclaimer">
-                    For educational and demonstration purposes only. Review <a href="https://developers.cloudflare.com/cloudflare-one/" target="_blank" rel="noopener">Cloudflare Developer Docs</a> for up-to-date and accurate content.
+                    For educational and demonstration purposes only. Review <a href="https://developers.cloudflare.com/cloudflare-one/" target="_blank" rel="noopener">Cloudflare Developer Docs</a> for up-to-date and accurate content. Open-sourced on <a href="https://github.com/DavidJKTofan/cf-cloudflare-one-architecture-builder-demo" target="_blank" rel="noopener">GitHub</a>
                 </div>
             </aside>
 
