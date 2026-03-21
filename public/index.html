@@ -3,315 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloudflare One Connectivity Diagram | SASE & Zero Trust</title>
-    <meta name="description" content="Visual guide to Cloudflare One connectivity options - on-ramps and off-ramps for SASE and Zero Trust deployments.">
+    <title>Cloudflare One Architecture Walkthrough</title>
+    <meta name="description" content="Interactive visual walkthrough of Cloudflare One SASE and Zero Trust architecture. Build your connectivity architecture step by step.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <span class="header-badge">SASE & Zero Trust</span>
-            <h1><span>Cloudflare One</span> Connectivity Diagram</h1>
-            <p class="header-subtitle">Visual guide to connectivity on-ramps and off-ramps</p>
-        </div>
-    </header>
-    <div class="container">
-        <section class="diagram-section">
-            <div class="diagram-header">
-                <h2>🔗 Connectivity Architecture Overview</h2>
+    <div id="app">
+        <!-- Top bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <svg class="cf-logo" viewBox="0 0 32 32" width="28" height="28"><path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2z" fill="#F38020"/><path d="M21.5 21.5h-11l-.5-1 5-9 .5-.5h1l.5.5 5 9-.5 1z" fill="#fff" opacity=".9"/></svg>
+                <h1>Cloudflare One <span class="accent">Architecture Builder</span></h1>
             </div>
-            <div class="diagram-container">
-                <div class="mermaid">
-                graph LR
-                    %% Define Node Styles with Different Colors
-                    classDef cloudflare fill:#F38020,stroke:#E56C0A,stroke-width:3px,color:#ffffff,font-weight:bold;
-                    classDef onrampUser fill:#DBEAFE,stroke:#3B82F6,stroke-width:2px,color:#1e40af;
-                    classDef onrampOffice fill:#D1FAE5,stroke:#10B981,stroke-width:2px,color:#065f46;
-                    classDef internet fill:#E0F2FE,stroke:#0EA5E9,stroke-width:2px,color:#0369a1;
-                    classDef saas fill:#FEF3C7,stroke:#F59E0B,stroke-width:2px,color:#92400e;
-                    classDef offrampTunnel fill:#EDE9FE,stroke:#8B5CF6,stroke-width:2px,color:#5b21b6;
-                    classDef offrampWarp fill:#FCE7F3,stroke:#EC4899,stroke-width:2px,color:#9d174d;
-                    classDef offrampIPSec fill:#FED7AA,stroke:#F97316,stroke-width:2px,color:#9a3412;
-                    classDef cloud fill:#DCFCE7,stroke:#22C55E,stroke-width:2px,color:#166534;
-                    classDef cni fill:#E0E7FF,stroke:#6366F1,stroke-width:2px,color:#3730a3;
-
-                    %% Subgraph for On-Ramps (Left Side)
-                    subgraph OnRamps["On-Ramps"]
-                        direction TB
-                        U1["Users with WARP Client"]:::onrampUser
-                        U2["Users without Client"]:::onrampUser
-                        O1["Branch Office<br/>Network Hardware"]:::onrampOffice
-                        O2["Remote Site<br/>Cloudflare One Appliance<br/>(formerly Magic WAN Connector)"]:::onrampOffice
-                    end
-
-                    %% Central Cloudflare Node
-                    CF["Cloudflare<br/>Global Network"]:::cloudflare
-
-                    %% Public Internet & SaaS Nodes
-                    PI["Public Internet"]:::internet
-                    SaaS["SaaS Applications<br/>Microsoft 365, Salesforce, etc."]:::saas
-
-                    %% Subgraph for Off-Ramps (Right Side)
-                    subgraph OffRamps["Off-Ramps"]
-                        direction TB
-                        D1["Private Resources<br/>(via Cloudflare Tunnel)"]:::offrampTunnel
-                        D2["Private Resources<br/>(via WARP Connector)"]:::offrampWarp
-                        D3["Data Centers<br/>(via Cloudflare WAN)"]:::offrampIPSec
-                        D4["Cloud Providers<br/>(via Multi-Cloud Networking)"]:::cloud
-                    end
-
-                    %% Connections with labels
-                    U1 --->|"MASQUE / WireGuard"| CF
-                    U2 --->|"HTTPS / PAC / DoH / DoT /<br/>mTLS / Clientless RBI"| CF
-                    O1 --->|"Anycast IPsec / GRE /<br/>DoH / DoT / Clientless RBI"| CF
-                    O2 --->|"Anycast IPsec"| CF
-                    CF -->|"HTTPS"| PI
-                    CF -->|"SAML / OIDC / SCIM / API"| SaaS
-                    CF <-->|"cloudflared (QUIC / HTTP/2)"| D1
-                    CF <===>|"MASQUE / WireGuard"| D2
-                    CF <===>|"Anycast IPsec / GRE /<br/>CNI (Direct / Partner)"| D3
-                    CF <===>|"Anycast IPsec / GRE /<br/>CNI (Partner / Cloud)"| D4
-
-                    %% Add styles to connections
-                    linkStyle 0 stroke:#3B82F6,stroke-width:2px;
-                    linkStyle 1 stroke:#3B82F6,stroke-width:2px;
-                    linkStyle 2 stroke:#10B981,stroke-width:2px;
-                    linkStyle 3 stroke:#10B981,stroke-width:2px;
-                    linkStyle 4 stroke:#0EA5E9,stroke-width:2px;
-                    linkStyle 5 stroke:#F59E0B,stroke-width:2px;
-                    linkStyle 6 stroke:#8B5CF6,stroke-width:2px;
-                    linkStyle 7 stroke:#EC4899,stroke-width:3px;
-                    linkStyle 8 stroke:#F97316,stroke-width:3px;
-                    linkStyle 9 stroke:#22C55E,stroke-width:3px;
+            <div class="topbar-right">
+                <div class="progress-pill" id="progressPill">
+                    <span class="progress-label">Progress</span>
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                    <span class="progress-pct" id="progressPct">0%</span>
                 </div>
+                <button class="btn btn-primary btn-sm" id="btnFullSase" title="Show full SASE architecture">Full SASE</button>
+                <button class="btn btn-ghost" id="btnReset" title="Reset architecture">Reset</button>
             </div>
-            <details class="color-legend-details">
-                <summary>View Color Legend</summary>
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #F38020"></div>
-                        <span>Cloudflare Network</span>
+        </header>
+
+        <!-- Main layout -->
+        <div class="main-layout">
+            <!-- Left: component palette -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-section">
+                    <details class="templates-dropdown" id="templatesDropdown">
+                        <summary class="sidebar-heading templates-toggle">Quick Start Templates <span class="toggle-arrow">&#9662;</span></summary>
+                    <div class="templates-group" id="templatesGroup">
+                        <button class="template-btn" data-template="vpn-replacement">
+                            <span class="template-emoji">&#128274;</span>
+                            <span class="template-text"><span class="template-name">Replace Your VPN</span><span class="template-sub">WARP + Tunnel for remote access</span></span>
+                        </button>
+                        <button class="template-btn" data-template="secure-internet">
+                            <span class="template-emoji">&#127760;</span>
+                            <span class="template-text"><span class="template-name">Secure Internet Traffic</span><span class="template-sub">SWG + DNS filtering for all users</span></span>
+                        </button>
+                        <button class="template-btn" data-template="cloud-first">
+                            <span class="template-emoji">&#9729;&#65039;</span>
+                            <span class="template-text"><span class="template-name">Multi-Cloud Connectivity</span><span class="template-sub">AWS + Azure via Multi-Cloud Networking</span></span>
+                        </button>
+                        <button class="template-btn" data-template="branch-sd-wan">
+                            <span class="template-emoji">&#127970;</span>
+                            <span class="template-text"><span class="template-name">Branch Office SD-WAN</span><span class="template-sub">Appliance + IPsec for branches</span></span>
+                        </button>
+                        <button class="template-btn" data-template="contractor-access">
+                            <span class="template-emoji">&#128100;</span>
+                            <span class="template-text"><span class="template-name">Clientless Contractor Access</span><span class="template-sub">RBI + Proxy for BYOD users</span></span>
+                        </button>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #DBEAFE"></div>
-                        <span>User On-Ramps</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #D1FAE5"></div>
-                        <span>Location On-Ramps</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #E0F2FE"></div>
-                        <span>Public Internet</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #FEF3C7"></div>
-                        <span>SaaS Applications</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #EDE9FE"></div>
-                        <span>Cloudflare Tunnel</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #FCE7F3"></div>
-                        <span>WARP Connector</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #FED7AA"></div>
-                        <span>Data Centers</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background-color: #DCFCE7"></div>
-                        <span>Cloud Providers</span>
+                    </details>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-heading">1. Your Infrastructure</h3>
+                    <p class="sidebar-hint">Start by placing your infrastructure origins</p>
+                    <div class="component-group" data-category="infrastructure">
+                        <button class="component-card" data-type="datacenter" draggable="true">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="6" rx="1"/><rect x="2" y="10" width="20" height="6" rx="1"/><circle cx="6" cy="5" r="1" fill="currentColor"/><circle cx="6" cy="13" r="1" fill="currentColor"/><line x1="17" y1="5" x2="20" y2="5"/><line x1="17" y1="13" x2="20" y2="13"/><rect x="2" y="18" width="20" height="4" rx="1" opacity="0.4"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">Data Center</span>
+                                <span class="card-desc">On-premises servers & apps</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="aws" draggable="true">
+                            <div class="card-icon cloud-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="6" fill="currentColor" stroke="none" font-weight="700">AWS</text></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">AWS VPC</span>
+                                <span class="card-desc">Amazon cloud workloads</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="gcp" draggable="true">
+                            <div class="card-icon cloud-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="5.5" fill="currentColor" stroke="none" font-weight="700">GCP</text></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">GCP VPC</span>
+                                <span class="card-desc">Google Cloud workloads</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="azure" draggable="true">
+                            <div class="card-icon cloud-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="4.8" fill="currentColor" stroke="none" font-weight="700">Azure</text></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">Azure VNet</span>
+                                <span class="card-desc">Microsoft Azure workloads</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="saas" draggable="true">
+                            <div class="card-icon saas-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="8" x2="21" y2="8"/><circle cx="6" cy="6" r="0.5" fill="currentColor"/><circle cx="8.5" cy="6" r="0.5" fill="currentColor"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="15" x2="13" y2="15"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">SaaS Apps</span>
+                                <span class="card-desc">M365, Salesforce, etc.</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="branch" draggable="true">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/><rect x="9" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/><rect x="9" y="13" width="2" height="2"/><rect x="13" y="13" width="2" height="2"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">Branch Office</span>
+                                <span class="card-desc">Physical office location</span>
+                            </div>
+                        </button>
                     </div>
                 </div>
-            </details>
-        </section>
 
-        <h2>Connectivity Options Reference</h2>
-        <div class="docs-links">
-            <h3>Understanding Connectivity</h3>
-            <p class="intro-text">Cloudflare One provides flexible connectivity options to connect <strong>locations (networks)</strong>, <strong>users (knowledge workers)</strong>, and <strong>applications (resources)</strong> to the global network.</p>
-            
-            <p>The table below outlines all available on-ramps and off-ramps:</p>
+                <div class="sidebar-section">
+                    <h3 class="sidebar-heading">2. Your Users</h3>
+                    <p class="sidebar-hint">Where are your users located?</p>
+                    <div class="component-group" data-category="users">
+                        <button class="component-card" data-type="remote-user" draggable="true">
+                            <div class="card-icon user-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M2 12h3m14 0h3" stroke-dasharray="2 2"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">Remote Worker</span>
+                                <span class="card-desc">Working from home / travel</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="office-user" draggable="true">
+                            <div class="card-icon user-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><rect x="8" y="18" width="8" height="3" rx="1" opacity="0.3"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">Office Worker</span>
+                                <span class="card-desc">On-site corporate user</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="contractor" draggable="true">
+                            <div class="card-icon user-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M15 3l2 2-2 2" opacity="0.6"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">Contractor / BYOD</span>
+                                <span class="card-desc">Unmanaged device user</span>
+                            </div>
+                        </button>
+                        <button class="component-card" data-type="iot" draggable="true">
+                            <div class="card-icon user-icon">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/><circle cx="12" cy="10" r="2" stroke-dasharray="2 1"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">IoT / Devices</span>
+                                <span class="card-desc">IP phones, cameras, sensors</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
 
-            <div class="legend-indicators">
-                <p><span class="indicator">🟡</span> <a href="https://developers.cloudflare.com/cloudflare-one/policies/gateway/identity-selectors/" target="_blank">Identity-based policies</a> not supported or restrictions apply (Users column)</p>
-                <p><span class="indicator">✅</span> Full support with identity-based policies</p>
-            </div>
+                <div class="sidebar-section">
+                    <h3 class="sidebar-heading">3. Connect with Cloudflare</h3>
+                    <p class="sidebar-hint">Click a placed element, then choose a connector</p>
+                    <div class="component-group connectors-group" data-category="connectors" id="connectorsPanel">
+                        <button class="connector-btn" data-connector="cloudflare-tunnel" disabled>
+                            <span class="connector-dot" style="--dot-color: #7C3AED"></span>
+                            <span>Cloudflare Tunnel</span>
+                            <span class="connector-tag">Off-ramp</span>
+                        </button>
+                        <button class="connector-btn" data-connector="warp-client" disabled>
+                            <span class="connector-dot" style="--dot-color: #3B82F6"></span>
+                            <span>WARP Client</span>
+                            <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="warp-connector" disabled>
+                            <span class="connector-dot" style="--dot-color: #E844A0"></span>
+                            <span>WARP Connector</span>
+                            <span class="connector-tag tag-beta">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="ipsec-tunnel" disabled>
+                            <span class="connector-dot" style="--dot-color: #F97316"></span>
+                            <span>IPsec Tunnel</span>
+                            <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="gre-tunnel" disabled>
+                            <span class="connector-dot" style="--dot-color: #FACC15"></span>
+                            <span>GRE Tunnel</span>
+                            <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="cni" disabled>
+                            <span class="connector-dot" style="--dot-color: #818CF8"></span>
+                            <span>Network Interconnect</span>
+                            <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="multi-cloud" disabled>
+                            <span class="connector-dot" style="--dot-color: #22C55E"></span>
+                            <span>Multi-Cloud Networking</span>
+                            <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="dns-location" disabled>
+                            <span class="connector-dot" style="--dot-color: #22D3EE"></span>
+                            <span>DNS Location</span>
+                            <span class="connector-tag">On-ramp</span>
+                        </button>
+                        <button class="connector-btn" data-connector="proxy-endpoint" disabled>
+                            <span class="connector-dot" style="--dot-color: #2DD4BF"></span>
+                            <span>Proxy Endpoint (PAC)</span>
+                            <span class="connector-tag">On-ramp</span>
+                        </button>
+                        <button class="connector-btn" data-connector="clientless-rbi" disabled>
+                            <span class="connector-dot" style="--dot-color: #FB923C"></span>
+                            <span>Clientless RBI</span>
+                            <span class="connector-tag">On-ramp</span>
+                        </button>
+                        <button class="connector-btn" data-connector="appliance" disabled>
+                            <span class="connector-dot" style="--dot-color: #F43F5E"></span>
+                            <span>CF One Appliance</span>
+                            <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="access-saas" disabled>
+                            <span class="connector-dot" style="--dot-color: #A78BFA"></span>
+                            <span>Access SSO (SAML/OIDC)</span>
+                            <span class="connector-tag">App-level</span>
+                        </button>
+                        <button class="connector-btn" data-connector="casb-api" disabled>
+                            <span class="connector-dot" style="--dot-color: #C084FC"></span>
+                            <span>CASB API Scan</span>
+                            <span class="connector-tag">App-level</span>
+                        </button>
+                    </div>
+                </div>
 
-            <div class="table-container">
-                <table class="connectivity-table">
-                    <thead>
-                        <tr>
-                            <th>Connectivity Option</th>
-                            <th>Locations<br>(Networks)</th>
-                            <th>Users</th>
-                            <th>Applications<br>(Resources)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/" target="_blank">WARP Client</a> (Default mode)</td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">Full identity-based policies</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh" target="_blank">WARP Client</a> (Gateway with DoH)</td>
-                            <td>-</td>
-                            <td>🟡<br><span class="note">DNS filtering only</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering" target="_blank">WARP Client</a> (Gateway without DNS)</td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">No DNS filtering</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode" target="_blank">WARP Client</a> (Proxy Mode)</td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">Proxy-based filtering</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#device-information-only" target="_blank">WARP Client</a> (Device Info Only)</td>
-                            <td>-</td>
-                            <td>🟡<br><span class="note">Device posture only</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/" target="_blank">DNS Resolver IPs</a></td>
-                            <td>✅<br><span class="note">Location-based DNS</span></td>
-                            <td>🟡<br><span class="note">Limited identity context</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/" target="_blank">DNS over HTTPS (DoH)</a></td>
-                            <td>✅<br><span class="note">Location-specific endpoints</span></td>
-                            <td>✅<br><span class="note">User-specific tokens</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/agentless/dns/dns-over-tls/" target="_blank">DNS over TLS (DoT)</a></td>
-                            <td>✅<br><span class="note">Location-specific endpoints</span></td>
-                            <td>🟡<br><span class="note">Limited identity</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/" target="_blank">Proxy Endpoint (PAC file)</a></td>
-                            <td>-</td>
-                            <td><span class="status-beta">✅ <span class="beta-badge">Beta</span></span><br><span class="note">Authorization endpoint</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/" target="_blank">Cloudflare Tunnel</a></td>
-                            <td>✅<br><span class="note">Private Networks</span></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">Private Networks & Public Hostnames</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/warp-connector/" target="_blank">WARP Connector</a></td>
-                            <td>✅<br><span class="note">Layer 3 routing</span></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">Layer 3 routing</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/setup/" target="_blank">Clientless RBI</a></td>
-                            <td>✅<br><span class="note">On-ramp via GRE or IPsec Tunnel</span></td>
-                            <td>🟡<br><span class="note">Non-identity via PAC, GRE or IPsec</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a> (formerly Magic WAN)</td>
-                            <td>✅<br><span class="note">Anycast IPsec/GRE Tunnels</span></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">Layer 3 routing</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a> (formerly Magic Cloud Networking)</td>
-                            <td>✅<br><span class="note">AWS / Azure / GCP VPCs</span></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">IPsec via Cloud VPN</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a> (formerly Magic WAN)</td>
-                            <td>✅<br><span class="note">Anycast IPSec/GRE Tunnels</span></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">Layer 3 routing</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a> (formerly Magic Cloud Networking)</td>
-                            <td>✅<br><span class="note">AWS / Azure / GCP VPCs</span></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">IPSec via Cloud VPN</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">Cloudflare Network Interconnect (CNI)</a></td>
-                            <td>✅<br><span class="note">Direct / Partner / Cloud</span></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">BGP / Private Peering</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/learning-paths/mtls/concepts/mtls-cloudflare/" target="_blank">Mutual TLS (mTLS)</a></td>
-                            <td>✅<br><span class="note">Network authentication</span></td>
-                            <td>🟡<br><span class="note">Service accounts</span></td>
-                            <td>✅<br><span class="note">API endpoints</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/" target="_blank">Service Tokens</a></td>
-                            <td>-</td>
-                            <td>🟡<br><span class="note">Service accounts</span></td>
-                            <td>✅<br><span class="note">API endpoints</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/identity/idp-integration/" target="_blank">Identity Provider (SAML/OIDC)</a></td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">SSO integration</span></td>
-                            <td>✅<br><span class="note">SaaS Applications</span></td>
-                        </tr>
-                        <tr>
-                            <td><a href="https://developers.cloudflare.com/cloudflare-one/applications/casb/" target="_blank">CASB (API Integration)</a></td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>✅<br><span class="note">SaaS applications</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div class="sidebar-disclaimer">
+                    For educational and demonstration purposes only. Review <a href="https://developers.cloudflare.com/cloudflare-one/" target="_blank" rel="noopener">Cloudflare Developer Docs</a> for up-to-date and accurate content.
+                </div>
+            </aside>
 
-            <div class="notes">
-                <p><em>Last updated: March 2026</em></p>
-                <p class="important-note"><strong>Key Notes:</strong></p>
-                <ul>
-                    <li><strong>Product name updates (Feb 2026):</strong> Magic WAN &rarr; <a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a>, Magic WAN Connector &rarr; <a href="https://developers.cloudflare.com/cloudflare-wan/configuration/appliance/" target="_blank">Cloudflare One Appliance</a>, Magic Cloud Networking &rarr; <a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a>, Magic Firewall &rarr; Cloudflare Network Firewall, Magic Network Monitoring &rarr; Network Flow.</li>
-                    <li><a href="https://developers.cloudflare.com/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/" target="_blank">Proxy Endpoints (PAC files)</a> now support <strong>Authorization endpoints</strong> for identity-based policies.</li>
-                    <li><a href="https://developers.cloudflare.com/ssl/post-quantum-cryptography/" target="_blank">Post-Quantum Cryptography (PQC)</a> is supported across the platform.</li>
-                    <li><a href="https://developers.cloudflare.com/cloudflare-one/policies/gateway/identity-selectors/" target="_blank">Identity-based policies</a> provide user-level control over access and security rules.</li>
-                    <li>mTLS and Service Tokens are used for service-to-service authentication and API security.</li>
-                    <li><a href="https://developers.cloudflare.com/cloudflare-wan/reference/gre-ipsec-tunnels/" target="_blank">Anycast IPsec/GRE Tunnels</a> connect data centers and branch offices; <a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a> automates IPsec tunnels to AWS, Azure, and GCP VPCs.</li>
-                    <li><a href="https://developers.cloudflare.com/network-interconnect/" target="_blank">CNI</a> supports Direct Interconnect (physical cross-connect), Partner Interconnect (Megaport, Equinix), and Cloud Interconnect (AWS Direct Connect, Azure ExpressRoute, GCP Cloud Interconnect).</li>
-                    <li><a href="https://developers.cloudflare.com/network-interconnect/pni-and-peering/" target="_blank">Public Peering or PNI</a> follows Cloudflare's open peering policy.</li>
-                </ul>
-            </div>
-            
-            <div class="detailed-view-button">
-                <a href="table.html" class="button table-link">
-                    <span>View Enhanced Table</span>
-                    <small>Includes categories, features, protocols, and more details</small>
-                </a>
-            </div>
+            <!-- Center: interactive canvas -->
+            <main class="canvas-area" id="canvasArea">
+                <div class="canvas-container" id="canvasContainer">
+                    <!-- Cloudflare network (always visible, center) -->
+                    <div class="cf-network" id="cfNetwork">
+                        <div class="cf-network-inner">
+                            <div class="cf-glow"></div>
+                            <svg class="cf-shield" viewBox="0 0 48 48" width="44" height="44">
+                                <path d="M24 4L6 12v12c0 11.1 7.7 21.5 18 24 10.3-2.5 18-12.9 18-24V12L24 4z" fill="#F38020" opacity="0.15" stroke="#F38020" stroke-width="1.5"/>
+                                <path d="M24 10l-12 5.5v8.5c0 7.7 5.1 14.9 12 16.6 6.9-1.7 12-8.9 12-16.6v-8.5L24 10z" fill="#F38020" opacity="0.3"/>
+                                <text x="24" y="29" text-anchor="middle" font-size="7" fill="#fff" font-weight="700" font-family="DM Sans, sans-serif">CF</text>
+                            </svg>
+                            <span class="cf-label">Cloudflare<br>Global Network</span>
+                            <div class="cf-services">
+                                <span class="cf-service-tag">SWG</span>
+                                <span class="cf-service-tag">ZTNA</span>
+                                <span class="cf-service-tag">CASB</span>
+                                <span class="cf-service-tag">DLP</span>
+                                <span class="cf-service-tag">RBI</span>
+                                <span class="cf-service-tag">FW</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SVG layer for connection lines -->
+                    <svg class="connections-layer" id="connectionsLayer"></svg>
+
+                    <!-- Drop zones -->
+                    <div class="drop-zone drop-zone-left" id="dropZoneLeft">
+                        <div class="drop-zone-label">Drop users here</div>
+                    </div>
+                    <div class="drop-zone drop-zone-right" id="dropZoneRight">
+                        <div class="drop-zone-label">Drop infrastructure here</div>
+                    </div>
+
+                    <!-- Placed elements container -->
+                    <div class="placed-elements" id="placedElements"></div>
+                </div>
+
+                <!-- Onboarding overlay -->
+                <div class="onboarding-overlay" id="onboarding">
+                    <div class="onboarding-card">
+                        <div class="onboarding-icon">
+                            <svg viewBox="0 0 64 64" width="56" height="56">
+                                <circle cx="32" cy="32" r="28" fill="#F38020" opacity="0.1" stroke="#F38020" stroke-width="2"/>
+                                <path d="M32 18v28M18 32h28" stroke="#F38020" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h2>Build Your Cloudflare One Architecture</h2>
+                        <p>Drag infrastructure and user components from the left panel onto the canvas, then connect them through Cloudflare's global network.</p>
+                        <div class="onboarding-steps">
+                            <div class="ob-step"><span class="ob-num">1</span>Place your infrastructure (data centers, cloud, SaaS)</div>
+                            <div class="ob-step"><span class="ob-num">2</span>Place your users (remote, office, contractors)</div>
+                            <div class="ob-step"><span class="ob-num">3</span>Click an element to attach Cloudflare connectivity</div>
+                        </div>
+                        <button class="btn btn-primary" id="btnStart">Start Building</button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right: detail panel -->
+            <aside class="detail-panel" id="detailPanel">
+                <div class="detail-empty" id="detailEmpty">
+                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>
+                    <p>Select an element on the canvas to see details and available connectivity options</p>
+                </div>
+                <div class="detail-content" id="detailContent" style="display:none">
+                    <div class="detail-header">
+                        <h3 id="detailTitle"></h3>
+                        <button class="btn-icon" id="btnRemoveElement" title="Remove element">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </button>
+                    </div>
+                    <p id="detailDesc" class="detail-desc"></p>
+                    <div id="detailConnections" class="detail-connections"></div>
+                    <div id="detailInfo" class="detail-info"></div>
+                </div>
+            </aside>
         </div>
+
+        <!-- Achievement toast container -->
+        <div class="toast-container" id="toastContainer"></div>
     </div>
-    <footer>
-        <p>Powered by <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a> & <a href="https://mermaid.js.org/" target="_blank">Mermaid.js</a></p>
-        <p class="disclaimer">For educational purposes only. Not official Cloudflare documentation.</p>
-    </footer>
-    <script src="js/main.js"></script>
+
+    <script src="js/app.js"></script>
 </body>
 </html>
