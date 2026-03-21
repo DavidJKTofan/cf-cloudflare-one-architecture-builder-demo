@@ -75,6 +75,8 @@ Lines are drawn as SVG `<path>` elements using quadratic Bezier curves (`Q` comm
 
 ## Development
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/DavidJKTofan/cf-cloudflare-one-architecture-builder-demo)
+
 ```bash
 npm install
 npm run dev        # Start local dev server (wrangler dev)
