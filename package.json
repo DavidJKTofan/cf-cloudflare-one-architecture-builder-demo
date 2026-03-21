@@ -14,7 +14,7 @@
 		"@cloudflare/vitest-pool-workers": "^0.13.3",
 		"@types/node": "^25.5.0",
 		"typescript": "^5.8.3",
-		"vitest": "~3.0.7",
+		"vitest": "^4.1.0",
 		"wrangler": "^4.76.0"
 	}
 }
