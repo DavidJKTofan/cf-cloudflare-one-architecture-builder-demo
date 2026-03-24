@@ -14,12 +14,12 @@
 /
   Cache-Control: public, max-age=300, must-revalidate
 
-# CSS and JS — versioned by content, cache longer
+# CSS and JS — short cache, always revalidate (no bundler/hashing)
 /css/*
-  Cache-Control: public, max-age=86400, must-revalidate
+  Cache-Control: public, max-age=300, must-revalidate
 
 /js/*
-  Cache-Control: public, max-age=86400, must-revalidate
+  Cache-Control: public, max-age=300, must-revalidate
 
 # Favicons and manifest — long cache
 /favicon.*

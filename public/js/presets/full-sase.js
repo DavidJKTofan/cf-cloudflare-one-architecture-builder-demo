@@ -31,8 +31,8 @@ window.App.applyFullSase = function applyFullSase() {
     const cx = rect.width / 2;
     const cy = rect.height / 2;
 
-    // Layout: 4 user types on the left, 5 infra on the right
-    const leftTypes  = ["remote-user", "office-user", "contractor", "iot"];
+    // Layout: 5 user types on the left, 5 infra on the right
+    const leftTypes  = ["remote-user", "office-user", "contractor", "iot", "visitor"];
     const rightTypes = ["datacenter", "aws", "azure", "saas", "branch"];
     const leftSpacing = (rect.height * 0.7) / (leftTypes.length - 1 || 1);
     const rightSpacing = (rect.height * 0.7) / (rightTypes.length - 1 || 1);
@@ -58,13 +58,14 @@ window.App.applyFullSase = function applyFullSase() {
         [2, "proxy-endpoint"],    // Contractor -> Proxy Endpoint
         [3, "warp-connector"],    // IoT -> WARP Connector
         [3, "dns-location"],      // IoT -> DNS Location
-        [4, "cloudflare-tunnel"], // Data Center -> Tunnel
-        [4, "ipsec-tunnel"],      // Data Center -> IPsec
-        [5, "multi-cloud"],       // AWS -> Multi-Cloud Networking
-        [6, "multi-cloud"],       // Azure -> Multi-Cloud Networking
-        [7, "access-saas"],       // SaaS -> Access SSO
-        [7, "casb-api"],          // SaaS -> CASB API
-        [8, "appliance"],         // Branch -> Appliance
+        [4, "dns-location"],      // Visitors -> DNS Location
+        [5, "cloudflare-tunnel"], // Data Center -> Tunnel
+        [5, "ipsec-tunnel"],      // Data Center -> IPsec
+        [6, "multi-cloud"],       // AWS -> Multi-Cloud Networking
+        [7, "multi-cloud"],       // Azure -> Multi-Cloud Networking
+        [8, "access-saas"],       // SaaS -> Access SSO
+        [8, "casb-api"],          // SaaS -> CASB API
+        [9, "appliance"],         // Branch -> Appliance
     ];
     connMap.forEach(([idx, connector]) => {
         const elId = state.elements[idx]?.id;
