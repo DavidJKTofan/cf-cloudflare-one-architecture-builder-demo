@@ -26,7 +26,7 @@ src/index.ts                  # Cloudflare Worker entry point (TypeScript)
 worker-configuration.d.ts     # Auto-generated Env types (do NOT hand-edit)
 public/
   index.html                  # SPA shell — script load order matters
-  css/app.css                 # All styles (CSS custom properties, dark theme)
+  css/app.css                 # All styles (CSS custom properties, dark and light themes)
   js/
     app.js                    # Thin orchestrator — renderAll(), init
     data/                     # Pure data objects (no DOM). Edit to change content.

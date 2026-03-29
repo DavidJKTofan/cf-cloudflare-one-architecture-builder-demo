@@ -10,7 +10,7 @@
     --cf-orange-light: #FBCFA0;
     --cf-orange-dark: #C95E00;
 
-    /* Canvas surface */
+    /* Canvas surface — dark (default) */
     --bg: #0C0F14;
     --bg-surface: #13161D;
     --bg-elevated: #1A1E27;
@@ -24,6 +24,23 @@
     /* Borders */
     --border: #252A36;
     --border-hover: #3A4050;
+
+    /* Semantic colors */
+    --danger: #ef4444;
+    --danger-bg: rgba(239, 68, 68, 0.1);
+    --overlay-bg: rgba(12, 15, 20, 0.85);
+    --toast-shadow: rgba(0, 0, 0, 0.4);
+    --card-icon-orange-bg: rgba(243, 128, 32, 0.08);
+    --card-icon-green-bg: rgba(34, 197, 94, 0.08);
+    --card-icon-cyan-bg: rgba(6, 182, 212, 0.08);
+    --card-icon-blue-bg: rgba(59, 130, 246, 0.08);
+    --cf-glow-bg: rgba(243, 128, 32, 0.12);
+    --cf-network-gradient: rgba(243, 128, 32, 0.08);
+    --cf-tag-bg: rgba(243, 128, 32, 0.1);
+    --cf-tag-border: rgba(243, 128, 32, 0.25);
+    --cf-selected-shadow: rgba(243, 128, 32, 0.2);
+    --cf-selected-glow: rgba(243, 128, 32, 0.1);
+    --drop-zone-hover-bg: rgba(243, 128, 32, 0.04);
 
     /* Connectors — chosen for max contrast on dark bg */
     --tunnel: #7C3AED;
@@ -47,6 +64,107 @@
     --topbar-h: 52px;
     --radius: 10px;
     --radius-sm: 6px;
+
+    color-scheme: dark;
+}
+
+/* ---- LIGHT THEME ---- */
+[data-theme="light"] {
+    --bg: #F4F5F7;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #F9FAFB;
+    --bg-card: #FFFFFF;
+
+    --text-primary: #1A1D26;
+    --text-secondary: #555D73;
+    --text-muted: #8B92A5;
+
+    --border: #D8DCE5;
+    --border-hover: #BCC1CE;
+
+    --danger: #DC2626;
+    --danger-bg: rgba(220, 38, 38, 0.08);
+    --overlay-bg: rgba(244, 245, 247, 0.9);
+    --toast-shadow: rgba(0, 0, 0, 0.12);
+    --card-icon-orange-bg: rgba(243, 128, 32, 0.1);
+    --card-icon-green-bg: rgba(34, 197, 94, 0.1);
+    --card-icon-cyan-bg: rgba(6, 182, 212, 0.1);
+    --card-icon-blue-bg: rgba(59, 130, 246, 0.1);
+    --cf-glow-bg: rgba(243, 128, 32, 0.08);
+    --cf-network-gradient: rgba(243, 128, 32, 0.06);
+    --cf-tag-bg: rgba(243, 128, 32, 0.08);
+    --cf-tag-border: rgba(243, 128, 32, 0.2);
+    --cf-selected-shadow: rgba(243, 128, 32, 0.15);
+    --cf-selected-glow: rgba(243, 128, 32, 0.08);
+    --drop-zone-hover-bg: rgba(243, 128, 32, 0.06);
+
+    /* Connectors — slightly deeper saturation for light bg readability */
+    --tunnel: #6D28D9;
+    --warp: #2563EB;
+    --warp-connector: #DB2777;
+    --ipsec: #EA580C;
+    --gre: #CA8A04;
+    --cni: #6366F1;
+    --multi-cloud: #16A34A;
+    --dns: #0891B2;
+    --proxy: #0D9488;
+    --rbi: #EA580C;
+    --appliance: #E11D48;
+    --access-saas: #7C3AED;
+    --casb-api: #A855F7;
+    --mtls: #475569;
+
+    color-scheme: light;
+}
+
+/* Respect OS preference when no explicit theme is set */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --bg: #F4F5F7;
+        --bg-surface: #FFFFFF;
+        --bg-elevated: #F9FAFB;
+        --bg-card: #FFFFFF;
+
+        --text-primary: #1A1D26;
+        --text-secondary: #555D73;
+        --text-muted: #8B92A5;
+
+        --border: #D8DCE5;
+        --border-hover: #BCC1CE;
+
+        --danger: #DC2626;
+        --danger-bg: rgba(220, 38, 38, 0.08);
+        --overlay-bg: rgba(244, 245, 247, 0.9);
+        --toast-shadow: rgba(0, 0, 0, 0.12);
+        --card-icon-orange-bg: rgba(243, 128, 32, 0.1);
+        --card-icon-green-bg: rgba(34, 197, 94, 0.1);
+        --card-icon-cyan-bg: rgba(6, 182, 212, 0.1);
+        --card-icon-blue-bg: rgba(59, 130, 246, 0.1);
+        --cf-glow-bg: rgba(243, 128, 32, 0.08);
+        --cf-network-gradient: rgba(243, 128, 32, 0.06);
+        --cf-tag-bg: rgba(243, 128, 32, 0.08);
+        --cf-tag-border: rgba(243, 128, 32, 0.2);
+        --cf-selected-shadow: rgba(243, 128, 32, 0.15);
+        --cf-selected-glow: rgba(243, 128, 32, 0.08);
+        --drop-zone-hover-bg: rgba(243, 128, 32, 0.06);
+
+        --tunnel: #6D28D9;
+        --warp: #2563EB;
+        --warp-connector: #DB2777;
+        --ipsec: #EA580C;
+        --gre: #CA8A04;
+        --cni: #6366F1;
+        --multi-cloud: #16A34A;
+        --dns: #0891B2;
+        --proxy: #0D9488;
+        --rbi: #EA580C;
+        --appliance: #E11D48;
+        --access-saas: #7C3AED;
+        --casb-api: #A855F7;
+        --mtls: #475569;
+
+        color-scheme: light;
+    }
 }
 
 *,
@@ -208,8 +326,8 @@ body {
 }
 
 .btn-icon:hover {
-    color: #ef4444;
-    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    background: var(--danger-bg);
 }
 
 /* ---- MAIN LAYOUT ---- */
@@ -305,7 +423,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(243, 128, 32, 0.08);
+    background: var(--card-icon-orange-bg);
     border-radius: 6px;
     color: var(--cf-orange);
     flex-shrink: 0;
@@ -313,17 +431,17 @@ body {
 
 .card-icon.cloud-icon {
     color: var(--multi-cloud);
-    background: rgba(34, 197, 94, 0.08);
+    background: var(--card-icon-green-bg);
 }
 
 .card-icon.saas-icon {
     color: var(--dns);
-    background: rgba(6, 182, 212, 0.08);
+    background: var(--card-icon-cyan-bg);
 }
 
 .card-icon.user-icon {
     color: var(--warp);
-    background: rgba(59, 130, 246, 0.08);
+    background: var(--card-icon-blue-bg);
 }
 
 .card-text {
@@ -433,14 +551,14 @@ body {
     padding-bottom: 4px;
     border-radius: 50%;
     border: 2px solid var(--cf-orange);
-    background: radial-gradient(circle, rgba(243, 128, 32, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--cf-network-gradient) 0%, transparent 70%);
 }
 
 .cf-glow {
     position: absolute;
     inset: -30px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(243, 128, 32, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--cf-glow-bg) 0%, transparent 70%);
     animation: pulse-glow 3s ease-in-out infinite;
     pointer-events: none;
 }
@@ -485,8 +603,8 @@ body {
     font-family: 'JetBrains Mono', monospace;
     font-weight: 500;
     color: var(--cf-orange);
-    background: rgba(243, 128, 32, 0.1);
-    border: 1px solid rgba(243, 128, 32, 0.25);
+    background: var(--cf-tag-bg);
+    border: 1px solid var(--cf-tag-border);
     padding: 1px 4px;
     border-radius: 3px;
     letter-spacing: 0.03em;
@@ -537,7 +655,7 @@ body {
 
 .drop-zone.drag-over {
     border-color: var(--cf-orange);
-    background: rgba(243, 128, 32, 0.04);
+    background: var(--drop-zone-hover-bg);
 }
 
 .drop-zone.has-items .drop-zone-label {
@@ -570,7 +688,7 @@ body {
 
 .placed-element.selected .element-body {
     border-color: var(--cf-orange);
-    box-shadow: 0 0 0 3px rgba(243, 128, 32, 0.2), 0 0 20px rgba(243, 128, 32, 0.1);
+    box-shadow: 0 0 0 3px var(--cf-selected-shadow), 0 0 20px var(--cf-selected-glow);
 }
 
 .element-body {
@@ -761,8 +879,8 @@ body {
 
 .detail-conn-item .conn-remove:hover {
     color: #fff;
-    background: #ef4444;
-    border-color: #ef4444;
+    background: var(--danger);
+    border-color: var(--danger);
 }
 
 /* Active connection — full color */
@@ -852,7 +970,7 @@ body {
 .onboarding-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(12, 15, 20, 0.85);
+    background: var(--overlay-bg);
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
@@ -952,7 +1070,7 @@ body {
     border-radius: var(--radius);
     font-size: 12px;
     color: var(--text-primary);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 32px var(--toast-shadow);
     animation: toast-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), toast-out 0.3s 3s ease forwards;
     pointer-events: all;
 }
@@ -1127,7 +1245,7 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #1E222D;
+    background: var(--bg-card);
     border: 1.5px solid var(--border);
     color: var(--text-muted);
     cursor: pointer;
@@ -1147,9 +1265,84 @@ body {
 }
 
 .element-remove-btn:hover {
-    background: #ef4444;
-    border-color: #ef4444;
+    background: var(--danger);
+    border-color: var(--danger);
     color: #fff;
+}
+
+/* ---- THEME TOGGLE ---- */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-toggle:hover {
+    border-color: var(--cf-orange);
+    color: var(--cf-orange);
+    background: var(--bg-card);
+}
+
+.theme-toggle:active {
+    transform: scale(0.92);
+}
+
+.theme-toggle svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    position: absolute;
+}
+
+/* Dark theme: show moon, hide sun */
+.theme-toggle .icon-sun {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+.theme-toggle .icon-moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* Light theme: show sun, hide moon */
+[data-theme="light"] .theme-toggle .icon-sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+/* OS-preference light (no explicit data-theme) */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) .theme-toggle .icon-sun {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+
+    :root:not([data-theme]) .theme-toggle .icon-moon {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.5);
+    }
 }
 
 /* ---- DISCLAIMER ---- */

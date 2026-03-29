@@ -24,7 +24,7 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 ├── public/
 │   ├── index.html                  # Single-page application shell
 │   ├── css/
-│   │   └── app.css                 # Styles (dark theme, blueprint grid, animations)
+│   │   └── app.css                 # Styles (dark and light themes, blueprint grid, animations)
 │   └── js/
 │       ├── app.js                  # Entry point — thin orchestrator, renderAll, init
 │       ├── data/

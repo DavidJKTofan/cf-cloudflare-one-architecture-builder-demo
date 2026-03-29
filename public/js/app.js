@@ -8,7 +8,7 @@
  * Load order (defined in index.html):
  *   1. data/*      — COMPONENTS, CONNECTORS, TEMPLATES, ACHIEVEMENTS
  *   2. engine/*    — state, connections, progress
- *   3. ui/*        — toast, drag-drop, sidebar, detail-panel, canvas, onboarding
+ *   3. ui/*        — toast, theme-toggle, drag-drop, sidebar, detail-panel, canvas, onboarding
  *   4. presets/*   — full-sase
  *   5. app.js      — this file (init)
  */
@@ -48,6 +48,7 @@ function setupCanvasDeselect() {
 /* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
     const A = window.App;
+    A.setupThemeToggle();
     A.setupDragAndDrop();
     A.setupSidebarClicks();
     A.setupConnectorButtons();
