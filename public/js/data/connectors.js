@@ -124,5 +124,21 @@ window.App.CONNECTORS = {
         color: "#64748B",
         desc: "Certificate-based authentication for devices and services that cannot use an IdP. Also a second factor for users alongside SSO. Requires uploading a root CA to Access.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/"
+    },
+    "email-security-api": {
+        name: "Email Security (API / BCC)",
+        protocol: "Graph API, BCC/Journaling",
+        direction: "Application-level",
+        color: "#E040FB",
+        desc: "Post-delivery deployment: Cloudflare scans emails after they reach the inbox. Uses Microsoft Graph API or BCC/Journaling rules. Supports auto-move to delete or quarantine threats.",
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/email-security/setup/post-delivery-deployment/"
+    },
+    "email-security-mx": {
+        name: "Email Security (MX/Inline)",
+        protocol: "MX record, SMTP",
+        direction: "Application-level",
+        color: "#CE93D8",
+        desc: "Pre-delivery deployment: MX records point to Cloudflare, scanning emails before they reach the inbox. Highest protection level — blocks threats in transit and supports text add-ons and link rewrite.",
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/email-security/setup/pre-delivery-deployment/"
     }
 };

@@ -57,6 +57,8 @@
     --access-saas: #A78BFA;
     --casb-api: #C084FC;
     --mtls: #64748B;
+    --email-security-api: #E040FB;
+    --email-security-mx: #CE93D8;
 
     /* Sizing */
     --sidebar-w: 280px;
@@ -113,6 +115,8 @@
     --access-saas: #7C3AED;
     --casb-api: #A855F7;
     --mtls: #475569;
+    --email-security-api: #D500F9;
+    --email-security-mx: #AB47BC;
 
     color-scheme: light;
 }
@@ -162,6 +166,8 @@
         --access-saas: #7C3AED;
         --casb-api: #A855F7;
         --mtls: #475569;
+        --email-security-api: #D500F9;
+        --email-security-mx: #AB47BC;
 
         color-scheme: light;
     }
@@ -1343,6 +1349,88 @@ body {
         opacity: 0;
         transform: rotate(90deg) scale(0.5);
     }
+}
+
+/* ---- EXPORT DROPDOWN ---- */
+.export-dropdown {
+    position: relative;
+}
+
+.export-dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.export-arrow {
+    font-size: 9px;
+    line-height: 1;
+    transition: transform 0.2s;
+    color: var(--text-muted);
+}
+
+.export-dropdown.open .export-arrow {
+    transform: rotate(180deg);
+}
+
+.export-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 180px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    z-index: 200;
+    padding: 4px;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.export-dropdown.open .export-dropdown-menu {
+    display: flex;
+}
+
+.export-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: left;
+    width: 100%;
+    transition: all 0.12s;
+}
+
+.export-option:hover {
+    background: var(--bg-card);
+    color: var(--cf-orange);
+}
+
+.export-option svg {
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.export-option:hover svg {
+    color: var(--cf-orange);
+}
+
+.export-hint {
+    margin-left: auto;
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    white-space: nowrap;
 }
 
 /* ---- DISCLAIMER ---- */

@@ -6,14 +6,16 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 
 ## Features
 
-- **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices)
-- **13 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-wan/zero-trust/connectivity-options/): Cloudflare Tunnel, WARP Client, WARP Connector, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Appliance, Access SSO, CASB API
+- **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Email Provider, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices, Visitors/Guests)
+- **15 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-wan/zero-trust/connectivity-options/): Cloudflare Tunnel, WARP Client, WARP Connector, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Appliance, Access SSO, CASB API, Mutual TLS, Email Security (API/BCC), Email Security (MX/Inline)
 - **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Clientless Contractor Access
-- **Full SASE button** that populates all 9 element types with relevant connections to reach 100%
+- **Full SASE button** that populates all element types with relevant connections to reach 100%
+- **Export diagram** as PNG (raster, 2x resolution) or SVG (vector, scalable) via dropdown menu
 - **Per-element remove** via X button on hover
 - **Detail panel** showing compatible connectors, active connections, and documentation links to Cloudflare Developer Docs
 - **Gamification** with progress tracking and 9 achievements
 - **Connection line spreading** so multiple connections from one element are visually distinct
+- **Dark and light themes** with OS preference auto-detection
 
 ## Project Structure
 
@@ -29,7 +31,7 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 │       ├── app.js                  # Entry point — thin orchestrator, renderAll, init
 │       ├── data/
 │       │   ├── components.js       # Component definitions (infra + user elements)
-│       │   ├── connectors.js       # Connector definitions (13 connectivity options)
+│       │   ├── connectors.js       # Connector definitions (15 connectivity options)
 │       │   ├── templates.js        # Use case templates (VPN replacement, etc.)
 │       │   └── achievements.js     # Achievement definitions (9 milestones)
 │       ├── engine/
@@ -38,11 +40,13 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 │       │   └── progress.js         # Progress bar + achievement checking
 │       ├── ui/
 │       │   ├── toast.js            # Toast notification system
+│       │   ├── theme-toggle.js     # Dark/light theme toggle
 │       │   ├── drag-drop.js        # Drag-and-drop from sidebar to canvas
 │       │   ├── sidebar.js          # Sidebar clicks, connector buttons, templates
 │       │   ├── detail-panel.js     # Right panel (info, docs, connections)
 │       │   ├── canvas.js           # Placed elements rendering + in-canvas drag
-│       │   └── onboarding.js       # Onboarding overlay
+│       │   ├── onboarding.js       # Onboarding overlay
+│       │   └── export-image.js     # Export diagram as PNG or SVG
 │       └── presets/
 │           └── full-sase.js        # Full SASE architecture preset
 ├── wrangler.jsonc                  # Wrangler config (assets binding, observability)
@@ -61,7 +65,7 @@ The frontend is vanilla JavaScript with **no build step**. Modules communicate v
 |---|---|---|
 | **Data** | `data/*.js` | Pure data objects — components, connectors, templates, achievements. No DOM access. Edit these to add/remove/modify content. |
 | **Engine** | `engine/*.js` | State management, SVG rendering, progress tracking. Core logic with no setup/event binding. |
-| **UI** | `ui/*.js` | DOM event handlers, rendering functions. Each file owns one UI concern (drag-drop, sidebar, detail panel, canvas, toasts, onboarding). |
+| **UI** | `ui/*.js` | DOM event handlers, rendering functions. Each file owns one UI concern (drag-drop, sidebar, detail panel, canvas, toasts, onboarding, export). |
 | **Presets** | `presets/*.js` | Predefined architecture layouts (Full SASE). Add new preset files here. |
 | **App** | `app.js` | Thin orchestrator — defines `renderAll()`, wires up reset/deselect, calls all `setup*()` functions on `DOMContentLoaded`. |
 
@@ -72,6 +76,15 @@ Minimal TypeScript Worker that serves static assets via the `ASSETS` binding and
 ### Connection Line Rendering
 
 Lines are drawn as SVG `<path>` elements using quadratic Bezier curves (`Q` command). Each line runs from the component position to the nearest point on the Cloudflare network circle edge (computed via unit vector * radius). When multiple connections originate from the same element, a perpendicular spread offset fans them apart so all lines remain visible.
+
+### Export
+
+The export dropdown (PNG / SVG) lives in `ui/export-image.js`:
+
+- **PNG**: Renders to an offscreen `<canvas>` at 2x device pixel ratio for crisp output. SVG icons are pre-loaded as `Image` objects via blob URLs before drawing to ensure they appear in the final bitmap.
+- **SVG**: Builds a standalone SVG document string with embedded elements, connection paths, and the Cloudflare Network node. Fully scalable — suitable for presentations and print.
+
+Both formats respect the current theme (dark / light).
 
 ## Development
 
@@ -128,6 +141,9 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 | Appliance | IPsec | Bidirectional | Zero-touch branch deployment |
 | Access SSO | SAML, OIDC | App-level | SaaS identity-aware authentication |
 | CASB API | REST API | App-level | SaaS misconfiguration scanning |
+| Mutual TLS | TLS client certificates | App-level | Certificate-based device/service auth |
+| Email Security (API/BCC) | Graph API, BCC/Journaling | App-level | Post-delivery email scanning |
+| Email Security (MX/Inline) | MX record, SMTP | App-level | Pre-delivery email scanning |
 
 * * * *
 

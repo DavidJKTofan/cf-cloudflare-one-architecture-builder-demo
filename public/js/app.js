@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setupResetButton();
     A.setupFullSase();
     A.setupOnboarding();
+    A.setupExportImage();
     A.setupTemplates();
     setupCanvasDeselect();
     A.renderAll();

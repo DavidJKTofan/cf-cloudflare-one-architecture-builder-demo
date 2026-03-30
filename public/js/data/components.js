@@ -60,6 +60,15 @@ window.App.COMPONENTS = {
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="2"/><line x1="3" y1="8" x2="21" y2="8"/><circle cx="6" cy="6" r="0.5" fill="currentColor"/><circle cx="8.5" cy="6" r="0.5" fill="currentColor"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="15" x2="13" y2="15"/></svg>',
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/saas-apps/"
     },
+    "email-security": {
+        label: "Email Provider",
+        category: "infrastructure",
+        desc: "Microsoft 365, Google Workspace, or on-premises email server. Integrate with Cloudflare Email Security via API, BCC/Journaling (post-delivery), or MX/Inline (pre-delivery) to protect against phishing, BEC, malware, and spam.",
+        compatibleConnectors: ["email-security-api", "email-security-mx"],
+        color: "#E040FB",
+        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/><path d="M2 20l7-7" opacity="0.4"/><path d="M22 20l-7-7" opacity="0.4"/></svg>',
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/email-security/"
+    },
     branch: {
         label: "Branch Office",
         category: "infrastructure",
