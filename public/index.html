@@ -40,7 +40,7 @@
     <!-- SEO -->
     <meta name="robots" content="index, follow">
     <meta name="author" content="Cloudflare">
-    <meta name="keywords" content="Cloudflare One, SASE, Zero Trust, architecture, walkthrough, WARP, Tunnel, IPsec, GRE, ZTNA, SWG, CASB, DLP, RBI">
+    <meta name="keywords" content="Cloudflare One, SASE, Zero Trust, architecture, walkthrough, Cloudflare One Client, Cloudflare Mesh, Tunnel, IPsec, GRE, ZTNA, SWG, CASB, DLP, RBI">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -121,7 +121,7 @@
                     <div class="templates-group" id="templatesGroup">
                         <button class="template-btn" data-template="vpn-replacement">
                             <span class="template-emoji">&#128274;</span>
-                            <span class="template-text"><span class="template-name">Replace Your VPN</span><span class="template-sub">WARP + Tunnel for remote access</span></span>
+                             <span class="template-text"><span class="template-name">Replace Your VPN</span><span class="template-sub">Cloudflare One Client + Tunnel for remote access</span></span>
                         </button>
                         <button class="template-btn" data-template="secure-internet">
                             <span class="template-emoji">&#127760;</span>
@@ -134,6 +134,10 @@
                         <button class="template-btn" data-template="branch-sd-wan">
                             <span class="template-emoji">&#127970;</span>
                             <span class="template-text"><span class="template-name">Branch Office SD-WAN</span><span class="template-sub">Appliance + IPsec for branches</span></span>
+                        </button>
+                        <button class="template-btn" data-template="agentic-ai">
+                            <span class="template-emoji">&#129302;</span>
+                            <span class="template-text"><span class="template-name">Agentic AI Access</span><span class="template-sub">MCP Portals + Mesh for AI agents</span></span>
                         </button>
                         <button class="template-btn" data-template="contractor-access">
                             <span class="template-emoji">&#128100;</span>
@@ -201,6 +205,15 @@
                                 <span class="card-desc">M365, Gmail — Email Security</span>
                             </div>
                         </button>
+                        <button class="component-card" data-type="mcp-server" draggable="true">
+                            <div class="card-icon saas-icon" style="color: #0EA5E9; background: rgba(14, 165, 233, 0.08)">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="12" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><path d="M7 13h10M7 16.5h6" opacity="0.6"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">MCP Server</span>
+                                <span class="card-desc">AI agent tools & resources</span>
+                            </div>
+                        </button>
                         <button class="component-card" data-type="branch" draggable="true">
                             <div class="card-icon">
                                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/><rect x="9" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/><rect x="9" y="13" width="2" height="2"/><rect x="13" y="13" width="2" height="2"/></svg>
@@ -253,6 +266,15 @@
                                 <span class="card-desc">IP phones, cameras, sensors</span>
                             </div>
                         </button>
+                        <button class="component-card" data-type="ai-agent" draggable="true">
+                            <div class="card-icon user-icon" style="color: #14B8A6; background: rgba(20, 184, 166, 0.08)">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="13" rx="2"/><path d="M9 20h6"/><path d="M12 16v4"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><path d="M9 12.5c0 0 1.5 1.5 3 1.5s3-1.5 3-1.5" opacity="0.6"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">AI Agent</span>
+                                <span class="card-desc">MCP client, coding assistant</span>
+                            </div>
+                        </button>
                         <button class="component-card" data-type="visitor" draggable="true">
                             <div class="card-icon user-icon">
                                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="10" r="2" opacity="0.4"/><path d="M19 21v-1a3 3 0 0 0-2-2.8" opacity="0.4"/></svg>
@@ -276,12 +298,12 @@
                         </button>
                         <button class="connector-btn" data-connector="warp-client" disabled>
                             <span class="connector-dot" style="--dot-color: #3B82F6"></span>
-                            <span>WARP Client</span>
+                            <span>Cloudflare One Client</span>
                             <span class="connector-tag">Bidirectional</span>
                         </button>
-                        <button class="connector-btn" data-connector="warp-connector" disabled>
+                        <button class="connector-btn" data-connector="cloudflare-mesh" disabled>
                             <span class="connector-dot" style="--dot-color: #E844A0"></span>
-                            <span>WARP Connector</span>
+                            <span>Cloudflare Mesh</span>
                             <span class="connector-tag">Bidirectional</span>
                         </button>
                         <button class="connector-btn" data-connector="ipsec-tunnel" disabled>
@@ -339,6 +361,11 @@
                             <span>Mutual TLS (mTLS)</span>
                             <span class="connector-tag">App-level</span>
                         </button>
+                        <button class="connector-btn" data-connector="mcp-portal" disabled>
+                            <span class="connector-dot" style="--dot-color: #0EA5E9"></span>
+                            <span>MCP Server Portal</span>
+                            <span class="connector-tag">App-level</span>
+                        </button>
                         <button class="connector-btn" data-connector="email-security-api" disabled>
                             <span class="connector-dot" style="--dot-color: #E040FB"></span>
                             <span>Email Security (API/BCC)</span>
@@ -381,6 +408,7 @@
                                 <span class="cf-service-tag">DEX</span>
                                 <span class="cf-service-tag">WAN</span>
                                 <span class="cf-service-tag">DNS</span>
+                                <span class="cf-service-tag">MCP</span>
                             </div>
                         </div>
                     </div>

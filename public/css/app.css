@@ -45,7 +45,7 @@
     /* Connectors — chosen for max contrast on dark bg */
     --tunnel: #7C3AED;
     --warp: #3B82F6;
-    --warp-connector: #E844A0;
+    --cloudflare-mesh: #E844A0;
     --ipsec: #F97316;
     --gre: #FACC15;
     --cni: #818CF8;
@@ -59,6 +59,7 @@
     --mtls: #64748B;
     --email-security-api: #E040FB;
     --email-security-mx: #CE93D8;
+    --mcp-portal: #0EA5E9;
 
     /* Sizing */
     --sidebar-w: 280px;
@@ -103,7 +104,7 @@
     /* Connectors — slightly deeper saturation for light bg readability */
     --tunnel: #6D28D9;
     --warp: #2563EB;
-    --warp-connector: #DB2777;
+    --cloudflare-mesh: #DB2777;
     --ipsec: #EA580C;
     --gre: #CA8A04;
     --cni: #6366F1;
@@ -117,6 +118,7 @@
     --mtls: #475569;
     --email-security-api: #D500F9;
     --email-security-mx: #AB47BC;
+    --mcp-portal: #0284C7;
 
     color-scheme: light;
 }
@@ -154,7 +156,7 @@
 
         --tunnel: #6D28D9;
         --warp: #2563EB;
-        --warp-connector: #DB2777;
+        --cloudflare-mesh: #DB2777;
         --ipsec: #EA580C;
         --gre: #CA8A04;
         --cni: #6366F1;
@@ -168,6 +170,7 @@
         --mtls: #475569;
         --email-security-api: #D500F9;
         --email-security-mx: #AB47BC;
+        --mcp-portal: #0284C7;
 
         color-scheme: light;
     }

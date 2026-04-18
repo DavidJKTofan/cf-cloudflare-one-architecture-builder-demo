@@ -65,7 +65,15 @@ window.App.ACHIEVEMENTS = [
     {
         id: "zero-trust-hero",
         title: "Zero Trust Hero",
-        desc: "Used WARP Client + Cloudflare Tunnel together",
+        desc: "Used Cloudflare One Client + Cloudflare Tunnel together",
         check: s => s.connections.some(c => c.connector === "warp-client") && s.connections.some(c => c.connector === "cloudflare-tunnel")
+    },
+    {
+        id: "agentic-pioneer",
+        title: "Agentic Pioneer",
+        desc: "Connected an AI Agent to an MCP Server via Portal",
+        check: s => s.connections.some(c => c.connector === "mcp-portal") &&
+            s.elements.some(e => e.type === "ai-agent") &&
+            s.elements.some(e => e.type === "mcp-server")
     },
 ];

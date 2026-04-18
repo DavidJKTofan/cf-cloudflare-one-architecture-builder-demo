@@ -22,20 +22,20 @@ window.App.CONNECTORS = {
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/"
     },
     "warp-client": {
-        name: "WARP Client (Cloudflare One Client)",
+        name: "Cloudflare One Client",
         protocol: "MASQUE (PQC), WireGuard",
         direction: "Bidirectional",
         color: "#3B82F6",
-        desc: "Device agent encrypting all traffic from the endpoint. Supports DNS, HTTP, and L4 network filtering with device posture checks. Post-quantum ready via MASQUE.",
+        desc: "Device agent (formerly WARP) encrypting all traffic from the endpoint. Supports DNS, HTTP, and L4 network filtering with device posture checks. Post-quantum ready via MASQUE.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/"
     },
-    "warp-connector": {
-        name: "WARP Connector",
-        protocol: "MASQUE, WireGuard",
+    "cloudflare-mesh": {
+        name: "Cloudflare Mesh",
+        protocol: "MASQUE (PQC)",
         direction: "Bidirectional",
         color: "#E844A0",
-        desc: "Linux-based L3 router for a subnet. Enables bidirectional traffic for IoT, VoIP/SIP, SCCM, and Active Directory. Preserves source IPs end-to-end.",
-        docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/"
+        desc: "Post-quantum encrypted mesh networking via Linux nodes. Every participant gets a private Mesh IP (100.96.0.0/12). Enables bidirectional traffic for IoT, VoIP/SIP, and site-to-site. Preserves source IPs end-to-end. Supports HA with active-passive replicas.",
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-mesh/"
     },
     "ipsec-tunnel": {
         name: "IPsec Tunnel",
@@ -43,7 +43,7 @@ window.App.CONNECTORS = {
         direction: "Bidirectional",
         color: "#F97316",
         desc: "Encrypted anycast tunnels from routers/firewalls to Cloudflare WAN. Automatic failover across data centers. Requires static public IP. Supports ECMP.",
-        docsUrl: "https://developers.cloudflare.com/cloudflare-wan/reference/gre-ipsec-tunnels/"
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/"
     },
     "gre-tunnel": {
         name: "GRE Tunnel",
@@ -51,7 +51,7 @@ window.App.CONNECTORS = {
         direction: "Bidirectional",
         color: "#FACC15",
         desc: "Lightweight stateless tunnels. No encryption (pair with IPsec if needed). Useful for redundancy or when IPsec throughput is limited. MTU: 1476 bytes.",
-        docsUrl: "https://developers.cloudflare.com/cloudflare-wan/reference/gre-ipsec-tunnels/"
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/"
     },
     "cni": {
         name: "Cloudflare Network Interconnect",
@@ -132,6 +132,14 @@ window.App.CONNECTORS = {
         color: "#E040FB",
         desc: "Post-delivery deployment: Cloudflare scans emails after they reach the inbox. Uses Microsoft Graph API or BCC/Journaling rules. Supports auto-move to delete or quarantine threats.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/email-security/setup/post-delivery-deployment/"
+    },
+    "mcp-portal": {
+        name: "MCP Server Portal",
+        protocol: "OAuth 2.1, HTTP",
+        direction: "Application-level",
+        color: "#0EA5E9",
+        desc: "Centralized gateway aggregating multiple MCP servers behind a single authenticated endpoint. Provides Access-based auth, tool curation, DLP scanning via Gateway, Code Mode for token optimization, and audit logging.",
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/"
     },
     "email-security-mx": {
         name: "Email Security (MX/Inline)",

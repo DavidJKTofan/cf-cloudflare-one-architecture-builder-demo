@@ -32,8 +32,8 @@ window.App.applyFullSase = function applyFullSase() {
     const cy = rect.height / 2;
 
     // Layout: 5 user types on the left, 5 infra on the right
-    const leftTypes  = ["remote-user", "office-user", "contractor", "iot", "visitor"];
-    const rightTypes = ["datacenter", "aws", "azure", "saas", "email-security", "branch"];
+    const leftTypes  = ["remote-user", "office-user", "contractor", "iot", "ai-agent", "visitor"];
+    const rightTypes = ["datacenter", "aws", "azure", "saas", "mcp-server", "email-security", "branch"];
     const leftSpacing = (rect.height * 0.7) / (leftTypes.length - 1 || 1);
     const rightSpacing = (rect.height * 0.7) / (rightTypes.length - 1 || 1);
     const leftStartY = cy - (leftTypes.length - 1) * leftSpacing / 2;
@@ -52,21 +52,23 @@ window.App.applyFullSase = function applyFullSase() {
 
     // Best-practice connections
     const connMap = [
-        [0, "warp-client"],           // Remote Worker -> WARP Client
-        [1, "warp-client"],           // Office Worker -> WARP Client
+        [0, "warp-client"],           // Remote Worker -> Cloudflare One Client
+        [1, "warp-client"],           // Office Worker -> Cloudflare One Client
         [2, "clientless-rbi"],        // Contractor -> Clientless RBI
         [2, "proxy-endpoint"],        // Contractor -> Proxy Endpoint
-        [3, "warp-connector"],        // IoT -> WARP Connector
+        [3, "cloudflare-mesh"],       // IoT -> Cloudflare Mesh
         [3, "dns-location"],          // IoT -> DNS Location
-        [4, "dns-location"],          // Visitors -> DNS Location
-        [5, "cloudflare-tunnel"],     // Data Center -> Tunnel
-        [5, "ipsec-tunnel"],          // Data Center -> IPsec
-        [6, "multi-cloud"],           // AWS -> Multi-Cloud Networking
-        [7, "multi-cloud"],           // Azure -> Multi-Cloud Networking
-        [8, "access-saas"],           // SaaS -> Access SSO
-        [8, "casb-api"],              // SaaS -> CASB API
-        [9, "email-security-api"],    // Email Provider -> Email Security (API)
-        [10, "appliance"],            // Branch -> Appliance
+        [4, "mcp-portal"],            // AI Agent -> MCP Server Portal
+        [5, "dns-location"],          // Visitors -> DNS Location
+        [6, "cloudflare-tunnel"],     // Data Center -> Tunnel
+        [6, "ipsec-tunnel"],          // Data Center -> IPsec
+        [7, "multi-cloud"],           // AWS -> Multi-Cloud Networking
+        [8, "multi-cloud"],           // Azure -> Multi-Cloud Networking
+        [9, "access-saas"],           // SaaS -> Access SSO
+        [9, "casb-api"],              // SaaS -> CASB API
+        [10, "mcp-portal"],           // MCP Server -> MCP Server Portal
+        [11, "email-security-api"],   // Email Provider -> Email Security (API)
+        [12, "appliance"],            // Branch -> Appliance
     ];
     connMap.forEach(([idx, connector]) => {
         const elId = state.elements[idx]?.id;
