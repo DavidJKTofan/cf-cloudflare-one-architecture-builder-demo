@@ -101,6 +101,7 @@ window.App.TEMPLATES = {
             { elementIdx: 0, connector: "cloudflare-mesh" },
             { elementIdx: 1, connector: "warp-client" },
             { elementIdx: 2, connector: "mcp-portal" },
+            { elementIdx: 3, connector: "mcp-portal" },
             { elementIdx: 3, connector: "access-saas" },
             { elementIdx: 4, connector: "cloudflare-tunnel" },
         ]
@@ -124,7 +125,7 @@ window.App.TEMPLATES = {
             { elementIdx: 3, connector: "access-saas" },
             { elementIdx: 3, connector: "casb-api" },
             { elementIdx: 4, connector: "mcp-portal" },
-            { elementIdx: 5, connector: "cloudflare-tunnel" },
+            { elementIdx: 5, connector: "mcp-portal" },
         ]
     },
     "contractor-access": {
