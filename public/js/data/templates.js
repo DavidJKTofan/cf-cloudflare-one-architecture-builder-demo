@@ -105,6 +105,28 @@ window.App.TEMPLATES = {
             { elementIdx: 4, connector: "cloudflare-tunnel" },
         ]
     },
+    "ai-security": {
+        name: "Holistic AI Security",
+        desc: "Discover shadow AI with Gateway, enforce DLP on AI prompts, govern MCP servers with Access portals, and monitor SaaS AI posture with CASB.",
+        docsUrl: "https://developers.cloudflare.com/learning-paths/holistic-ai-security/concepts/",
+        elements: [
+            { type: "remote-user", side: "left", slot: 0 },
+            { type: "ai-agent", side: "left", slot: 1 },
+            { type: "contractor", side: "left", slot: 2 },
+            { type: "saas", side: "right", slot: 0 },
+            { type: "mcp-server", side: "right", slot: 1 },
+            { type: "mcp-server", side: "right", slot: 2 },
+        ],
+        connections: [
+            { elementIdx: 0, connector: "warp-client" },
+            { elementIdx: 1, connector: "mcp-portal" },
+            { elementIdx: 2, connector: "clientless-rbi" },
+            { elementIdx: 3, connector: "access-saas" },
+            { elementIdx: 3, connector: "casb-api" },
+            { elementIdx: 4, connector: "mcp-portal" },
+            { elementIdx: 5, connector: "cloudflare-tunnel" },
+        ]
+    },
     "contractor-access": {
         name: "Clientless Contractor Access",
         desc: "Contractors and BYOD users access private apps via Clientless RBI or Proxy Endpoints without installing software.",

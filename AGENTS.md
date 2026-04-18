@@ -31,7 +31,7 @@ public/
     app.js                    # Thin orchestrator — renderAll(), init
     data/                     # Pure data objects (no DOM). Edit to change content.
       components.js           # Infrastructure + user element definitions
-      connectors.js           # 13 Cloudflare connectivity options
+      connectors.js           # 17 Cloudflare connectivity options
       templates.js            # Use case template presets
       achievements.js         # Gamification milestones
     engine/                   # Core logic (no event binding)
@@ -39,7 +39,7 @@ public/
       connections.js          # SVG Bezier curve rendering
       progress.js             # Progress bar + achievement checking
     ui/                       # DOM events + rendering (one concern per file)
-      toast.js, drag-drop.js, sidebar.js, detail-panel.js, canvas.js, onboarding.js
+      toast.js, drag-drop.js, sidebar.js, detail-panel.js, canvas.js, onboarding.js, export-image.js
     presets/
       full-sase.js            # Full SASE architecture preset
 ```

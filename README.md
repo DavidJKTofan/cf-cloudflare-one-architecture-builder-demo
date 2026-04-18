@@ -6,14 +6,14 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 
 ## Features
 
-- **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Email Provider, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices, Visitors/Guests)
-- **15 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-wan/zero-trust/connectivity-options/): Cloudflare Tunnel, WARP Client, WARP Connector, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Appliance, Access SSO, CASB API, Mutual TLS, Email Security (API/BCC), Email Security (MX/Inline)
-- **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Clientless Contractor Access
+- **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Email Provider, MCP Server, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices, AI Agent, Visitors/Guests)
+- **17 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-one/networks/connectivity-options/): Cloudflare Tunnel, Cloudflare One Client, Cloudflare Mesh, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Appliance, Access SSO, CASB API, Mutual TLS, MCP Server Portal, Email Security (API/BCC), Email Security (MX/Inline)
+- **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Agentic AI Access, Holistic AI Security, Clientless Contractor Access
 - **Full SASE button** that populates all element types with relevant connections to reach 100%
 - **Export diagram** as PNG (raster, 2x resolution) or SVG (vector, scalable) via dropdown menu
 - **Per-element remove** via X button on hover
 - **Detail panel** showing compatible connectors, active connections, and documentation links to Cloudflare Developer Docs
-- **Gamification** with progress tracking and 9 achievements
+- **Gamification** with progress tracking and 10 achievements
 - **Connection line spreading** so multiple connections from one element are visually distinct
 - **Dark and light themes** with OS preference auto-detection
 
@@ -31,9 +31,9 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 │       ├── app.js                  # Entry point — thin orchestrator, renderAll, init
 │       ├── data/
 │       │   ├── components.js       # Component definitions (infra + user elements)
-│       │   ├── connectors.js       # Connector definitions (15 connectivity options)
-│       │   ├── templates.js        # Use case templates (VPN replacement, etc.)
-│       │   └── achievements.js     # Achievement definitions (9 milestones)
+│       │   ├── connectors.js       # Connector definitions (17 connectivity options)
+│       │   ├── templates.js        # Use case templates (VPN replacement, AI security, etc.)
+│       │   └── achievements.js     # Achievement definitions (10 milestones)
 │       ├── engine/
 │       │   ├── state.js            # State object + mutations (add/remove/reset)
 │       │   ├── connections.js      # SVG connection line rendering (Bezier curves)
@@ -124,13 +124,13 @@ npm run deploy     # Deploy to Cloudflare Workers
 
 ## Connectivity Options Reference
 
-Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com/cloudflare-wan/zero-trust/connectivity-options/) and [SASE Reference Architecture](https://developers.cloudflare.com/reference-architecture/architectures/sase/).
+Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com/cloudflare-one/networks/connectivity-options/) and [SASE Reference Architecture](https://developers.cloudflare.com/reference-architecture/architectures/sase/).
 
 | Connector | Protocol | Direction | Typical Use |
 |---|---|---|---|
 | Cloudflare Tunnel | HTTP/2, QUIC | Off-ramp | Private web apps, SSH, RDP without public IPs |
-| WARP Client | MASQUE, WireGuard | Bidirectional | Secure remote workforce devices |
-| WARP Connector | MASQUE, WireGuard | Bidirectional | IoT, VoIP, server-initiated traffic (beta) |
+| Cloudflare One Client | MASQUE (PQC), WireGuard | Bidirectional | Secure remote workforce devices (formerly WARP) |
+| Cloudflare Mesh | MASQUE (PQC) | Bidirectional | Site-to-site, device-to-device mesh networking (formerly WARP Connector) |
 | IPsec Tunnel | IPsec (IKEv2) | Bidirectional | Encrypted site-to-site over Internet |
 | GRE Tunnel | GRE | Bidirectional | Lightweight site connectivity |
 | Network Interconnect | Direct/Partner/Cloud | Bidirectional | Private dedicated connections |
@@ -142,6 +142,7 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 | Access SSO | SAML, OIDC | App-level | SaaS identity-aware authentication |
 | CASB API | REST API | App-level | SaaS misconfiguration scanning |
 | Mutual TLS | TLS client certificates | App-level | Certificate-based device/service auth |
+| MCP Server Portal | OAuth 2.1, HTTP | App-level | Centralized AI agent access to MCP servers |
 | Email Security (API/BCC) | Graph API, BCC/Journaling | App-level | Post-delivery email scanning |
 | Email Security (MX/Inline) | MX record, SMTP | App-level | Pre-delivery email scanning |
 
