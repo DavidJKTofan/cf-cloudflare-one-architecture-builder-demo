@@ -218,6 +218,15 @@
                                 <span class="card-desc">AI agent tools & resources</span>
                             </div>
                         </button>
+                        <button class="component-card" data-type="cloudflare-workers" draggable="true">
+                            <div class="card-icon" style="color: #F38020; background: rgba(243, 128, 32, 0.08)">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M8 12h2l1.5-3L13 15l1.5-3H17" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
+                            <div class="card-text">
+                                <span class="card-title">Cloudflare Workers</span>
+                                <span class="card-desc">Connect Workers to private apps &amp; DBs</span>
+                            </div>
+                        </button>
                         <button class="component-card" data-type="branch" draggable="true">
                             <div class="card-icon">
                                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/><rect x="9" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/><rect x="9" y="13" width="2" height="2"/><rect x="13" y="13" width="2" height="2"/></svg>
@@ -308,6 +317,11 @@
                         <button class="connector-btn" data-connector="cloudflare-mesh" disabled>
                             <span class="connector-dot" style="--dot-color: #E844A0"></span>
                             <span>Cloudflare Mesh</span>
+                            <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="workers-vpc" disabled>
+                            <span class="connector-dot" style="--dot-color: #F59E0B"></span>
+                            <span>Workers VPC</span>
                             <span class="connector-tag">Bidirectional</span>
                         </button>
                         <button class="connector-btn" data-connector="ipsec-tunnel" disabled>
@@ -413,6 +427,7 @@
                                 <span class="cf-service-tag">WAN</span>
                                 <span class="cf-service-tag">DNS</span>
                                 <span class="cf-service-tag">MCP</span>
+                                <span class="cf-service-tag">VPC</span>
                             </div>
                         </div>
                     </div>

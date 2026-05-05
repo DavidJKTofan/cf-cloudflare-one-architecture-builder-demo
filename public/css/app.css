@@ -60,6 +60,7 @@
     --email-security-api: #E040FB;
     --email-security-mx: #CE93D8;
     --mcp-portal: #0EA5E9;
+    --workers-vpc: #F59E0B;
 
     /* Sizing */
     --sidebar-w: 280px;
@@ -119,6 +120,7 @@
     --email-security-api: #D500F9;
     --email-security-mx: #AB47BC;
     --mcp-portal: #0284C7;
+    --workers-vpc: #D97706;
 
     color-scheme: light;
 }
@@ -171,6 +173,7 @@
         --email-security-api: #D500F9;
         --email-security-mx: #AB47BC;
         --mcp-portal: #0284C7;
+        --workers-vpc: #D97706;
 
         color-scheme: light;
     }

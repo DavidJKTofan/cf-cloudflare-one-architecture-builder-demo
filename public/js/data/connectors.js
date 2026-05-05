@@ -34,15 +34,23 @@ window.App.CONNECTORS = {
         protocol: "MASQUE (PQC)",
         direction: "Bidirectional",
         color: "#E844A0",
-        desc: "Post-quantum encrypted mesh networking via Linux nodes. Every participant gets a private Mesh IP (100.96.0.0/12). Enables bidirectional traffic for IoT, VoIP/SIP, and site-to-site. Preserves source IPs end-to-end. Supports HA with active-passive replicas.",
+        desc: "Post-quantum encrypted mesh networking via Linux nodes (formerly WARP Connector). Every participant gets a private Mesh IP. Enables bidirectional TCP/UDP/ICMP for IoT, VoIP/SIP, and site-to-site. Preserves source IPs end-to-end. Supports HA active-passive replicas. Integrates with Workers VPC — bind your entire Mesh network to a Worker via `network_id: 'cf1:network'`.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-mesh/"
+    },
+    "workers-vpc": {
+        name: "Workers VPC",
+        protocol: "HTTP, TCP (Tunnel or Mesh)",
+        direction: "Bidirectional",
+        color: "#F59E0B",
+        desc: "Connect Cloudflare Workers globally to private APIs, services, and databases in any cloud or on-premises network — without exposing them to the public Internet. Uses Cloudflare Tunnel (VPC Services per-host binding) or Cloudflare Mesh (VPC Network binding via `cf1:network`) as the transport. Supports HTTP and TCP services; TCP databases use Hyperdrive integration.",
+        docsUrl: "https://developers.cloudflare.com/workers-vpc/"
     },
     "ipsec-tunnel": {
         name: "IPsec Tunnel",
         protocol: "IPsec (IKEv2)",
         direction: "Bidirectional",
         color: "#F97316",
-        desc: "Encrypted anycast tunnels from routers/firewalls to Cloudflare WAN. Automatic failover across data centers. Requires static public IP. Supports ECMP.",
+        desc: "Encrypted anycast tunnels from routers/firewalls to Cloudflare WAN. Automatic failover across data centers. Requires static public IP. Supports ECMP. Also enables Private Origins: point a public DNS record to a private origin IP and Cloudflare routes requests through the tunnel — CDN, WAF, and Cache all apply without exposing the origin.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/"
     },
     "gre-tunnel": {
