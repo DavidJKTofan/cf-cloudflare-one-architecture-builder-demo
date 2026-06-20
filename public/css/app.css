@@ -61,6 +61,7 @@
     --email-security-mx: #CE93D8;
     --mcp-portal: #0EA5E9;
     --workers-vpc: #F59E0B;
+    --public-https: #38BDF8;
     --private-origin: #14B8A6;
 
     /* Sizing */
@@ -122,6 +123,7 @@
     --email-security-mx: #AB47BC;
     --mcp-portal: #0284C7;
     --workers-vpc: #D97706;
+    --public-https: #0369A1;
     --private-origin: #0F766E;
 
     color-scheme: light;
@@ -176,6 +178,8 @@
         --email-security-mx: #AB47BC;
         --mcp-portal: #0284C7;
         --workers-vpc: #D97706;
+        --public-https: #0369A1;
+        --private-origin: #0F766E;
 
         color-scheme: light;
     }

@@ -146,8 +146,8 @@ window.App.COMPONENTS = {
     visitor: {
         label: "Visitors / Guests",
         category: "users",
-        desc: "Guest WiFi users, customers, students, or visitors on unmanaged devices. Secure with DNS Location filtering as a baseline; add IPsec or Appliance for network-level enforcement.",
-        compatibleConnectors: ["dns-location", "clientless-rbi", "proxy-endpoint"],
+        desc: "Guest WiFi users, customers, students, or public Internet visitors on unmanaged devices. Use Public Internet (HTTPS) for proxied public hostnames, DNS Location for baseline filtering, or clientless options for controlled web access.",
+        compatibleConnectors: ["public-https", "dns-location", "clientless-rbi", "proxy-endpoint"],
         color: "#94A3B8",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="10" r="2" opacity="0.4"/><path d="M19 21v-1a3 3 0 0 0-2-2.8" opacity="0.4"/></svg>',
         docsUrl: "https://developers.cloudflare.com/reference-architecture/design-guides/securing-guest-wireless-networks/"

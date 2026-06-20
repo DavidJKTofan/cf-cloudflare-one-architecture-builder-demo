@@ -96,6 +96,7 @@ window.App.TEMPLATES = {
             { type: "mcp-server", side: "right", slot: 2 },
         ],
         connections: [
+            { elementIdx: 0, connector: "public-https" },
             { elementIdx: 1, connector: "private-origin-routing" },
             { elementIdx: 1, connector: "ipsec-tunnel" },
             { elementIdx: 2, connector: "private-origin-routing" },

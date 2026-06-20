@@ -33,7 +33,7 @@ public/
     app.js                    # Thin orchestrator — renderAll(), init
     data/                     # Pure data objects (no DOM). Edit to change content.
       components.js           # Infrastructure + user element definitions
-      connectors.js           # 19 Cloudflare connectivity options
+      connectors.js           # 20 connector types
       templates.js            # Use case template presets
       achievements.js         # Gamification milestones
     engine/                   # Core logic (no event binding)

@@ -45,6 +45,14 @@ window.App.CONNECTORS = {
         desc: "Connect Workers to private APIs, services, and databases without public exposure. Use Tunnel for per-host VPC Service bindings or Mesh with `cf1:network` for network-wide access. Workers using `cf1:network` can also egress to public Internet destinations through Cloudflare Gateway, so DNS, HTTP, Network, and egress policies and logs apply.",
         docsUrl: "https://developers.cloudflare.com/workers-vpc/"
     },
+    "public-https": {
+        name: "Public Internet (HTTPS)",
+        protocol: "HTTPS, proxied DNS",
+        direction: "On-ramp only",
+        color: "#38BDF8",
+        desc: "Public users reach a proxied hostname on Cloudflare. Cloudflare applies application services such as CDN, WAF, Cache, bot management, rate limiting, transforms, and Workers before Private Origin Routing sends the request to a private origin.",
+        docsUrl: "https://developers.cloudflare.com/dns/private-origins/"
+    },
     "private-origin-routing": {
         name: "Private Origin Routing",
         protocol: "HTTP/HTTPS, proxied DNS",

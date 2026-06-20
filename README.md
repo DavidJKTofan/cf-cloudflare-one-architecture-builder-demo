@@ -7,7 +7,7 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 ## Features
 
 - **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Email Provider, MCP Server, Cloudflare Workers, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices, AI Agent, Visitors/Guests)
-- **19 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-one/networks/connectivity-options/): Cloudflare Tunnel, Cloudflare One Client, Cloudflare Mesh, Workers VPC, Private Origin Routing, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Cloudflare One Appliance, Access SSO, CASB API, Mutual TLS, MCP Server Portal, Email Security (API/BCC), Email Security (MX/Inline)
+- **20 connector types** for Cloudflare architecture diagrams, including Cloudflare Tunnel, Cloudflare One Client, Cloudflare Mesh, Workers VPC, Public Internet (HTTPS), Private Origin Routing, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Cloudflare One Appliance, Access SSO, CASB API, Mutual TLS, MCP Server Portal, Email Security (API/BCC), Email Security (MX/Inline)
 - **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Private Origins, Agentic AI Access, Holistic AI Security, Clientless Contractor Access
 - **Full SASE button** that populates a complete sample architecture with relevant connections to reach 100%
 - **Export diagram** as PNG (raster, 2x resolution) or SVG (vector, scalable) via dropdown menu
@@ -32,7 +32,7 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 │       ├── app.js                  # Entry point — thin orchestrator, renderAll, init
 │       ├── data/
 │       │   ├── components.js       # Component definitions (infra + user elements)
-│       │   ├── connectors.js       # Connector definitions (19 connectivity options)
+│       │   ├── connectors.js       # Connector definitions (20 connector types)
 │       │   ├── templates.js        # Use case templates (VPN replacement, Private Origins, AI security, etc.)
 │       │   └── achievements.js     # Achievement definitions (10 milestones)
 │       ├── engine/
@@ -140,6 +140,7 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 | Cloudflare One Client | MASQUE (PQC), WireGuard | Bidirectional | Secure remote workforce devices |
 | Cloudflare Mesh | MASQUE (PQC) | Bidirectional | Private networking for users, nodes, agents, and site-to-site traffic |
 | Workers VPC | HTTP, TCP, Gateway egress | Bidirectional | Workers access to private networks and Gateway-governed egress |
+| Public Internet (HTTPS) | HTTPS, proxied DNS | On-ramp | Public users reaching proxied hostnames on Cloudflare |
 | Private Origin Routing | HTTP/HTTPS, proxied DNS | Off-ramp | Public hostnames routed to private HTTP/HTTPS origins |
 | IPsec Tunnel | IPsec (IKEv2) | Bidirectional | Encrypted site-to-site over Internet |
 | GRE Tunnel | GRE | Bidirectional | Lightweight site connectivity |
