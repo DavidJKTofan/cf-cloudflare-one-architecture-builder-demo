@@ -291,12 +291,12 @@
                         </tr>
                         <tr data-category="network" data-complexity="medium" data-use-case="datacenter,cloud">
                             <td class="connectivity-option">
-                                <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/" target="_blank">Cloudflare Tunnel</a>
+                                <a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/" target="_blank">Cloudflare Tunnel</a>
                                 <div class="requirements">Outbound-only connections</div>
                             </td>
-                            <td class="support-indicator support-full">✅<span class="note"><a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/private-net/" target="_blank">Private Networks</a></span></td>
+                            <td class="support-indicator support-full">✅<span class="note"><a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/" target="_blank">Private Networks</a></span></td>
                             <td class="support-indicator support-none">—</td>
-                            <td class="support-indicator support-full">✅<span class="note">Private Networks and <a href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/routing-to-tunnel/" target="_blank">Public Hostnames</a></span></td>
+                            <td class="support-indicator support-full">✅<span class="note">Private Networks and <a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/" target="_blank">Public Hostnames</a></span></td>
                             <td>
                                 <div class="use-case-tags">
                                     <span class="use-case-tag datacenter">Data Centers</span>
@@ -320,7 +320,7 @@
                         <tr data-category="network" data-complexity="medium" data-use-case="datacenter,cloud">
                             <td class="connectivity-option">
                                 <a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-mesh/" target="_blank">Cloudflare Mesh</a>
-                                <div class="requirements">Post-quantum encrypted mesh networking — site-to-site, device-to-device, bidirectional</div>
+                                <div class="requirements">Post-quantum encrypted mesh networking for users, nodes, agents, and Workers VPC</div>
                             </td>
                             <td class="support-indicator support-full">✅<span class="note">Layer 3 routing</span></td>
                             <td class="support-indicator support-none">—</td>
@@ -338,14 +338,15 @@
                                     <span class="protocol-badge">WireGuard</span>
                                     <span class="protocol-badge">IP Routing</span>
                                     <span class="protocol-badge">Source IP Preservation</span>
+                                    <span class="protocol-badge">Gateway Policies</span>
                                     <span class="protocol-badge">Layer 3</span>
                                 </div>
                             </td>
                         </tr>
                         <tr data-category="network" data-complexity="medium" data-use-case="office">
                             <td class="connectivity-option">
-                                <a href="https://developers.cloudflare.com/cloudflare-wan/configuration/appliance/" target="_blank">Cloudflare One Appliance</a>
-                                <div class="requirements">Formerly Magic WAN Connector - Zero-touch SD-WAN appliance</div>
+                                <a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliances/" target="_blank">Cloudflare One Appliance</a>
+                                <div class="requirements">Zero-touch Cloudflare WAN appliance for branch connectivity</div>
                             </td>
                             <td class="support-indicator support-full">✅<span class="note">IPsec Tunnels</span></td>
                             <td class="support-indicator support-none">—</td>
@@ -368,7 +369,7 @@
                         <tr data-category="network" data-complexity="high" data-use-case="datacenter,office">
                             <td class="connectivity-option">
                                 <a href="https://developers.cloudflare.com/cloudflare-wan/" target="_blank">Cloudflare WAN</a>
-                                <div class="requirements">Formerly Magic WAN - Enterprise network infrastructure</div>
+                                <div class="requirements">Enterprise WAN connectivity with unified Routes management</div>
                             </td>
                             <td class="support-indicator support-full">✅<span class="note">Anycast IPsec/GRE Tunnels</span></td>
                             <td class="support-indicator support-none">—</td>
@@ -386,6 +387,7 @@
                                     <span class="protocol-badge">SD-WAN</span>
                                     <span class="protocol-badge">Cloudflare Network Firewall</span>
                                     <span class="protocol-badge">Traffic Steering</span>
+                                    <span class="protocol-badge">Private Origins</span>
                                     <span class="protocol-badge">IP Routing</span>
                                 </div>
                             </td>
@@ -393,7 +395,7 @@
                         <tr data-category="network" data-complexity="medium" data-use-case="cloud">
                             <td class="connectivity-option">
                                 <a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a>
-                                <div class="requirements">Formerly Magic Cloud Networking - Orchestrates cloud-native VPN to Cloudflare WAN</div>
+                                <div class="requirements">Orchestrates cloud-native VPNs to Cloudflare WAN</div>
                             </td>
                             <td class="support-indicator support-full">✅<span class="note">AWS / Azure / GCP VPCs</span></td>
                             <td class="support-indicator support-none">—</td>
@@ -432,6 +434,7 @@
                                     <span class="protocol-badge">Direct Interconnect</span>
                                     <span class="protocol-badge">Partner Interconnect</span>
                                     <span class="protocol-badge">Cloud Interconnect</span>
+                                    <span class="protocol-badge">Private Origins</span>
                                     <span class="protocol-badge">BGP</span>
                                     <span class="protocol-badge">High Bandwidth</span>
                                 </div>

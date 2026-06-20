@@ -85,9 +85,27 @@ window.App.TEMPLATES = {
             { elementIdx: 4, connector: "cni" },
         ]
     },
+    "private-origins": {
+        name: "Private Origins",
+        desc: "Public hostnames reach private HTTP/HTTPS origins through private network routing. Keep CDN, WAF, Cache, Transform Rules, and Workers in front while origins stay private.",
+        docsUrl: "https://developers.cloudflare.com/dns/private-origins/",
+        elements: [
+            { type: "visitor", side: "left", slot: 0 },
+            { type: "datacenter", side: "right", slot: 0 },
+            { type: "aws", side: "right", slot: 1 },
+            { type: "mcp-server", side: "right", slot: 2 },
+        ],
+        connections: [
+            { elementIdx: 1, connector: "private-origin-routing" },
+            { elementIdx: 1, connector: "ipsec-tunnel" },
+            { elementIdx: 2, connector: "private-origin-routing" },
+            { elementIdx: 2, connector: "cloudflare-mesh" },
+            { elementIdx: 3, connector: "private-origin-routing" },
+        ]
+    },
     "agentic-ai": {
         name: "Agentic AI Access",
-        desc: "AI agents connect to MCP servers via portals. Employees use the Cloudflare One Client alongside their agents. Private resources secured via Mesh and Tunnel.",
+        desc: "AI agents connect to MCP servers via portals. Employees use the Cloudflare One Client alongside their agents. Private resources use Mesh, Tunnel, and Workers VPC with Gateway policy enforcement.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/access-controls/ai-controls/mcp-portals/",
         elements: [
             { type: "ai-agent", side: "left", slot: 0 },

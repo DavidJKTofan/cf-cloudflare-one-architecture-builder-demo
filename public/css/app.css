@@ -19,7 +19,7 @@
     /* Text */
     --text-primary: #E8ECF4;
     --text-secondary: #8B92A5;
-    --text-muted: #555D73;
+    --text-muted: #A0A8BA;
 
     /* Borders */
     --border: #252A36;
@@ -61,6 +61,7 @@
     --email-security-mx: #CE93D8;
     --mcp-portal: #0EA5E9;
     --workers-vpc: #F59E0B;
+    --private-origin: #14B8A6;
 
     /* Sizing */
     --sidebar-w: 280px;
@@ -81,7 +82,7 @@
 
     --text-primary: #1A1D26;
     --text-secondary: #555D73;
-    --text-muted: #8B92A5;
+    --text-muted: #6B7280;
 
     --border: #D8DCE5;
     --border-hover: #BCC1CE;
@@ -121,6 +122,7 @@
     --email-security-mx: #AB47BC;
     --mcp-portal: #0284C7;
     --workers-vpc: #D97706;
+    --private-origin: #0F766E;
 
     color-scheme: light;
 }
@@ -135,7 +137,7 @@
 
         --text-primary: #1A1D26;
         --text-secondary: #555D73;
-        --text-muted: #8B92A5;
+        --text-muted: #6B7280;
 
         --border: #D8DCE5;
         --border-hover: #BCC1CE;
@@ -301,7 +303,7 @@ body {
 
 .btn-primary {
     background: var(--cf-orange);
-    color: #fff;
+    color: #0C0F14;
 }
 
 .btn-primary:hover {

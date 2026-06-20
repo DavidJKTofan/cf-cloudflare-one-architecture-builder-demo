@@ -11,7 +11,7 @@ export default {
 			'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 		};
 
-		if (request.method !== 'GET') {
+		if (request.method !== 'GET' && request.method !== 'HEAD') {
 			return new Response('Method not allowed', {
 				status: 405,
 				headers: securityHeaders,
@@ -20,14 +20,16 @@ export default {
 
 		try {
 			const response = await env.ASSETS.fetch(request);
+			const headers = new Headers(response.headers);
+
+			for (const [key, value] of Object.entries(securityHeaders)) {
+				headers.set(key, value);
+			}
 
 			return new Response(response.body, {
 				status: response.status,
 				statusText: response.statusText,
-				headers: {
-					...Object.fromEntries(response.headers.entries()),
-					...securityHeaders,
-				},
+				headers,
 			});
 		} catch (e) {
 			console.error(

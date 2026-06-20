@@ -6,10 +6,10 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 
 ## Features
 
-- **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Email Provider, MCP Server, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices, AI Agent, Visitors/Guests)
-- **17 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-one/networks/connectivity-options/): Cloudflare Tunnel, Cloudflare One Client, Cloudflare Mesh, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Appliance, Access SSO, CASB API, Mutual TLS, MCP Server Portal, Email Security (API/BCC), Email Security (MX/Inline)
-- **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Agentic AI Access, Holistic AI Security, Clientless Contractor Access
-- **Full SASE button** that populates all element types with relevant connections to reach 100%
+- **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Email Provider, MCP Server, Cloudflare Workers, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices, AI Agent, Visitors/Guests)
+- **19 connectivity options** matching [Cloudflare's connectivity documentation](https://developers.cloudflare.com/cloudflare-one/networks/connectivity-options/): Cloudflare Tunnel, Cloudflare One Client, Cloudflare Mesh, Workers VPC, Private Origin Routing, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Cloudflare One Appliance, Access SSO, CASB API, Mutual TLS, MCP Server Portal, Email Security (API/BCC), Email Security (MX/Inline)
+- **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Private Origins, Agentic AI Access, Holistic AI Security, Clientless Contractor Access
+- **Full SASE button** that populates a complete sample architecture with relevant connections to reach 100%
 - **Export diagram** as PNG (raster, 2x resolution) or SVG (vector, scalable) via dropdown menu
 - **Per-element remove** via X button on hover
 - **Detail panel** showing compatible connectors, active connections, and documentation links to Cloudflare Developer Docs
@@ -25,14 +25,15 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 │   └── index.ts                    # Cloudflare Worker (serves assets + security headers)
 ├── public/
 │   ├── index.html                  # Single-page application shell
+│   ├── llms.txt                    # Agentic browsing metadata
 │   ├── css/
 │   │   └── app.css                 # Styles (dark and light themes, blueprint grid, animations)
 │   └── js/
 │       ├── app.js                  # Entry point — thin orchestrator, renderAll, init
 │       ├── data/
 │       │   ├── components.js       # Component definitions (infra + user elements)
-│       │   ├── connectors.js       # Connector definitions (17 connectivity options)
-│       │   ├── templates.js        # Use case templates (VPN replacement, AI security, etc.)
+│       │   ├── connectors.js       # Connector definitions (19 connectivity options)
+│       │   ├── templates.js        # Use case templates (VPN replacement, Private Origins, AI security, etc.)
 │       │   └── achievements.js     # Achievement definitions (10 milestones)
 │       ├── engine/
 │       │   ├── state.js            # State object + mutations (add/remove/reset)
@@ -49,8 +50,9 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 │       │   └── export-image.js     # Export diagram as PNG or SVG
 │       └── presets/
 │           └── full-sase.js        # Full SASE architecture preset
-├── wrangler.jsonc                  # Wrangler config (assets binding, observability)
+├── wrangler.jsonc                  # Wrangler config (assets binding, SPA routing, observability)
 ├── tsconfig.json                   # TypeScript configuration
+├── vitest.config.mjs               # Workers Vitest configuration
 ├── worker-configuration.d.ts       # Auto-generated types from `wrangler types`
 └── package.json
 ```
@@ -73,6 +75,10 @@ The frontend is vanilla JavaScript with **no build step**. Modules communicate v
 
 Minimal TypeScript Worker that serves static assets via the `ASSETS` binding and adds security headers (`CSP`, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`). Uses `satisfies ExportedHandler<Env>` with the generated `Env` type.
 
+The Wrangler Static Assets configuration uses `not_found_handling: "single-page-application"` so deep links serve `index.html`, and `run_worker_first: true` so the Worker consistently applies security headers before asset responses.
+
+This project intentionally uses Wrangler Static Assets rather than the Cloudflare Vite plugin because the frontend has no Vite build step. If the frontend is later migrated to a Vite or framework build, add `@cloudflare/vite-plugin` and update the asset directory to the generated build output.
+
 ### Connection Line Rendering
 
 Lines are drawn as SVG `<path>` elements using quadratic Bezier curves (`Q` command). Each line runs from the component position to the nearest point on the Cloudflare network circle edge (computed via unit vector * radius). When multiple connections originate from the same element, a perpendicular spread offset fans them apart so all lines remain visible.
@@ -94,7 +100,9 @@ Both formats respect the current theme (dark / light).
 npm install
 npm run dev        # Start local dev server (wrangler dev)
 npm run check      # TypeScript type-check
+npm run test       # Run Workers runtime tests
 npm run types      # Regenerate Env types from wrangler.jsonc
+npx wrangler deploy --dry-run  # Validate deployment without publishing
 npm run deploy     # Deploy to Cloudflare Workers
 ```
 
@@ -129,8 +137,10 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 | Connector | Protocol | Direction | Typical Use |
 |---|---|---|---|
 | Cloudflare Tunnel | HTTP/2, QUIC | Off-ramp | Private web apps, SSH, RDP without public IPs |
-| Cloudflare One Client | MASQUE (PQC), WireGuard | Bidirectional | Secure remote workforce devices (formerly WARP) |
-| Cloudflare Mesh | MASQUE (PQC) | Bidirectional | Site-to-site, device-to-device mesh networking (formerly WARP Connector) |
+| Cloudflare One Client | MASQUE (PQC), WireGuard | Bidirectional | Secure remote workforce devices |
+| Cloudflare Mesh | MASQUE (PQC) | Bidirectional | Private networking for users, nodes, agents, and site-to-site traffic |
+| Workers VPC | HTTP, TCP, Gateway egress | Bidirectional | Workers access to private networks and Gateway-governed egress |
+| Private Origin Routing | HTTP/HTTPS, proxied DNS | Off-ramp | Public hostnames routed to private HTTP/HTTPS origins |
 | IPsec Tunnel | IPsec (IKEv2) | Bidirectional | Encrypted site-to-site over Internet |
 | GRE Tunnel | GRE | Bidirectional | Lightweight site connectivity |
 | Network Interconnect | Direct/Partner/Cloud | Bidirectional | Private dedicated connections |
@@ -138,13 +148,20 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 | DNS Location | DoH, DoT, IPv4/6 | On-ramp | Agentless DNS filtering |
 | Proxy Endpoint | HTTP/HTTPS (PAC) | On-ramp | Agentless HTTP filtering |
 | Clientless RBI | HTTP/HTTPS | On-ramp | Secure browser for unmanaged devices |
-| Appliance | IPsec | Bidirectional | Zero-touch branch deployment |
+| Cloudflare One Appliance | IPsec | Bidirectional | Zero-touch branch deployment |
 | Access SSO | SAML, OIDC | App-level | SaaS identity-aware authentication |
 | CASB API | REST API | App-level | SaaS misconfiguration scanning |
 | Mutual TLS | TLS client certificates | App-level | Certificate-based device/service auth |
 | MCP Server Portal | OAuth 2.1, HTTP | App-level | Centralized AI agent access to MCP servers |
 | Email Security (API/BCC) | Graph API, BCC/Journaling | App-level | Post-delivery email scanning |
 | Email Security (MX/Inline) | MX record, SMTP | App-level | Pre-delivery email scanning |
+
+## Cloudflare Workers References
+
+- [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
+- [Workers SPA routing](https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/)
+- [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/)
+- [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
 
 * * * *
 

@@ -18,7 +18,7 @@ window.App.CONNECTORS = {
         protocol: "QUIC, HTTP/2",
         direction: "Off-ramp only",
         color: "#7C3AED",
-        desc: "Outbound-only connections via cloudflared. Exposes web apps, SSH, and RDP without public IPs or firewall changes. Client IP available via CF-Connecting-IP header.",
+        desc: "Outbound-only connections via cloudflared. Exposes specific web apps, SSH, and RDP without public IPs or firewall changes. Cloudflare Tunnel routes are managed from Networking > Routes alongside Mesh and Cloudflare WAN routes.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/"
     },
     "warp-client": {
@@ -34,23 +34,31 @@ window.App.CONNECTORS = {
         protocol: "MASQUE (PQC)",
         direction: "Bidirectional",
         color: "#E844A0",
-        desc: "Post-quantum encrypted mesh networking via Linux nodes (formerly WARP Connector). Every participant gets a private Mesh IP. Enables bidirectional TCP/UDP/ICMP for IoT, VoIP/SIP, and site-to-site. Preserves source IPs end-to-end. Supports HA active-passive replicas. Integrates with Workers VPC — bind your entire Mesh network to a Worker via `network_id: 'cf1:network'`.",
+        desc: "Post-quantum encrypted private networking for users, Linux mesh nodes, services, and agents. Every participant gets a private Mesh IP and can use bidirectional TCP, UDP, and ICMP. Mesh preserves source IPs, supports CIDR routes and HA replicas, appears in Networking > Routes, and can be bound to Workers with `network_id: 'cf1:network'`.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-mesh/"
     },
     "workers-vpc": {
         name: "Workers VPC",
-        protocol: "HTTP, TCP (Tunnel or Mesh)",
+        protocol: "HTTP, TCP, Gateway egress",
         direction: "Bidirectional",
         color: "#F59E0B",
-        desc: "Connect Cloudflare Workers globally to private APIs, services, and databases in any cloud or on-premises network — without exposing them to the public Internet. Uses Cloudflare Tunnel (VPC Services per-host binding) or Cloudflare Mesh (VPC Network binding via `cf1:network`) as the transport. Supports HTTP and TCP services; TCP databases use Hyperdrive integration.",
+        desc: "Connect Workers to private APIs, services, and databases without public exposure. Use Tunnel for per-host VPC Service bindings or Mesh with `cf1:network` for network-wide access. Workers using `cf1:network` can also egress to public Internet destinations through Cloudflare Gateway, so DNS, HTTP, Network, and egress policies and logs apply.",
         docsUrl: "https://developers.cloudflare.com/workers-vpc/"
+    },
+    "private-origin-routing": {
+        name: "Private Origin Routing",
+        protocol: "HTTP/HTTPS, proxied DNS",
+        direction: "Off-ramp only",
+        color: "#14B8A6",
+        desc: "Closed-beta Application Services for Private Origins. Proxied A and AAAA records can route public hostnames to private origin IPs over existing IPsec, GRE, CNI, or Mesh paths. CDN, WAF, Cache, Transform Rules, and Workers still apply while the origin stays private.",
+        docsUrl: "https://developers.cloudflare.com/dns/private-origins/"
     },
     "ipsec-tunnel": {
         name: "IPsec Tunnel",
         protocol: "IPsec (IKEv2)",
         direction: "Bidirectional",
         color: "#F97316",
-        desc: "Encrypted anycast tunnels from routers/firewalls to Cloudflare WAN. Automatic failover across data centers. Requires static public IP. Supports ECMP. Also enables Private Origins: point a public DNS record to a private origin IP and Cloudflare routes requests through the tunnel — CDN, WAF, and Cache all apply without exposing the origin.",
+        desc: "Encrypted anycast tunnels from routers and firewalls to Cloudflare WAN. Use for site-to-site connectivity, Cloudflare WAN routing, and Private Origins where public hostnames need to reach private HTTP/HTTPS services. Routes are managed from Networking > Routes.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/"
     },
     "gre-tunnel": {
@@ -58,7 +66,7 @@ window.App.CONNECTORS = {
         protocol: "GRE",
         direction: "Bidirectional",
         color: "#FACC15",
-        desc: "Lightweight stateless tunnels. No encryption (pair with IPsec if needed). Useful for redundancy or when IPsec throughput is limited. MTU: 1476 bytes.",
+        desc: "Lightweight stateless tunnels for Cloudflare WAN and Magic Transit. GRE does not encrypt traffic, so pair with IPsec if encryption is required. Use Networking > Routes to manage destinations and next hops.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/"
     },
     "cni": {
@@ -66,7 +74,7 @@ window.App.CONNECTORS = {
         protocol: "Direct / Partner / Cloud",
         direction: "Bidirectional",
         color: "#818CF8",
-        desc: "Private dedicated connections bypassing the public Internet. Direct (fiber), Partner (Megaport, Equinix), or Cloud (AWS, GCP, Azure) interconnect. Enterprise plan required.",
+        desc: "Private dedicated connections that bypass the public Internet. Direct, Partner, and Cloud interconnect options support Cloudflare WAN, Magic Transit, and Private Origins for private origin reachability. Enterprise plan required.",
         docsUrl: "https://developers.cloudflare.com/network-interconnect/"
     },
     "multi-cloud": {
@@ -74,7 +82,7 @@ window.App.CONNECTORS = {
         protocol: "IPsec (automated)",
         direction: "Bidirectional",
         color: "#22C55E",
-        desc: "Auto-discovers cloud resources and creates VPN tunnels to Cloudflare WAN. Supports AWS (VPC + Transit Gateway hub), Azure VNet, and GCP VPC.",
+        desc: "Auto-discovers cloud resources and creates VPN tunnels to Cloudflare WAN. Supports AWS, Azure, and GCP VPCs. Resulting routes are visible with other connector routes on the unified Networking > Routes page.",
         docsUrl: "https://developers.cloudflare.com/multi-cloud-networking/"
     },
     "dns-location": {
@@ -106,8 +114,8 @@ window.App.CONNECTORS = {
         protocol: "IPsec",
         direction: "Bidirectional",
         color: "#F43F5E",
-        desc: "Plug-and-play SD-WAN appliance (Dell VEP1460 or VM). Auto-creates IPsec tunnels with zero-touch provisioning. Supports HA and centralized management. 1 Gbps+.",
-        docsUrl: "https://developers.cloudflare.com/cloudflare-wan/configuration/appliance/"
+        desc: "Plug-and-play Cloudflare WAN appliance for branches and sites. Auto-creates IPsec tunnels with zero-touch provisioning, supports HA, and is managed centrally with routes visible in Networking > Routes.",
+        docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliances/"
     },
     "access-saas": {
         name: "Access SSO (SAML/OIDC)",

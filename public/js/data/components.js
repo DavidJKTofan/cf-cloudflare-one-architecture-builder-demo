@@ -18,8 +18,8 @@ window.App.COMPONENTS = {
     datacenter: {
         label: "Data Center",
         category: "infrastructure",
-        desc: "On-premises data center with servers, databases, and internal applications. Connect to Cloudflare for secure remote access without exposing public IPs. Via a Cloudflare WAN IPsec tunnel you can also serve private origins publicly — Cloudflare's CDN, WAF, and Cache apply as normal (Private Origins).",
-        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "gre-tunnel", "cni", "appliance", "workers-vpc"],
+        desc: "On-premises data center with servers, databases, and internal applications. Use Tunnel, Mesh, Cloudflare WAN, CNI, or Appliance connectivity for private access. Private Origin Routing can also place Cloudflare CDN, WAF, Cache, and Workers in front of HTTP/HTTPS services without exposing the origin.",
+        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "gre-tunnel", "cni", "appliance", "workers-vpc", "private-origin-routing"],
         color: "#F97316",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="6" rx="1"/><rect x="2" y="10" width="20" height="6" rx="1"/><circle cx="6" cy="5" r="1" fill="currentColor"/><circle cx="6" cy="13" r="1" fill="currentColor"/><line x1="17" y1="5" x2="20" y2="5"/><line x1="17" y1="13" x2="20" y2="13"/><rect x="2" y="18" width="20" height="4" rx="1" opacity="0.4"/></svg>',
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/"
@@ -27,8 +27,8 @@ window.App.COMPONENTS = {
     aws: {
         label: "AWS VPC",
         category: "infrastructure",
-        desc: "Amazon Web Services Virtual Private Cloud. Use Multi-Cloud Networking for automated IPsec tunnel setup, or Cloudflare Tunnel for application-level access. Workers VPC lets deployed Workers reach private ECS, Lambda, or RDS resources directly.",
-        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc"],
+        desc: "Amazon Web Services Virtual Private Cloud. Use Multi-Cloud Networking, Mesh, Tunnel, or CNI for private connectivity. Workers VPC lets deployed Workers reach private ECS, Lambda, or RDS resources, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
+        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc", "private-origin-routing"],
         color: "#FF9900",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="6" fill="currentColor" stroke="none" font-weight="700">AWS</text></svg>',
         docsUrl: "https://developers.cloudflare.com/multi-cloud-networking/"
@@ -36,8 +36,8 @@ window.App.COMPONENTS = {
     gcp: {
         label: "GCP VPC",
         category: "infrastructure",
-        desc: "Google Cloud Platform Virtual Private Cloud. Connect via Multi-Cloud Networking for automated IPsec, or use Cloudflare Tunnel for specific services. Workers VPC enables Workers to call private GCP services without public exposure.",
-        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc"],
+        desc: "Google Cloud Platform Virtual Private Cloud. Connect via Multi-Cloud Networking, Mesh, Tunnel, or CNI. Workers VPC enables Workers to call private GCP services, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
+        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc", "private-origin-routing"],
         color: "#4285F4",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="5.5" fill="currentColor" stroke="none" font-weight="700">GCP</text></svg>',
         docsUrl: "https://developers.cloudflare.com/multi-cloud-networking/"
@@ -45,8 +45,8 @@ window.App.COMPONENTS = {
     azure: {
         label: "Azure VNet",
         category: "infrastructure",
-        desc: "Microsoft Azure Virtual Network. Multi-Cloud Networking automates VPN gateway creation. Ensure your VNet has sufficient address space (/20+ recommended). Workers VPC enables Workers to call private Azure services without public exposure.",
-        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc"],
+        desc: "Microsoft Azure Virtual Network. Multi-Cloud Networking automates VPN gateway creation; ensure your VNet has sufficient address space. Workers VPC enables Workers to call private Azure services, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
+        compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc", "private-origin-routing"],
         color: "#0078D4",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="4.8" fill="currentColor" stroke="none" font-weight="700">Azure</text></svg>',
         docsUrl: "https://developers.cloudflare.com/multi-cloud-networking/"
@@ -72,8 +72,8 @@ window.App.COMPONENTS = {
     "mcp-server": {
         label: "MCP Server",
         category: "infrastructure",
-        desc: "Remote Model Context Protocol server providing tools and resources to AI agents. Can be hosted on Cloudflare Workers or self-hosted. Secure with Access policies and aggregate via MCP Server Portals for centralized governance and DLP. Use Workers VPC so Worker-hosted MCP servers can reach private databases and APIs.",
-        compatibleConnectors: ["mcp-portal", "cloudflare-tunnel", "access-saas", "workers-vpc"],
+        desc: "Remote Model Context Protocol server providing tools and resources to AI agents. Can be hosted on Workers or self-hosted. Secure with Access policies and MCP Server Portals. Use Workers VPC for private databases and APIs, or Private Origin Routing when HTTP/HTTPS MCP services need Cloudflare application services in front.",
+        compatibleConnectors: ["mcp-portal", "cloudflare-tunnel", "access-saas", "workers-vpc", "private-origin-routing"],
         color: "#0EA5E9",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="12" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><path d="M7 13h10M7 16.5h6" opacity="0.6"/></svg>',
         docsUrl: "https://developers.cloudflare.com/agents/model-context-protocol/authorization/"
@@ -81,7 +81,7 @@ window.App.COMPONENTS = {
     "cloudflare-workers": {
         label: "Cloudflare Workers",
         category: "infrastructure",
-        desc: "Serverless code deployed globally. Use Workers VPC bindings to securely connect to internal apps, private APIs, and databases in any cloud or on-premises network — no public exposure needed.",
+        desc: "Serverless code deployed globally. Workers VPC bindings securely connect Workers to internal apps, private APIs, and databases. With `cf1:network`, public Internet egress from Workers can also inherit Cloudflare Gateway DNS, HTTP, Network, and egress policies and logs.",
         compatibleConnectors: ["workers-vpc"],
         color: "#F38020",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M8 12h2l1.5-3L13 15l1.5-3H17" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -90,8 +90,8 @@ window.App.COMPONENTS = {
     branch: {
         label: "Branch Office",
         category: "infrastructure",
-        desc: "Physical branch office with network infrastructure. Deploy Cloudflare One Appliance for zero-touch connectivity, or use IPsec/GRE tunnels from existing routers.",
-        compatibleConnectors: ["ipsec-tunnel", "gre-tunnel", "appliance", "dns-location", "cloudflare-tunnel", "cloudflare-mesh", "clientless-rbi"],
+        desc: "Physical branch office with network infrastructure. Deploy Cloudflare One Appliance for zero-touch connectivity, use IPsec or GRE tunnels from existing routers, or publish private HTTP/HTTPS services through Private Origin Routing.",
+        compatibleConnectors: ["ipsec-tunnel", "gre-tunnel", "appliance", "dns-location", "cloudflare-tunnel", "cloudflare-mesh", "clientless-rbi", "private-origin-routing"],
         color: "#10B981",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/><rect x="9" y="9" width="2" height="2"/><rect x="13" y="9" width="2" height="2"/><rect x="9" y="13" width="2" height="2"/><rect x="13" y="13" width="2" height="2"/></svg>',
         docsUrl: "https://developers.cloudflare.com/cloudflare-wan/"
@@ -137,7 +137,7 @@ window.App.COMPONENTS = {
     "ai-agent": {
         label: "AI Agent",
         category: "users",
-        desc: "Autonomous AI agent — coding assistant, MCP client, or deployed Worker agent. Connects to MCP servers via portals, accesses private resources via Mesh/Workers VPC, or runs locally with the Cloudflare One Client.",
+        desc: "Autonomous AI agent such as a coding assistant, MCP client, or Worker-based agent. Connects to MCP servers through portals, reaches private resources through Mesh or Workers VPC, and can have public Worker egress governed by Gateway policies.",
         compatibleConnectors: ["mcp-portal", "warp-client", "cloudflare-mesh", "workers-vpc"],
         color: "#14B8A6",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="13" rx="2"/><path d="M9 20h6"/><path d="M12 16v4"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><path d="M9 12.5c0 0 1.5 1.5 3 1.5s3-1.5 3-1.5" opacity="0.6"/></svg>',

@@ -40,7 +40,7 @@
     <!-- SEO -->
     <meta name="robots" content="index, follow">
     <meta name="author" content="Cloudflare">
-    <meta name="keywords" content="Cloudflare One, SASE, Zero Trust, architecture, walkthrough, Cloudflare One Client, Cloudflare Mesh, Tunnel, IPsec, GRE, ZTNA, SWG, CASB, DLP, RBI">
+    <meta name="keywords" content="Cloudflare One, SASE, Zero Trust, architecture, walkthrough, Cloudflare One Client, Cloudflare Mesh, Tunnel, IPsec, GRE, Workers VPC, Private Origins, Unified Routes, ZTNA, SWG, CASB, DLP, RBI">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -135,6 +135,10 @@
                             <span class="template-emoji">&#127970;</span>
                             <span class="template-text"><span class="template-name">Branch Office SD-WAN</span><span class="template-sub">Appliance + IPsec for branches</span></span>
                         </button>
+                        <button class="template-btn" data-template="private-origins">
+                            <span class="template-emoji">&#128274;</span>
+                            <span class="template-text"><span class="template-name">Private Origins</span><span class="template-sub">Public hostnames to private HTTP origins</span></span>
+                        </button>
                         <button class="template-btn" data-template="agentic-ai">
                             <span class="template-emoji">&#129302;</span>
                             <span class="template-text"><span class="template-name">Agentic AI Access</span><span class="template-sub">MCP Portals + Mesh for AI agents</span></span>
@@ -152,7 +156,7 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <h3 class="sidebar-heading">1. Your Infrastructure</h3>
+                    <h2 class="sidebar-heading">1. Your Infrastructure</h2>
                     <p class="sidebar-hint">Start by placing your infrastructure origins</p>
                     <div class="component-group" data-category="infrastructure">
                         <button class="component-card" data-type="datacenter" draggable="true">
@@ -240,7 +244,7 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <h3 class="sidebar-heading">2. Your Users</h3>
+                    <h2 class="sidebar-heading">2. Your Users</h2>
                     <p class="sidebar-hint">Where are your users located?</p>
                     <div class="component-group" data-category="users">
                         <button class="component-card" data-type="remote-user" draggable="true">
@@ -301,7 +305,7 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <h3 class="sidebar-heading">3. Connect with Cloudflare</h3>
+                    <h2 class="sidebar-heading">3. Connect with Cloudflare</h2>
                     <p class="sidebar-hint">Click a placed element, then choose a connector</p>
                     <div class="component-group connectors-group" data-category="connectors" id="connectorsPanel">
                         <button class="connector-btn" data-connector="cloudflare-tunnel" disabled>
@@ -323,6 +327,11 @@
                             <span class="connector-dot" style="--dot-color: #F59E0B"></span>
                             <span>Workers VPC</span>
                             <span class="connector-tag">Bidirectional</span>
+                        </button>
+                        <button class="connector-btn" data-connector="private-origin-routing" disabled>
+                            <span class="connector-dot" style="--dot-color: #14B8A6"></span>
+                            <span>Private Origin Routing</span>
+                            <span class="connector-tag">Off-ramp</span>
                         </button>
                         <button class="connector-btn" data-connector="ipsec-tunnel" disabled>
                             <span class="connector-dot" style="--dot-color: #F97316"></span>
@@ -428,6 +437,8 @@
                                 <span class="cf-service-tag">DNS</span>
                                 <span class="cf-service-tag">MCP</span>
                                 <span class="cf-service-tag">VPC</span>
+                                <span class="cf-service-tag">WAF</span>
+                                <span class="cf-service-tag">Routes</span>
                             </div>
                         </div>
                     </div>

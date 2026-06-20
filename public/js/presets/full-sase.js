@@ -31,9 +31,9 @@ window.App.applyFullSase = function applyFullSase() {
     const cx = rect.width / 2;
     const cy = rect.height / 2;
 
-    // Layout: 5 user types on the left, 5 infra on the right
+    // Layout: users on the left, infrastructure on the right
     const leftTypes  = ["remote-user", "office-user", "contractor", "iot", "ai-agent", "visitor"];
-    const rightTypes = ["datacenter", "aws", "azure", "saas", "mcp-server", "email-security", "branch"];
+    const rightTypes = ["datacenter", "aws", "azure", "saas", "mcp-server", "cloudflare-workers", "email-security", "branch"];
     const leftSpacing = (rect.height * 0.7) / (leftTypes.length - 1 || 1);
     const rightSpacing = (rect.height * 0.7) / (rightTypes.length - 1 || 1);
     const leftStartY = cy - (leftTypes.length - 1) * leftSpacing / 2;
@@ -62,13 +62,15 @@ window.App.applyFullSase = function applyFullSase() {
         [5, "dns-location"],          // Visitors -> DNS Location
         [6, "cloudflare-tunnel"],     // Data Center -> Tunnel
         [6, "ipsec-tunnel"],          // Data Center -> IPsec
+        [6, "private-origin-routing"], // Data Center -> Private Origin Routing
         [7, "multi-cloud"],           // AWS -> Multi-Cloud Networking
         [8, "multi-cloud"],           // Azure -> Multi-Cloud Networking
         [9, "access-saas"],           // SaaS -> Access SSO
         [9, "casb-api"],              // SaaS -> CASB API
         [10, "mcp-portal"],           // MCP Server -> MCP Server Portal
-        [11, "email-security-api"],   // Email Provider -> Email Security (API)
-        [12, "appliance"],            // Branch -> Appliance
+        [11, "workers-vpc"],          // Cloudflare Workers -> Workers VPC
+        [12, "email-security-api"],   // Email Provider -> Email Security (API)
+        [13, "appliance"],            // Branch -> Appliance
     ];
     connMap.forEach(([idx, connector]) => {
         const elId = state.elements[idx]?.id;
