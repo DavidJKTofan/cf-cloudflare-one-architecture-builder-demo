@@ -22,11 +22,11 @@
         <div class="matrix-container">
             <div class="stats-bar">
                 <div class="stat-item">
-                    <div class="stat-number" id="totalOptions">20</div>
+                    <div class="stat-number" id="totalOptions">21</div>
                     <div class="stat-label">Total Options</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="filteredOptions">20</div>
+                    <div class="stat-number" id="filteredOptions">21</div>
                     <div class="stat-label">Showing</div>
                 </div>
                 <div class="stat-item">
@@ -392,6 +392,32 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr data-category="network" data-complexity="medium" data-use-case="datacenter,cloud,office">
+                            <td class="connectivity-option">
+                                <a href="https://developers.cloudflare.com/workers-vpc/" target="_blank">Workers VPC</a>
+                                <div class="requirements">Workers private network access with VPC Service bindings or cf1:network</div>
+                            </td>
+                            <td class="support-indicator support-full">✅<span class="note">Tunnel, Mesh, WAN on-ramps</span></td>
+                            <td class="support-indicator support-none">—</td>
+                            <td class="support-indicator support-full">✅<span class="note">Private APIs, services, databases</span></td>
+                            <td>
+                                <div class="use-case-tags">
+                                    <span class="use-case-tag datacenter">Data Centers</span>
+                                    <span class="use-case-tag cloud">Cloud Resources</span>
+                                    <span class="use-case-tag office">Office Networks</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="protocol-badges">
+                                    <span class="protocol-badge">cf1:network</span>
+                                    <span class="protocol-badge">VPC Service Binding</span>
+                                    <span class="protocol-badge">Cloudflare Tunnel</span>
+                                    <span class="protocol-badge">Cloudflare Mesh</span>
+                                    <span class="protocol-badge">GRE / IPsec / CNI</span>
+                                    <span class="protocol-badge">Gateway Egress Policies</span>
+                                </div>
+                            </td>
+                        </tr>
                         <tr data-category="network" data-complexity="medium" data-use-case="cloud">
                             <td class="connectivity-option">
                                 <a href="https://developers.cloudflare.com/multi-cloud-networking/" target="_blank">Multi-Cloud Networking</a>
@@ -581,6 +607,10 @@
                 <div class="info-card">
                     <h3>🌐 Protocol Support</h3>
                     <p>Modern protocols like <a href="https://developers.cloudflare.com/ssl/post-quantum-cryptography/" target="_blank">Post-Quantum Cryptography</a>, WireGuard, and MASQUE are supported across applicable connection types.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🧭 Route Planning</h3>
+                    <p>When private routes overlap Cloudflare One Client split-tunnel excludes, include the required CIDRs so traffic reaches Cloudflare. For Workers VPC traffic to Cloudflare WAN destinations, route Cloudflare source IPs back through the WAN on-ramp.</p>
                 </div>
                 <div class="info-card">
                     <h3>🔗 Additional Resources</h3>

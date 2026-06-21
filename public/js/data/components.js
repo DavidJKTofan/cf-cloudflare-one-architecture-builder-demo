@@ -18,7 +18,7 @@ window.App.COMPONENTS = {
     datacenter: {
         label: "Data Center",
         category: "infrastructure",
-        desc: "On-premises data center with servers, databases, and internal applications. Use Tunnel, Mesh, Cloudflare WAN, CNI, or Appliance connectivity for private access. Private Origin Routing can also place Cloudflare CDN, WAF, Cache, and Workers in front of HTTP/HTTPS services without exposing the origin.",
+        desc: "On-premises data center with servers, databases, and internal applications. Use Tunnel, Mesh, Cloudflare WAN, CNI, or Appliance connectivity for private access. Workers VPC with `cf1:network` can reach routes behind WAN on-ramps when return paths route Cloudflare source IPs back through the on-ramp. Private Origin Routing can also place Cloudflare CDN, WAF, Cache, and Workers in front of HTTP/HTTPS services without exposing the origin.",
         compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "gre-tunnel", "cni", "appliance", "workers-vpc", "private-origin-routing"],
         color: "#F97316",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="6" rx="1"/><rect x="2" y="10" width="20" height="6" rx="1"/><circle cx="6" cy="5" r="1" fill="currentColor"/><circle cx="6" cy="13" r="1" fill="currentColor"/><line x1="17" y1="5" x2="20" y2="5"/><line x1="17" y1="13" x2="20" y2="13"/><rect x="2" y="18" width="20" height="4" rx="1" opacity="0.4"/></svg>',
@@ -27,7 +27,7 @@ window.App.COMPONENTS = {
     aws: {
         label: "AWS VPC",
         category: "infrastructure",
-        desc: "Amazon Web Services Virtual Private Cloud. Use Multi-Cloud Networking, Mesh, Tunnel, or CNI for private connectivity. Workers VPC lets deployed Workers reach private ECS, Lambda, or RDS resources, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
+        desc: "Amazon Web Services Virtual Private Cloud. Use Multi-Cloud Networking, Mesh, Tunnel, or CNI for private connectivity. Workers VPC lets deployed Workers reach private ECS, Lambda, or RDS resources through Tunnel or `cf1:network` routes, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
         compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc", "private-origin-routing"],
         color: "#FF9900",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="6" fill="currentColor" stroke="none" font-weight="700">AWS</text></svg>',
@@ -36,7 +36,7 @@ window.App.COMPONENTS = {
     gcp: {
         label: "GCP VPC",
         category: "infrastructure",
-        desc: "Google Cloud Platform Virtual Private Cloud. Connect via Multi-Cloud Networking, Mesh, Tunnel, or CNI. Workers VPC enables Workers to call private GCP services, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
+        desc: "Google Cloud Platform Virtual Private Cloud. Connect via Multi-Cloud Networking, Mesh, Tunnel, or CNI. Workers VPC enables Workers to call private GCP services through Tunnel or `cf1:network` routes, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
         compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc", "private-origin-routing"],
         color: "#4285F4",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="5.5" fill="currentColor" stroke="none" font-weight="700">GCP</text></svg>',
@@ -45,7 +45,7 @@ window.App.COMPONENTS = {
     azure: {
         label: "Azure VNet",
         category: "infrastructure",
-        desc: "Microsoft Azure Virtual Network. Multi-Cloud Networking automates VPN gateway creation; ensure your VNet has sufficient address space. Workers VPC enables Workers to call private Azure services, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
+        desc: "Microsoft Azure Virtual Network. Multi-Cloud Networking automates VPN gateway creation; ensure your VNet has sufficient address space. Workers VPC enables Workers to call private Azure services through Tunnel or `cf1:network` routes, and Private Origin Routing can protect private HTTP/HTTPS apps behind public hostnames.",
         compatibleConnectors: ["cloudflare-tunnel", "cloudflare-mesh", "ipsec-tunnel", "multi-cloud", "cni", "workers-vpc", "private-origin-routing"],
         color: "#0078D4",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 19A4.5 4.5 0 0 1 6.5 10a6 6 0 0 1 11 0 4.5 4.5 0 0 1 0 9h-11z"/><text x="12" y="16" text-anchor="middle" font-size="4.8" fill="currentColor" stroke="none" font-weight="700">Azure</text></svg>',
@@ -81,7 +81,7 @@ window.App.COMPONENTS = {
     "cloudflare-workers": {
         label: "Cloudflare Workers",
         category: "infrastructure",
-        desc: "Serverless code deployed globally. Workers VPC bindings securely connect Workers to internal apps, private APIs, and databases. With `cf1:network`, public Internet egress from Workers can also inherit Cloudflare Gateway DNS, HTTP, Network, and egress policies and logs.",
+        desc: "Serverless code deployed globally. Workers VPC bindings securely connect Workers to internal apps, private APIs, and databases. With `network_id: 'cf1:network'`, a Worker can reach private routes announced by Tunnel or Mesh plus Cloudflare WAN on-ramps such as GRE, IPsec, and CNI. Public Internet egress from Workers can also inherit Cloudflare Gateway DNS, HTTP, Network, and egress policies and logs.",
         compatibleConnectors: ["workers-vpc"],
         color: "#F38020",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M8 12h2l1.5-3L13 15l1.5-3H17" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -101,7 +101,7 @@ window.App.COMPONENTS = {
     "remote-user": {
         label: "Remote Worker",
         category: "users",
-        desc: "Employee working from home or while traveling. Deploy the Cloudflare One Client for full device security, or use agentless options (RBI, PAC, DNS) for lighter deployments.",
+        desc: "Employee working from home or while traveling. Deploy the Cloudflare One Client for full device security, or use agentless options (RBI, PAC, DNS) for lighter deployments. When using Mesh or private network routes, make sure needed private CIDRs are not still excluded by split-tunnel settings.",
         compatibleConnectors: ["warp-client", "clientless-rbi", "proxy-endpoint", "dns-location", "mtls"],
         color: "#3B82F6",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M2 12h3m14 0h3" stroke-dasharray="2 2"/></svg>',
@@ -110,7 +110,7 @@ window.App.COMPONENTS = {
     "office-user": {
         label: "Office Worker",
         category: "users",
-        desc: "On-site corporate employee with a managed device. Use the Cloudflare One Client for full protection, or agentless options (RBI, PAC, DNS) for the office network.",
+        desc: "On-site corporate employee with a managed device. Use the Cloudflare One Client for full protection, or agentless options (RBI, PAC, DNS) for the office network. If private ranges overlap default split-tunnel excludes, include the required CIDRs so traffic reaches Cloudflare routes.",
         compatibleConnectors: ["warp-client", "clientless-rbi", "proxy-endpoint", "dns-location", "mtls"],
         color: "#8B5CF6",
         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><rect x="8" y="18" width="8" height="3" rx="1" opacity="0.3"/></svg>',

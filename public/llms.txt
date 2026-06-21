@@ -6,4 +6,5 @@ This site is an educational interactive demo for building Cloudflare One SASE an
 
 - [Cloudflare One documentation](https://developers.cloudflare.com/cloudflare-one/)
 - [Cloudflare One connectivity options](https://developers.cloudflare.com/cloudflare-one/networks/connectivity-options/)
+- [Workers VPC](https://developers.cloudflare.com/workers-vpc/)
 - [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)

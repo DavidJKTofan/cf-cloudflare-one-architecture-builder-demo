@@ -8,7 +8,7 @@ Built as a Cloudflare Worker with static assets. No frameworks, no build step fo
 
 - **Drag-and-drop canvas** with infrastructure (Data Center, AWS, GCP, Azure, SaaS, Email Provider, MCP Server, Cloudflare Workers, Branch Office) and user components (Remote Worker, Office Worker, Contractor/BYOD, IoT/Devices, AI Agent, Visitors/Guests)
 - **20 connector types** for Cloudflare architecture diagrams, including Cloudflare Tunnel, Cloudflare One Client, Cloudflare Mesh, Workers VPC, Public Internet (HTTPS), Private Origin Routing, IPsec, GRE, CNI, Multi-Cloud Networking, DNS Location, Proxy Endpoint, Clientless RBI, Cloudflare One Appliance, Access SSO, CASB API, Mutual TLS, MCP Server Portal, Email Security (API/BCC), Email Security (MX/Inline)
-- **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Private Origins, Agentic AI Access, Holistic AI Security, Clientless Contractor Access
+- **Quick Start Templates** (collapsible) for common use cases: VPN Replacement, Secure Internet Traffic, Multi-Cloud, Branch SD-WAN, Workers to Private Network, Private Origins, Agentic AI Access, Holistic AI Security, Clientless Contractor Access
 - **Full SASE button** that populates a complete sample architecture with relevant connections to reach 100%
 - **Export diagram** as PNG (raster, 2x resolution) or SVG (vector, scalable) via dropdown menu
 - **Per-element remove** via X button on hover
@@ -139,7 +139,7 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 | Cloudflare Tunnel | HTTP/2, QUIC | Off-ramp | Private web apps, SSH, RDP without public IPs |
 | Cloudflare One Client | MASQUE (PQC), WireGuard | Bidirectional | Secure remote workforce devices |
 | Cloudflare Mesh | MASQUE (PQC) | Bidirectional | Private networking for users, nodes, agents, and site-to-site traffic |
-| Workers VPC | HTTP, TCP, Gateway egress | Bidirectional | Workers access to private networks and Gateway-governed egress |
+| Workers VPC | HTTP, TCP, cf1:network, Gateway egress | Bidirectional | Workers access to private networks behind Tunnel, Mesh, and Cloudflare WAN on-ramps, plus Gateway-governed egress |
 | Public Internet (HTTPS) | HTTPS, proxied DNS | On-ramp | Public users reaching proxied hostnames on Cloudflare |
 | Private Origin Routing | HTTP/HTTPS, proxied DNS | Off-ramp | Public hostnames routed to private HTTP/HTTPS origins |
 | IPsec Tunnel | IPsec (IKEv2) | Bidirectional | Encrypted site-to-site over Internet |
@@ -161,6 +161,7 @@ Based on [Cloudflare One Connectivity Options](https://developers.cloudflare.com
 
 - [Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/)
 - [Workers SPA routing](https://developers.cloudflare.com/workers/static-assets/routing/single-page-application/)
+- [Workers VPC](https://developers.cloudflare.com/workers-vpc/)
 - [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/)
 - [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
 

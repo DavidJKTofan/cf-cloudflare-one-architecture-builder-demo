@@ -85,6 +85,23 @@ window.App.TEMPLATES = {
             { elementIdx: 4, connector: "cni" },
         ]
     },
+    "workers-private-network": {
+        name: "Workers to Private Network",
+        desc: "Workers VPC with `cf1:network` reaches private routes announced by Tunnel, Mesh, and Cloudflare WAN on-ramps such as GRE, IPsec, and CNI. WAN destinations must route Cloudflare source IPs back through the on-ramp.",
+        docsUrl: "https://developers.cloudflare.com/workers-vpc/configuration/vpc-networks/",
+        elements: [
+            { type: "cloudflare-workers", side: "left", slot: 0 },
+            { type: "aws", side: "right", slot: 0 },
+            { type: "datacenter", side: "right", slot: 1 },
+            { type: "branch", side: "right", slot: 2 },
+        ],
+        connections: [
+            { elementIdx: 0, connector: "workers-vpc" },
+            { elementIdx: 1, connector: "cloudflare-tunnel" },
+            { elementIdx: 2, connector: "cloudflare-mesh" },
+            { elementIdx: 3, connector: "ipsec-tunnel" },
+        ]
+    },
     "private-origins": {
         name: "Private Origins",
         desc: "Public hostnames reach private HTTP/HTTPS origins through private network routing. Keep CDN, WAF, Cache, Transform Rules, and Workers in front while origins stay private.",

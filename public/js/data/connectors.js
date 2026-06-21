@@ -26,7 +26,7 @@ window.App.CONNECTORS = {
         protocol: "MASQUE (PQC), WireGuard",
         direction: "Bidirectional",
         color: "#3B82F6",
-        desc: "Device agent (formerly WARP) encrypting all traffic from the endpoint. Supports DNS, HTTP, and L4 network filtering with device posture checks. Post-quantum ready via MASQUE.",
+        desc: "Device agent (formerly WARP) encrypting traffic from the endpoint. Supports DNS, HTTP, and L4 network filtering with device posture checks. Post-quantum ready via MASQUE. Review split-tunnel excludes before advertising private routes: default private ranges such as 10.0.0.0/8 can prevent Mesh or tunnel-routed CIDRs from reaching Cloudflare unless the needed prefixes are included.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/"
     },
     "cloudflare-mesh": {
@@ -34,15 +34,15 @@ window.App.CONNECTORS = {
         protocol: "MASQUE (PQC)",
         direction: "Bidirectional",
         color: "#E844A0",
-        desc: "Post-quantum encrypted private networking for users, Linux mesh nodes, services, and agents. Every participant gets a private Mesh IP and can use bidirectional TCP, UDP, and ICMP. Mesh preserves source IPs, supports CIDR routes and HA replicas, appears in Networking > Routes, and can be bound to Workers with `network_id: 'cf1:network'`.",
+        desc: "Post-quantum encrypted private networking for users, Linux mesh nodes, services, and agents. Every participant gets a private Mesh IP and can use bidirectional TCP, UDP, and ICMP. Mesh preserves source IPs, supports CIDR routes and HA replicas, appears in Networking > Routes, and can be bound to Workers with `network_id: 'cf1:network'`. For endpoint access, align WARP split-tunnel settings with advertised CIDR routes.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-mesh/"
     },
     "workers-vpc": {
         name: "Workers VPC",
-        protocol: "HTTP, TCP, Gateway egress",
+        protocol: "HTTP, TCP, cf1:network, Gateway egress",
         direction: "Bidirectional",
         color: "#F59E0B",
-        desc: "Connect Workers to private APIs, services, and databases without public exposure. Use Tunnel for per-host VPC Service bindings or Mesh with `cf1:network` for network-wide access. Workers using `cf1:network` can also egress to public Internet destinations through Cloudflare Gateway, so DNS, HTTP, Network, and egress policies and logs apply.",
+        desc: "Connect Workers to private APIs, services, and databases without public exposure. Use Tunnel for per-host VPC Service bindings or `cf1:network` for network-wide access to routes announced by Tunnel, Mesh, and Cloudflare WAN on-ramps including GRE, IPsec, and CNI. For WAN on-ramp destinations, route Cloudflare source IPs back through the on-ramp so stateful flows return to Cloudflare. Workers using `cf1:network` can also egress to public Internet destinations through Cloudflare Gateway, so DNS, HTTP, Network, and egress policies and logs apply.",
         docsUrl: "https://developers.cloudflare.com/workers-vpc/"
     },
     "public-https": {
@@ -66,7 +66,7 @@ window.App.CONNECTORS = {
         protocol: "IPsec (IKEv2)",
         direction: "Bidirectional",
         color: "#F97316",
-        desc: "Encrypted anycast tunnels from routers and firewalls to Cloudflare WAN. Use for site-to-site connectivity, Cloudflare WAN routing, and Private Origins where public hostnames need to reach private HTTP/HTTPS services. Routes are managed from Networking > Routes.",
+        desc: "Encrypted anycast tunnels from routers and firewalls to Cloudflare WAN. Use for site-to-site connectivity, Cloudflare WAN routing, Workers VPC `cf1:network` reachability, and Private Origins where public hostnames need to reach private HTTP/HTTPS services. For Workers VPC traffic, route Cloudflare source IPs back through the tunnel. Routes are managed from Networking > Routes.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/"
     },
     "gre-tunnel": {
@@ -74,7 +74,7 @@ window.App.CONNECTORS = {
         protocol: "GRE",
         direction: "Bidirectional",
         color: "#FACC15",
-        desc: "Lightweight stateless tunnels for Cloudflare WAN and Magic Transit. GRE does not encrypt traffic, so pair with IPsec if encryption is required. Use Networking > Routes to manage destinations and next hops.",
+        desc: "Lightweight stateless tunnels for Cloudflare WAN and Magic Transit. GRE does not encrypt traffic, so pair with IPsec if encryption is required. GRE routes can be reached by Workers VPC through `cf1:network` when return traffic is routed back to Cloudflare. Use Networking > Routes to manage destinations and next hops.",
         docsUrl: "https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/"
     },
     "cni": {
@@ -82,7 +82,7 @@ window.App.CONNECTORS = {
         protocol: "Direct / Partner / Cloud",
         direction: "Bidirectional",
         color: "#818CF8",
-        desc: "Private dedicated connections that bypass the public Internet. Direct, Partner, and Cloud interconnect options support Cloudflare WAN, Magic Transit, and Private Origins for private origin reachability. Enterprise plan required.",
+        desc: "Private dedicated connections that bypass the public Internet. Direct, Partner, and Cloud interconnect options support Cloudflare WAN, Magic Transit, Workers VPC `cf1:network` reachability, and Private Origins for private origin reachability. Enterprise plan required.",
         docsUrl: "https://developers.cloudflare.com/network-interconnect/"
     },
     "multi-cloud": {
